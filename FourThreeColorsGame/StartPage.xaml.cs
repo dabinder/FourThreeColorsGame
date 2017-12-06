@@ -33,7 +33,7 @@ namespace FourThreeColorsGame {
 		/// <param name="sender">source of new game request</param>
 		/// <param name="e">request detail</param>
 		private void OnNewGameClicked(object sender, RoutedEventArgs e) {
-			this.Frame.Navigate(typeof(View.BoardPage));
+			this.Frame.Navigate(typeof(Views.BoardPage));
 		}
 	}
 }
