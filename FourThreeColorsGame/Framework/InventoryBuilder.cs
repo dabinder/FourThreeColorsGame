@@ -30,12 +30,6 @@ namespace FourThreeColorsGame.Framework {
 					throw new ArgumentOutOfRangeException($"InventoryVariant {variant} not among enumerated types");
 			}
 
-			/*
-			if (colors.Length != 3) {
-				throw new FormatException("Colors array must contain exactly three elements");
-			}
-			*/
-
 			//create sets of pieces of corresponding colors
 			for (int i = 1; i <= colors[0]; i++) {
 				yield return new Piece(ColorType.Color1);

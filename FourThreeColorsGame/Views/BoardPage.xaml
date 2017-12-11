@@ -10,11 +10,12 @@
 	xmlns:conv="using:FourThreeColorsGame.Converters"
     mc:Ignorable="d"
 	Height="500" Width="1000"
+	Background="Black"
 >
 	<Page.DataContext>
 		<vm:GameViewModel />
 	</Page.DataContext>
-
+	
 	<!-- colors -->
 	<Page.Resources>
 		<conv:ColorTypeToColorConverter x:Key="ColorTypeToColorConverter" />
@@ -27,22 +28,109 @@
 		<SolidColorBrush x:Key="ColorValue3" Color="{Binding Converter={StaticResource ColorTypeToColorConverter}, ConverterParameter={StaticResource ColorTypeEnumColor3}}" />
 	</Page.Resources>
 
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="300" />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
-
-		<Grid Grid.Column="0" x:Name="DashboardLayout" VerticalAlignment="Center" >
-			<Grid.RowDefinitions>
-				<RowDefinition Height="30" />
-				<RowDefinition />
-			</Grid.RowDefinitions>
-
-			<TextBlock Grid.Row="0" Text="Pieces remaining" Style="{ThemeResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-			<Grid Grid.Row="1">
+	<Canvas Name="GameDisplay">
+		<!-- overlay for player names -->
+		<Border Canvas.ZIndex="1" Name="PlayerNames" Width="500" Height="300" Canvas.Left="165" Canvas.Top="75" Background="Black" BorderThickness="1" BorderBrush="SkyBlue">
+			<Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="100" />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="150" />
+					<ColumnDefinition Width="200" />
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Player Names" Foreground="SkyBlue" Margin="0, 10, 0, 0" FontSize="20pt" />
+
+				<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Player 1 Name" />
+				<TextBox Grid.Row="1" Grid.Column="1" Name="Player1Name" Text="{Binding Player1.Name, Mode=TwoWay}" TextChanged="OnPlayerNameChanged" />
+
+				<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Player 2 Name" />
+				<TextBox Grid.Row="2" Grid.Column="1" Name="Player2Name" Text="{Binding Player2.Name, Mode=TwoWay}" TextChanged="OnPlayerNameChanged" />
+
+				<Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Name="PlayerNameCloseButton" Content="Close" Margin="0, 15, 0, 0" Click="OnPlayerNameCloseButtonClicked" />
+
+				<TextBlock Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" Name="PlayerNamesError" Text="Fill in both player names" Foreground="#FFFF6D6D" FontSize="10pt" Visibility="Collapsed" />
+			</Grid>
+		</Border>
+
+		<!-- main view -->
+		<Grid Canvas.ZIndex="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="300" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+
+			<Grid Grid.Column="0" x:Name="DashboardLayout" VerticalAlignment="Center" >
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="0" Text="Pieces remaining" Style="{ThemeResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+				<Grid Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<!-- column 0: colors -->
+					<Border Grid.Row="1" Grid.Column="0" Background="{StaticResource ColorValue1}" />
+					<Border Grid.Row="2" Grid.Column="0" Background="{StaticResource ColorValue2}" />
+					<Border Grid.Row="3" Grid.Column="0" Background="{StaticResource ColorValue3}" />
+					<TextBlock Grid.Row="4" Grid.Column="0" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+					<!-- column 1: player 1 -->
+					<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Player1.Inventory.TotalCount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+					<!-- column 2: player 2 -->
+					<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Player2.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Player2.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Player2.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Player2.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Player2.Inventory.TotalCount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+					<!-- column 3: totals -->
+					<TextBlock Grid.Row="0" Grid.Column="3" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Color1TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding Color2TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Color3TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding GrandTotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				</Grid>
+			</Grid>
+
+			<!-- game board -->
+			<Grid Grid.Column="1" x:Name="GameBoard" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50, 0, 15, 0">
+				<Grid.Resources>
+					<SolidColorBrush x:Key="BorderBrush" Color="Silver" />
+					<x:Double x:Key="SpaceSize">60</x:Double>
+					<Thickness x:Key="BorderThickness">1</Thickness>
+				</Grid.Resources>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
 					<ColumnDefinition />
 					<ColumnDefinition />
 					<ColumnDefinition />
@@ -54,35 +142,112 @@
 					<RowDefinition />
 					<RowDefinition />
 					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
 				</Grid.RowDefinitions>
 
-				<!-- column 0: colors -->
-				<Border Grid.Row="1" Grid.Column="0" Background="{StaticResource ColorValue1}" />
-				<Border Grid.Row="2" Grid.Column="0" Background="{StaticResource ColorValue2}" />
-				<Border Grid.Row="3" Grid.Column="0" Background="{StaticResource ColorValue3}" />
-				<TextBlock Grid.Row="4" Grid.Column="0" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				<!-- draw game grid -->
+				<!-- row 0 -->
+				<Border Grid.Row="0" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="0" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="0" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="0" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="0" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="0" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="0" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="0" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="0" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
 
-				<!-- column 1: player 1 -->
-				<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Player1.Inventory.TotalCount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				<!-- row 1 -->
+				<Border Grid.Row="1" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="1" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="1" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="1" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="1" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="1" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="1" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="1" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="1" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
 
-				<!-- column 2: player 2 -->
-				<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Player2.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Player2.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Player2.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Player2.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Player2.Inventory.TotalCount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				<!-- row 2 -->
+				<Border Grid.Row="2" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="2" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="2" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="2" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="2" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="2" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="2" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="2" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="2" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
 
-				<!-- column 3: totals -->
-				<TextBlock Grid.Row="0" Grid.Column="3" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Color1TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding Color2TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Color3TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding GrandTotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+				<!-- row 3 -->
+				<Border Grid.Row="3" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="3" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="3" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="3" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="3" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="3" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="3" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="3" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="3" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+
+				<!-- row 4 -->
+				<Border Grid.Row="4" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="4" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="4" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="4" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="4" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="4" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="4" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="4" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="4" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+
+				<!-- row 5 -->
+				<Border Grid.Row="5" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="5" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="5" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="5" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="5" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="5" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="5" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="5" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="5" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+
+				<!-- row 6 -->
+				<Border Grid.Row="6" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="6" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="6" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="6" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="6" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="6" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="6" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="6" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="6" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+
+				<!-- row 7 -->
+				<Border Grid.Row="7" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="7" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="7" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="7" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="7" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="7" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="7" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="7" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="7" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+
+				<!-- row 8 -->
+				<Border Grid.Row="8" Grid.Column="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="8" Grid.Column="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="8" Grid.Column="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="8" Grid.Column="3" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="8" Grid.Column="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="8" Grid.Column="5" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="8" Grid.Column="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="8" Grid.Column="7" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<Border Grid.Row="8" Grid.Column="8" BorderBrush="{StaticResource BorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
 			</Grid>
 		</Grid>
-	</Grid>
+	</Canvas>
 </Page>

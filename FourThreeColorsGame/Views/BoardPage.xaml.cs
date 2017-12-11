@@ -21,10 +21,19 @@ namespace FourThreeColorsGame.Views {
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
 	sealed partial class BoardPage : Page {
-		public GameViewModel ViewModel { get; }
-
 		public BoardPage() {
 			this.InitializeComponent();
+		}
+
+		private void OnPlayerNameCloseButtonClicked(object sender, RoutedEventArgs e) {
+			GameDisplay.Children.Remove(PlayerNames);
+		}
+
+		private void OnPlayerNameChanged(object sender, TextChangedEventArgs e) {
+			bool enabled = Player1Name.Text != "" && Player2Name.Text != "";
+
+			PlayerNameCloseButton.IsEnabled = enabled;
+			PlayerNamesError.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
 		}
 	}
 }

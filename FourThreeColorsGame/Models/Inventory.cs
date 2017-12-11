@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Data;
 
 namespace FourThreeColorsGame.Models {
 	class Inventory : GroupedObservableCollection<int, Piece> {
-		const int SIZE = 40;
+		internal const int SIZE = 40;
 
 		public int TotalCount {
 			get {

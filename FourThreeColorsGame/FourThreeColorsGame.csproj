@@ -97,9 +97,6 @@
     </Compile>
     <Compile Include="Collections\GroupedObservableCollection.cs" />
     <Compile Include="Collections\Grouping.cs" />
-    <Compile Include="Controls\Dashboard.xaml.cs">
-      <DependentUpon>Dashboard.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Converters\ColorTypeToColorConverter.cs" />
     <Compile Include="Framework\ColorTypeEnum.cs" />
     <Compile Include="Framework\DisplayedColors.cs" />
@@ -139,10 +136,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\Dashboard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="StartPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
