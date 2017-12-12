@@ -11,9 +11,6 @@ using System.Collections.Specialized;
 
 namespace FourThreeColorsGame.ViewModels {
 	class GameViewModel : ObservableObject {
-		public const int BOARD_DIMENSIONS = 9;
-		public const int SPACE_SIZE = 2;
-
 		#region piece counts
 		public int Color1TotalPieces {
 			get {
