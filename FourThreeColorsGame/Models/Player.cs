@@ -31,6 +31,6 @@ namespace FourThreeColorsGame.Models {
 			Name = name;
 			_inventory = new Inventory(variant);
 			OnPropertyChanged(nameof(Inventory));
+		}
 	}
-}
 }

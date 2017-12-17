@@ -15,17 +15,9 @@
 	<Page.DataContext>
 		<vm:GameViewModel />
 	</Page.DataContext>
-	
-	<!-- colors -->
-	<Page.Resources>
-		<conv:ColorTypeToColorConverter x:Key="ColorTypeToColorConverter" />
-		<fw:ColorType x:Key="ColorTypeEnumColor1">Color1</fw:ColorType>
-		<fw:ColorType x:Key="ColorTypeEnumColor2">Color2</fw:ColorType>
-		<fw:ColorType x:Key="ColorTypeEnumColor3">Color3</fw:ColorType>
 
-		<SolidColorBrush x:Key="ColorValue1" Color="{Binding Converter={StaticResource ColorTypeToColorConverter}, ConverterParameter={StaticResource ColorTypeEnumColor1}}" />
-		<SolidColorBrush x:Key="ColorValue2" Color="{Binding Converter={StaticResource ColorTypeToColorConverter}, ConverterParameter={StaticResource ColorTypeEnumColor2}}" />
-		<SolidColorBrush x:Key="ColorValue3" Color="{Binding Converter={StaticResource ColorTypeToColorConverter}, ConverterParameter={StaticResource ColorTypeEnumColor3}}" />
+	<Page.Resources>
+		<ResourceDictionary Source="ms-appx:///Resources/GameResources.xaml" />
 	</Page.Resources>
 
 	<Canvas Name="GameDisplay">
@@ -69,6 +61,7 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="30" />
 					<RowDefinition />
+					<RowDefinition Height="30" />
 				</Grid.RowDefinitions>
 
 				<TextBlock Grid.Row="0" Text="Pieces remaining" Style="{ThemeResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -89,9 +82,9 @@
 					</Grid.RowDefinitions>
 
 					<!-- column 0: colors -->
-					<Border Grid.Row="1" Grid.Column="0" Background="{StaticResource ColorValue1}" />
-					<Border Grid.Row="2" Grid.Column="0" Background="{StaticResource ColorValue2}" />
-					<Border Grid.Row="3" Grid.Column="0" Background="{StaticResource ColorValue3}" />
+					<Border Grid.Row="1" Grid.Column="0" Background="{StaticResource Color1}" />
+					<Border Grid.Row="2" Grid.Column="0" Background="{StaticResource Color2}" />
+					<Border Grid.Row="3" Grid.Column="0" Background="{StaticResource Color3}" />
 					<TextBlock Grid.Row="4" Grid.Column="0" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
 					<!-- column 1: player 1 -->
@@ -115,6 +108,16 @@
 					<TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Color3TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 					<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding GrandTotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 				</Grid>
+
+				<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<StackPanel.Resources>
+						<Style TargetType="TextBlock">
+							<Setter Property="Foreground" Value="SkyBlue" />
+						</Style>
+					</StackPanel.Resources>
+					<TextBlock Text="Current Player:" Margin="0, 0, 5, 0" />
+					<TextBlock Text="{Binding CurrentPlayer.Name}" />
+				</StackPanel>
 			</Grid>
 
 			<!-- game board -->

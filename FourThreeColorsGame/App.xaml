@@ -5,10 +5,4 @@
     xmlns:local="using:FourThreeColorsGame"
     RequestedTheme="Dark"
 >
-
-	<Application.Resources>
-		<!-- default colors -->
-		<SolidColorBrush x:Key="DefaultHoverBorder" Color="SkyBlue" />
-		
-	</Application.Resources>
 </Application>

@@ -34,6 +34,15 @@ namespace FourThreeColorsGame.ViewModels {
 		}
 		#endregion
 
+		private int turnCount;
+		public Player CurrentPlayer {
+			get {
+				return turnCount % 2 == 1 ?
+					Player1 :
+					Player2;
+			}
+		}
+
 		#region player info
 		private readonly Player _player1;
 		public Player Player1 {
@@ -60,6 +69,10 @@ namespace FourThreeColorsGame.ViewModels {
 			OnPropertyChanged(nameof(GrandTotalPieces));
 			Player1.Inventory.CollectionChanged += OnInventoryChanged;
 			Player2.Inventory.CollectionChanged += OnInventoryChanged;
+
+			//start first turn
+			turnCount = 1;
+			OnPropertyChanged(nameof(CurrentPlayer));
 		}
 
 		private void OnInventoryChanged(object sender, NotifyCollectionChangedEventArgs e) {
