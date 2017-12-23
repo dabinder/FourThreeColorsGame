@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Data;
 using System.Collections.Specialized;
+using System.Windows.Input;
 
 namespace FourThreeColorsGame.ViewModels {
 	class GameViewModel : ObservableObject {
@@ -34,6 +35,7 @@ namespace FourThreeColorsGame.ViewModels {
 		}
 		#endregion
 
+		#region turns
 		private int turnCount;
 		public Player CurrentPlayer {
 			get {
@@ -42,6 +44,7 @@ namespace FourThreeColorsGame.ViewModels {
 					Player2;
 			}
 		}
+		#endregion
 
 		#region player info
 		private readonly Player _player1;
@@ -54,6 +57,26 @@ namespace FourThreeColorsGame.ViewModels {
 		public Player Player2 {
 			get {
 				return _player2;
+			}
+		}
+		#endregion
+
+		#region game board actions
+		private readonly RelayCommand _gameSpaceClick;
+		public RelayCommand GameSpaceClick {
+			get {
+				return _gameSpaceClick;
+			}
+		}
+
+		private bool _pieceSelectionVisible = false;
+		public bool PieceSelectionVisible {
+			get {
+				return _pieceSelectionVisible;
+			}
+			set {
+				_pieceSelectionVisible = value;
+				OnPropertyChanged(nameof(PieceSelectionVisible));
 			}
 		}
 		#endregion
@@ -73,6 +96,13 @@ namespace FourThreeColorsGame.ViewModels {
 			//start first turn
 			turnCount = 1;
 			OnPropertyChanged(nameof(CurrentPlayer));
+
+			//initialize click listener
+			_gameSpaceClick = new RelayCommand(param => this.SelectPiece());
+		}
+
+		private void SelectPiece() {
+			PieceSelectionVisible = true;
 		}
 
 		private void OnInventoryChanged(object sender, NotifyCollectionChangedEventArgs e) {

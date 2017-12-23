@@ -7,9 +7,15 @@
 
 	<!-- default colors -->
 	<SolidColorBrush x:Key="DefaultHoverBorder" Color="SkyBlue" />
+	<SolidColorBrush x:Key="DefaultHeaderText" Color="SkyBlue" />
+	<SolidColorBrush x:Key="DefaultBorderBrush" Color="Silver" />
+	<SolidColorBrush x:Key="DefaultBackgroundColor" Color="Black" />
+	
+	<!-- converters -->
+	<conv:ColorTypeToColorConverter x:Key="ColorTypeToColorConverter" />
+	<conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
 	<!-- piece colors -->
-	<conv:ColorTypeToColorConverter x:Key="ColorTypeToColorConverter" />
 	<SolidColorBrush x:Key="Color1">
 		<SolidColorBrush.Color>
 			<Binding Converter="{StaticResource ColorTypeToColorConverter}">
@@ -37,5 +43,21 @@
 			</Binding>
 		</SolidColorBrush.Color>
 	</SolidColorBrush>
+	
+	<!-- layout -->
+	<x:Double x:Key="SpaceSize">60</x:Double>
+	<x:Double x:Key="PieceSize">45</x:Double>
+	<x:Double x:Key="CountPosition">22.5</x:Double>
+	<Thickness x:Key="BorderThickness">1</Thickness>
 
+	<!-- game pieces -->
+	<DataTemplate x:Key="GamePiece1">
+		<Ellipse Width="{StaticResource PieceSize}" Height="{StaticResource PieceSize}" Fill="{StaticResource Color1}" />
+	</DataTemplate>
+	<DataTemplate x:Key="GamePiece2">
+		<Ellipse Width="{StaticResource PieceSize}" Height="{StaticResource PieceSize}" Fill="{StaticResource Color2}" />
+	</DataTemplate>
+	<DataTemplate x:Key="GamePiece3">
+		<Ellipse Width="{StaticResource PieceSize}" Height="{StaticResource PieceSize}" Fill="{StaticResource Color3}" />
+	</DataTemplate>
 </ResourceDictionary>
