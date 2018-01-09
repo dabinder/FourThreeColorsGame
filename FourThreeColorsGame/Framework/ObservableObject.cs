@@ -16,7 +16,7 @@ namespace FourThreeColorsGame.Framework {
 		/// send notification of property changed to listeners
 		/// </summary>
 		/// <param name="propertyName">name of property changed</param>
-		protected void OnPropertyChanged(string propertyName) {
+		protected void NotifyPropertyChanged(string propertyName) {
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}

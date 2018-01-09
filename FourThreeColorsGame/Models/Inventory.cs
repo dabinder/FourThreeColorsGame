@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,13 @@ namespace FourThreeColorsGame.Models {
 			
 			if (TotalCount != SIZE) {
 				throw new ArithmeticException("Total number of pieces must add up to exactly " + SIZE);
+			}
+
+			//trigger update of total
+			foreach (ObservableCollection<Piece> c in this) {
+				c.CollectionChanged += (sender, e) => {
+					OnPropertyChanged(new PropertyChangedEventArgs(nameof(TotalCount)));
+				};
 			}
 		}
 	}

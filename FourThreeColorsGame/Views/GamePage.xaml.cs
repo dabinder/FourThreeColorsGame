@@ -1,4 +1,5 @@
 ﻿using FourThreeColorsGame.ViewModels;
+using FourThreeColorsGame.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.ComponentModel;
+using FourThreeColorsGame.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,17 +26,6 @@ namespace FourThreeColorsGame.Views {
 	sealed partial class GamePage : Page {
 		public GamePage() {
 			this.InitializeComponent();
-		}
-
-		private void OnPlayerNameCloseButtonClicked(object sender, RoutedEventArgs e) {
-			GameDisplay.Children.Remove(PlayerNames);
-		}
-
-		private void OnPlayerNameChanged(object sender, TextChangedEventArgs e) {
-			bool enabled = Player1Name.Text != "" && Player2Name.Text != "";
-
-			PlayerNameCloseButton.IsEnabled = enabled;
-			PlayerNamesError.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
 		}
 	}
 }

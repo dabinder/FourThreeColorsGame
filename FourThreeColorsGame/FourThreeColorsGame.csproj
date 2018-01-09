@@ -97,12 +97,21 @@
     </Compile>
     <Compile Include="Collections\GroupedObservableCollection.cs" />
     <Compile Include="Collections\Grouping.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\PositionToIntConverter.cs" />
+    <Compile Include="ViewModels\SpaceViewModel.cs" />
+    <Compile Include="Views\GameSpace.xaml.cs">
+      <DependentUpon>GameSpace.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ColorTypeToColorConverter.cs" />
     <Compile Include="Framework\ColorTypeEnum.cs" />
     <Compile Include="Framework\DisplayedColors.cs" />
+    <Compile Include="Framework\IntAlphaConverter.cs" />
     <Compile Include="Framework\InventoryBuilder.cs" />
     <Compile Include="Framework\InventoryVariantEnum.cs" />
+    <Compile Include="Collections\ObservableDictionary.cs" />
     <Compile Include="Framework\ObservableObject.cs" />
     <Compile Include="Framework\RelayCommand.cs" />
     <Compile Include="Models\Inventory.cs" />
@@ -138,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\GameSpace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\GameResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -148,8 +161,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\GamePage.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup />

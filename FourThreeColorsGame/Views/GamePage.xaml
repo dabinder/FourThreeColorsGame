@@ -8,6 +8,7 @@
 	xmlns:vm="using:FourThreeColorsGame.ViewModels"
 	xmlns:fw="using:FourThreeColorsGame.Framework"
 	xmlns:conv="using:FourThreeColorsGame.Converters"
+	xmlns:v="using:FourThreeColorsGame.Views"
     mc:Ignorable="d"
 	Height="500" Width="1000"
 	Background="Black"
@@ -22,7 +23,7 @@
 
 	<Canvas Name="GameDisplay">
 		<!-- overlay for player names -->
-		<Border Canvas.ZIndex="1" Name="PlayerNames" Width="500" Height="300" Canvas.Left="165" Canvas.Top="75" Background="Black" BorderThickness="1" BorderBrush="SkyBlue">
+		<Border Canvas.ZIndex="1" Name="PlayerNames" Width="500" Height="300" Canvas.Left="165" Canvas.Top="75" Background="Black" BorderThickness="1" BorderBrush="SkyBlue" Visibility="{Binding PlayerNameBoxVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
 			<Grid HorizontalAlignment="Center" VerticalAlignment="Top">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="100" />
@@ -39,61 +40,34 @@
 				<TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Player Names" Foreground="{StaticResource DefaultHeaderText}" Margin="0, 10, 0, 0" FontSize="20pt" />
 
 				<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Player 1 Name" />
-				<TextBox Grid.Row="1" Grid.Column="1" Name="Player1Name" Text="{Binding Player1.Name, Mode=TwoWay}" TextChanged="OnPlayerNameChanged" />
+				<TextBox Grid.Row="1" Grid.Column="1" Name="Player1Name" Text="{Binding Player1.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 				<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Player 2 Name" />
-				<TextBox Grid.Row="2" Grid.Column="1" Name="Player2Name" Text="{Binding Player2.Name, Mode=TwoWay}" TextChanged="OnPlayerNameChanged" />
+				<TextBox Grid.Row="2" Grid.Column="1" Name="Player2Name" Text="{Binding Player2.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-				<Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Name="PlayerNameCloseButton" Content="Close" Margin="0, 15, 0, 0" Click="OnPlayerNameCloseButtonClicked" />
+				<Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Name="PlayerNameCloseButton" Content="Close" Margin="0, 15, 0, 0" Command="{Binding HidePlayerNameBox}" IsEnabled="{Binding PlayerNameError, Converter={StaticResource InverseBooleanConverter}}" />
 
-				<TextBlock Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" Name="PlayerNamesError" Text="Fill in both player names" Foreground="#FFFF6D6D" FontSize="10pt" Visibility="Collapsed" />
+				<TextBlock
+					Grid.Row="4"
+					Grid.ColumnSpan="2"
+					HorizontalAlignment="Center"
+					Name="PlayerNamesError"
+					Text="Fill in both player names"
+					Foreground="#FFFF6D6D"
+					FontSize="10pt"
+					Visibility="{Binding PlayerNameError, Converter={StaticResource BooleanToVisibilityConverter}}"
+				/>
 			</Grid>
 		</Border>
 		
-		<!-- piece selection menu -->
-		<StackPanel Canvas.ZIndex="1" Background="{StaticResource DefaultBackgroundColor}" Name="PieceSelectionMenu" Visibility="{Binding PieceSelectionVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-			<TextBlock Text="Select a piece" HorizontalAlignment="Center" Foreground="{StaticResource DefaultHeaderText}" />
-			<StackPanel Orientation="Horizontal">
-				<StackPanel.Resources>
-					<Style TargetType="Border">
-						<Setter Property="Width" Value="{StaticResource PieceSize}" />
-						<Setter Property="Height" Value="{StaticResource PieceSize}" />
-						<Setter Property="Margin" Value="0, 0, 5, 0" />
-					</Style>
-					<Style TargetType="TextBlock">
-						<Setter Property="Canvas.Left" Value="{StaticResource CountPosition}" />
-						<Setter Property="Canvas.Top" Value="{StaticResource CountPosition}" />
-					</Style>
-				</StackPanel.Resources>
-
-				<Border>
-					<Canvas>
-						<ContentControl Canvas.ZIndex="0" ContentTemplate="{StaticResource GamePiece1}" />
-						<TextBlock Text="{Binding CurrentPlayer.Inventory[0].Count}" />
-					</Canvas>
-				</Border>
-				<Border>
-					<Canvas>
-						<ContentControl Canvas.ZIndex="0" ContentTemplate="{StaticResource GamePiece2}" />
-						<TextBlock Text="{Binding CurrentPlayer.Inventory[1].Count}" />
-					</Canvas>
-				</Border>
-				<Border>
-					<Canvas>
-						<ContentControl Canvas.ZIndex="0" ContentTemplate="{StaticResource GamePiece3}" />
-						<TextBlock Text="{Binding CurrentPlayer.Inventory[2].Count}" />
-					</Canvas>
-				</Border>
-			</StackPanel>
-		</StackPanel>
-
 		<!-- main view -->
-		<Grid Canvas.ZIndex="0">
+		<Grid Canvas.ZIndex="0" Name="MainGameLayout">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="300" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 
+			<!-- dashboard -->
 			<Grid Grid.Column="0" x:Name="DashboardLayout" VerticalAlignment="Center" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="30" />
@@ -156,19 +130,9 @@
 					<TextBlock Text="{Binding CurrentPlayer.Name}" />
 				</StackPanel>
 			</Grid>
-
+			
 			<!-- game board -->
 			<Grid Grid.Column="1" x:Name="GameBoard" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50, 0, 15, 0">
-				<Grid.Resources>
-					<Style TargetType="Button" x:Key="GameSpaceStyle">
-						<Setter Property="Background" Value="Transparent" />
-						<Setter Property="BorderBrush" Value="Silver" />
-						<Setter Property="Width" Value="{StaticResource SpaceSize}" />
-						<Setter Property="BorderThickness" Value="1" />
-						<Setter Property="Height" Value="{StaticResource SpaceSize}" />
-					</Style>
-				</Grid.Resources>
-
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
 					<ColumnDefinition />
@@ -192,105 +156,106 @@
 					<RowDefinition />
 				</Grid.RowDefinitions>
 
-				<!-- draw game grid -->
+				<!-- draw game board -->
+
 				<!-- row 0 -->
-				<Button Grid.Row="0" Grid.Column="0" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
-				<Button Grid.Row="0" Grid.Column="1" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
-				<Button Grid.Row="0" Grid.Column="2" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
-				<Button Grid.Row="0" Grid.Column="3" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
-				<Button Grid.Row="0" Grid.Column="4" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
-				<Button Grid.Row="0" Grid.Column="5" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
-				<Button Grid.Row="0" Grid.Column="6" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
-				<Button Grid.Row="0" Grid.Column="7" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
-				<Button Grid.Row="0" Grid.Column="8" Style="{StaticResource GameSpaceStyle}" Command="{Binding GameSpaceClick}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="0" DataContext="{Binding GameBoard[A0]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="1" DataContext="{Binding GameBoard[B0]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="2" DataContext="{Binding GameBoard[C0]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="3" DataContext="{Binding GameBoard[D0]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="4" DataContext="{Binding GameBoard[E0]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="5" DataContext="{Binding GameBoard[F0]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="6" DataContext="{Binding GameBoard[G0]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="7" DataContext="{Binding GameBoard[H0]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="0" Grid.Column="8" DataContext="{Binding GameBoard[I0]}" Command="{Binding SelectSpace}" />
 
 				<!-- row 1 -->
-				<Border Grid.Row="1" Grid.Column="0" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="1" Grid.Column="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="1" Grid.Column="2" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="1" Grid.Column="3" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="1" Grid.Column="4" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="1" Grid.Column="5" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="1" Grid.Column="6" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="1" Grid.Column="7" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="1" Grid.Column="8" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="0" DataContext="{Binding GameBoard[A1]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="1" DataContext="{Binding GameBoard[B1]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="2" DataContext="{Binding GameBoard[C1]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="3" DataContext="{Binding GameBoard[D1]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="4" DataContext="{Binding GameBoard[E1]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="5" DataContext="{Binding GameBoard[F1]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="6" DataContext="{Binding GameBoard[G1]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="7" DataContext="{Binding GameBoard[H1]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="1" Grid.Column="8" DataContext="{Binding GameBoard[I1]}" Command="{Binding SelectSpace}" />
 
 				<!-- row 2 -->
-				<Border Grid.Row="2" Grid.Column="0" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="2" Grid.Column="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="2" Grid.Column="2" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="2" Grid.Column="3" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="2" Grid.Column="4" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="2" Grid.Column="5" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="2" Grid.Column="6" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="2" Grid.Column="7" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="2" Grid.Column="8" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="0" DataContext="{Binding GameBoard[A2]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="1" DataContext="{Binding GameBoard[B2]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="2" DataContext="{Binding GameBoard[C2]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="3" DataContext="{Binding GameBoard[D2]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="4" DataContext="{Binding GameBoard[E2]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="5" DataContext="{Binding GameBoard[F2]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="6" DataContext="{Binding GameBoard[G2]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="7" DataContext="{Binding GameBoard[H2]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="2" Grid.Column="8" DataContext="{Binding GameBoard[I2]}" Command="{Binding SelectSpace}" />
 
 				<!-- row 3 -->
-				<Border Grid.Row="3" Grid.Column="0" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="3" Grid.Column="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="3" Grid.Column="2" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="3" Grid.Column="3" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="3" Grid.Column="4" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="3" Grid.Column="5" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="3" Grid.Column="6" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="3" Grid.Column="7" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="3" Grid.Column="8" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="0" DataContext="{Binding GameBoard[A3]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="1" DataContext="{Binding GameBoard[B3]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="2" DataContext="{Binding GameBoard[C3]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="3" DataContext="{Binding GameBoard[D3]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="4" DataContext="{Binding GameBoard[E3]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="5" DataContext="{Binding GameBoard[F3]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="6" DataContext="{Binding GameBoard[G3]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="7" DataContext="{Binding GameBoard[H3]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="3" Grid.Column="8" DataContext="{Binding GameBoard[I3]}" Command="{Binding SelectSpace}" />
 
 				<!-- row 4 -->
-				<Border Grid.Row="4" Grid.Column="0" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="4" Grid.Column="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="4" Grid.Column="2" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="4" Grid.Column="3" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="4" Grid.Column="4" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="4" Grid.Column="5" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="4" Grid.Column="6" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="4" Grid.Column="7" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="4" Grid.Column="8" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="0" DataContext="{Binding GameBoard[A4]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="1" DataContext="{Binding GameBoard[B4]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="2" DataContext="{Binding GameBoard[C4]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="3" DataContext="{Binding GameBoard[D4]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="4" DataContext="{Binding GameBoard[E4]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="5" DataContext="{Binding GameBoard[F4]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="6" DataContext="{Binding GameBoard[G4]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="7" DataContext="{Binding GameBoard[H4]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="4" Grid.Column="8" DataContext="{Binding GameBoard[I4]}" Command="{Binding SelectSpace}" />
 
 				<!-- row 5 -->
-				<Border Grid.Row="5" Grid.Column="0" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="5" Grid.Column="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="5" Grid.Column="2" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="5" Grid.Column="3" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="5" Grid.Column="4" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="5" Grid.Column="5" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="5" Grid.Column="6" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="5" Grid.Column="7" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="5" Grid.Column="8" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="0" DataContext="{Binding GameBoard[A5]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="1" DataContext="{Binding GameBoard[B5]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="2" DataContext="{Binding GameBoard[C5]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="3" DataContext="{Binding GameBoard[D5]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="4" DataContext="{Binding GameBoard[E5]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="5" DataContext="{Binding GameBoard[F5]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="6" DataContext="{Binding GameBoard[G5]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="7" DataContext="{Binding GameBoard[H5]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="5" Grid.Column="8" DataContext="{Binding GameBoard[I5]}" Command="{Binding SelectSpace}" />
 
 				<!-- row 6 -->
-				<Border Grid.Row="6" Grid.Column="0" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="6" Grid.Column="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="6" Grid.Column="2" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="6" Grid.Column="3" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="6" Grid.Column="4" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="6" Grid.Column="5" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="6" Grid.Column="6" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="6" Grid.Column="7" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="6" Grid.Column="8" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="0" DataContext="{Binding GameBoard[A6]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="1" DataContext="{Binding GameBoard[B6]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="2" DataContext="{Binding GameBoard[C6]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="3" DataContext="{Binding GameBoard[D6]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="4" DataContext="{Binding GameBoard[E6]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="5" DataContext="{Binding GameBoard[F6]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="6" DataContext="{Binding GameBoard[G6]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="7" DataContext="{Binding GameBoard[H6]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="6" Grid.Column="8" DataContext="{Binding GameBoard[I6]}" Command="{Binding SelectSpace}" />
 
 				<!-- row 7 -->
-				<Border Grid.Row="7" Grid.Column="0" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="7" Grid.Column="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="7" Grid.Column="2" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="7" Grid.Column="3" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="7" Grid.Column="4" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="7" Grid.Column="5" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="7" Grid.Column="6" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="7" Grid.Column="7" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="7" Grid.Column="8" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="0" DataContext="{Binding GameBoard[A7]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="1" DataContext="{Binding GameBoard[B7]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="2" DataContext="{Binding GameBoard[C7]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="3" DataContext="{Binding GameBoard[D7]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="4" DataContext="{Binding GameBoard[E7]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="5" DataContext="{Binding GameBoard[F7]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="6" DataContext="{Binding GameBoard[G7]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="7" DataContext="{Binding GameBoard[H7]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="7" Grid.Column="8" DataContext="{Binding GameBoard[I7]}" Command="{Binding SelectSpace}" />
 
 				<!-- row 8 -->
-				<Border Grid.Row="8" Grid.Column="0" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="8" Grid.Column="1" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="8" Grid.Column="2" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="8" Grid.Column="3" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="8" Grid.Column="4" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="8" Grid.Column="5" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="8" Grid.Column="6" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="8" Grid.Column="7" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
-				<Border Grid.Row="8" Grid.Column="8" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}" Width="{StaticResource SpaceSize}" Height="{StaticResource SpaceSize}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="0" DataContext="{Binding GameBoard[A8]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="1" DataContext="{Binding GameBoard[B8]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="2" DataContext="{Binding GameBoard[C8]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="3" DataContext="{Binding GameBoard[D8]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="4" DataContext="{Binding GameBoard[E8]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="5" DataContext="{Binding GameBoard[F8]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="6" DataContext="{Binding GameBoard[G8]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="7" DataContext="{Binding GameBoard[H8]}" Command="{Binding SelectSpace}" />
+				<v:GameSpace Grid.Row="8" Grid.Column="8" DataContext="{Binding GameBoard[I8]}" Command="{Binding SelectSpace}" />
 			</Grid>
 		</Grid>
 	</Canvas>

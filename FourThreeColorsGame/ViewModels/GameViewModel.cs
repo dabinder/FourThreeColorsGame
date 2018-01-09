@@ -9,9 +9,14 @@ using Windows.UI;
 using Windows.UI.Xaml.Data;
 using System.Collections.Specialized;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace FourThreeColorsGame.ViewModels {
 	class GameViewModel : ObservableObject {
+		const int BOARD_SIZE = 9;
+
 		#region piece counts
 		public int Color1TotalPieces {
 			get {
@@ -36,12 +41,27 @@ namespace FourThreeColorsGame.ViewModels {
 		#endregion
 
 		#region turns
-		private int turnCount;
-		public Player CurrentPlayer {
+		private int _turn;
+		private int Turn {
 			get {
-				return turnCount % 2 == 1 ?
+				return _turn;
+			}
+			set {
+				_turn = value;
+				CurrentPlayer = value % 2 == 1 ?
 					Player1 :
 					Player2;
+			}
+		}
+
+		private Player _currentPlayer;
+		public Player CurrentPlayer {
+			get {
+				return _currentPlayer;
+			}
+			private set {
+				_currentPlayer = value;
+				NotifyPropertyChanged(nameof(CurrentPlayer));
 			}
 		}
 		#endregion
@@ -59,57 +79,145 @@ namespace FourThreeColorsGame.ViewModels {
 				return _player2;
 			}
 		}
+
+		private bool _playerNameBoxVisible;
+		public bool PlayerNameBoxVisible {
+			get {
+				return _playerNameBoxVisible;
+			}
+			set {
+				_playerNameBoxVisible = value;
+				NotifyPropertyChanged(nameof(PlayerNameBoxVisible));
+			}
+		}
+
+		private readonly RelayCommand _hidePlayerNameBox;
+		public RelayCommand HidePlayerNameBox {
+			get {
+				return _hidePlayerNameBox;
+			}
+		}
+
+		private bool _playerNameError;
+		public bool PlayerNameError {
+			get {
+				return _playerNameError;
+			}
+			set {
+				_playerNameError = value;
+				NotifyPropertyChanged(nameof(PlayerNameError));
+			}
+		}
 		#endregion
 
 		#region game board actions
-		private readonly RelayCommand _gameSpaceClick;
-		public RelayCommand GameSpaceClick {
+		private SpaceViewModel _currentGameSpace;
+		public SpaceViewModel CurrentGameSpace {
 			get {
-				return _gameSpaceClick;
+				return _currentGameSpace;
+			}
+			private set {
+				_currentGameSpace = value;
+				NotifyPropertyChanged(nameof(CurrentGameSpace));
 			}
 		}
 
-		private bool _pieceSelectionVisible = false;
-		public bool PieceSelectionVisible {
+		private bool _boardActive;
+		public bool BoardActive {
 			get {
-				return _pieceSelectionVisible;
+				return _boardActive;
 			}
 			set {
-				_pieceSelectionVisible = value;
-				OnPropertyChanged(nameof(PieceSelectionVisible));
+				_boardActive = value;
+				NotifyPropertyChanged(nameof(BoardActive));
 			}
 		}
+
+		public ObservableDictionary<string, SpaceViewModel> GameBoard { get; }
 		#endregion
 
 		public GameViewModel() {
 			//setup players
 			_player1 = new Player("Player 1", InventoryVariant.Variant1);
-			OnPropertyChanged(nameof(Player1));
+			NotifyPropertyChanged(nameof(Player1));
+			Player1.PropertyChanged += PlayerNameChanged;
 			_player2 = new Player("Player 2", InventoryVariant.Variant2);
-			OnPropertyChanged(nameof(Player2));
+			NotifyPropertyChanged(nameof(Player2));
+			Player2.PropertyChanged += PlayerNameChanged;
+			_playerNameBoxVisible = true;
+			_hidePlayerNameBox = new RelayCommand(param => {
+				PlayerNameBoxVisible = false;
+				BoardActive = true;
+			});
+
+			//setup board
+			GameBoard = new ObservableDictionary<string, SpaceViewModel>();
+			for (int x = 0; x < BOARD_SIZE; x++) {
+				for (int y = 0; y < BOARD_SIZE; y++) {
+					char colName = IntAlphaConverter.IntToAlpha(x);
+					SpaceViewModel vm = new SpaceViewModel();
+					vm.PropertyChanged += SpaceViewPropertyChanged;
+					GameBoard.Add(colName.ToString() + y, vm);
+				}
+			}
+			NotifyPropertyChanged(nameof(GameBoard));
 
 			//record total change on inventory change, set value initially
-			OnPropertyChanged(nameof(GrandTotalPieces));
+			NotifyPropertyChanged(nameof(GrandTotalPieces));
 			Player1.Inventory.CollectionChanged += OnInventoryChanged;
+			foreach (ObservableCollection<Piece> c in Player1.Inventory) {
+				c.CollectionChanged += OnInventoryChanged;
+			}
 			Player2.Inventory.CollectionChanged += OnInventoryChanged;
+			foreach (ObservableCollection<Piece> c in Player2.Inventory) {
+				c.CollectionChanged += OnInventoryChanged;
+			}
 
 			//start first turn
-			turnCount = 1;
-			OnPropertyChanged(nameof(CurrentPlayer));
-
-			//initialize click listener
-			_gameSpaceClick = new RelayCommand(param => this.SelectPiece());
+			Turn = 1;
 		}
 
-		private void SelectPiece() {
-			PieceSelectionVisible = true;
+		private void SpaceViewPropertyChanged(object sender, PropertyChangedEventArgs e) {
+			switch (e.PropertyName) {
+				case "Active":
+					//update current space
+					SpaceViewModel space = sender as SpaceViewModel;
+					if (CurrentGameSpace != space) {
+						if (CurrentGameSpace != null) {
+							CurrentGameSpace.Active = false;
+						}
+						CurrentGameSpace = space;
+						CurrentGameSpace.CurrentPlayer = CurrentPlayer;
+					}
+					break;
+
+				case "Occupied":
+					//if newly occupied space, advance turn marker
+					Turn++;
+					break;
+
+				default:
+					//ignore
+					break;
+			}
+		}
+
+		/// <summary>
+		/// make sure player names are valid
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void PlayerNameChanged(object sender, PropertyChangedEventArgs e) {
+			if (e.PropertyName == "Name") {
+				PlayerNameError = (Player1.Name == "" || Player2.Name == "");
+			}
 		}
 
 		private void OnInventoryChanged(object sender, NotifyCollectionChangedEventArgs e) {
-			OnPropertyChanged(nameof(GrandTotalPieces));
-			OnPropertyChanged(nameof(Color1TotalPieces));
-			OnPropertyChanged(nameof(Color2TotalPieces));
-			OnPropertyChanged(nameof(Color3TotalPieces));
+			NotifyPropertyChanged(nameof(GrandTotalPieces));
+			NotifyPropertyChanged(nameof(Color1TotalPieces));
+			NotifyPropertyChanged(nameof(Color2TotalPieces));
+			NotifyPropertyChanged(nameof(Color3TotalPieces));
 		}
 	}
 }

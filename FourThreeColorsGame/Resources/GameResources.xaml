@@ -14,50 +14,23 @@
 	<!-- converters -->
 	<conv:ColorTypeToColorConverter x:Key="ColorTypeToColorConverter" />
 	<conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<conv:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+	<conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+	<conv:PositionToIntConverter x:Key="PositionToIntConverter" />
 
 	<!-- piece colors -->
-	<SolidColorBrush x:Key="Color1">
-		<SolidColorBrush.Color>
-			<Binding Converter="{StaticResource ColorTypeToColorConverter}">
-				<Binding.ConverterParameter>
-					<fw:ColorType>Color1</fw:ColorType>
-				</Binding.ConverterParameter>
-			</Binding>
-		</SolidColorBrush.Color>
-	</SolidColorBrush>
-	<SolidColorBrush x:Key="Color2">
-		<SolidColorBrush.Color>
-			<Binding Converter="{StaticResource ColorTypeToColorConverter}">
-				<Binding.ConverterParameter>
-					<fw:ColorType>Color2</fw:ColorType>
-				</Binding.ConverterParameter>
-			</Binding>
-		</SolidColorBrush.Color>
-	</SolidColorBrush>
-	<SolidColorBrush x:Key="Color3">
-		<SolidColorBrush.Color>
-			<Binding Converter="{StaticResource ColorTypeToColorConverter}">
-				<Binding.ConverterParameter>
-					<fw:ColorType>Color3</fw:ColorType>
-				</Binding.ConverterParameter>
-			</Binding>
-		</SolidColorBrush.Color>
-	</SolidColorBrush>
+	<fw:ColorType x:Key="ColorType1">Color1</fw:ColorType>
+	<fw:ColorType x:Key="ColorType2">Color2</fw:ColorType>
+	<fw:ColorType x:Key="ColorType3">Color3</fw:ColorType>
+	<SolidColorBrush x:Key="Color1" Color="{Binding Source={StaticResource ColorType1}, Converter={StaticResource ColorTypeToColorConverter}}" />
+	<SolidColorBrush x:Key="Color2" Color="{Binding Source={StaticResource ColorType2}, Converter={StaticResource ColorTypeToColorConverter}}" />
+	<SolidColorBrush x:Key="Color3" Color="{Binding Source={StaticResource ColorType3}, Converter={StaticResource ColorTypeToColorConverter}}" />
 	
 	<!-- layout -->
 	<x:Double x:Key="SpaceSize">60</x:Double>
 	<x:Double x:Key="PieceSize">45</x:Double>
+	<!-- padding should be (SpaceSize - PieceSize)/2 - BorderThickness -->
+	<x:Double x:Key="PiecePadding">7</x:Double>
 	<x:Double x:Key="CountPosition">22.5</x:Double>
 	<Thickness x:Key="BorderThickness">1</Thickness>
-
-	<!-- game pieces -->
-	<DataTemplate x:Key="GamePiece1">
-		<Ellipse Width="{StaticResource PieceSize}" Height="{StaticResource PieceSize}" Fill="{StaticResource Color1}" />
-	</DataTemplate>
-	<DataTemplate x:Key="GamePiece2">
-		<Ellipse Width="{StaticResource PieceSize}" Height="{StaticResource PieceSize}" Fill="{StaticResource Color2}" />
-	</DataTemplate>
-	<DataTemplate x:Key="GamePiece3">
-		<Ellipse Width="{StaticResource PieceSize}" Height="{StaticResource PieceSize}" Fill="{StaticResource Color3}" />
-	</DataTemplate>
 </ResourceDictionary>

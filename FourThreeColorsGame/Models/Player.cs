@@ -16,7 +16,7 @@ namespace FourThreeColorsGame.Models {
 			}
 			set {
 				_name = value;
-				OnPropertyChanged(nameof(Name));
+				NotifyPropertyChanged(nameof(Name));
 			}
 		}
 
@@ -30,7 +30,7 @@ namespace FourThreeColorsGame.Models {
 		public Player(string name, InventoryVariant variant) {
 			Name = name;
 			_inventory = new Inventory(variant);
-			OnPropertyChanged(nameof(Inventory));
+			NotifyPropertyChanged(nameof(Inventory));
 		}
 	}
 }

@@ -21,6 +21,10 @@ namespace FourThreeColorsGame.Framework {
 
 		public event EventHandler CanExecuteChanged;
 
+		public void NotifyCanExecuteChanged() {
+			CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+		}
+
 		public void Execute(object parameter) {
 			_execute(parameter);
 		}
