@@ -68,9 +68,14 @@ namespace FourThreeColorsGame.ViewModels {
 			}
 		}
 
-		public SpaceViewModel() {
+		public int X { get; }
+		public int Y { get; }
+
+		public SpaceViewModel(int x, int y) {
 			_selectSpace = new RelayCommand(ClickGameSpace);
 			_selectPiece = new RelayCommand(PlayPiece, CanPlayPiece);
+			X = x;
+			Y = y;
 		}
 
 		private void ClickGameSpace(object parameter) {

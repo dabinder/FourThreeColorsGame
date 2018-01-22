@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 namespace FourThreeColorsGame.ViewModels {
 	class GameViewModel : ObservableObject {
 		const int BOARD_SIZE = 9;
+		const int WIN_LENGTH = 4;
 
 		#region piece counts
 		public int Color1TotalPieces {
@@ -116,7 +117,7 @@ namespace FourThreeColorsGame.ViewModels {
 			get {
 				return _currentGameSpace;
 			}
-			private set {
+			set {
 				_currentGameSpace = value;
 				NotifyPropertyChanged(nameof(CurrentGameSpace));
 			}
@@ -154,10 +155,9 @@ namespace FourThreeColorsGame.ViewModels {
 			GameBoard = new ObservableDictionary<string, SpaceViewModel>();
 			for (int x = 0; x < BOARD_SIZE; x++) {
 				for (int y = 0; y < BOARD_SIZE; y++) {
-					char colName = IntAlphaConverter.IntToAlpha(x);
-					SpaceViewModel vm = new SpaceViewModel();
+					SpaceViewModel vm = new SpaceViewModel(x, y);
 					vm.PropertyChanged += SpaceViewPropertyChanged;
-					GameBoard.Add(colName.ToString() + y, vm);
+					GameBoard.Add(GetCoordinateString(x, y), vm);
 				}
 			}
 			NotifyPropertyChanged(nameof(GameBoard));
@@ -192,14 +192,70 @@ namespace FourThreeColorsGame.ViewModels {
 					break;
 
 				case "Occupied":
-					//if newly occupied space, advance turn marker
-					Turn++;
+					//if newly occupied space, check if player is winner, then advance turn marker
+					if (!CheckWinCondition()) {
+						Turn++;
+					}
 					break;
 
 				default:
 					//ignore
 					break;
 			}
+		}
+
+		private string GetCoordinateString(int x, int y) {
+			return IntAlphaConverter.IntToAlpha(x).ToString() + y;
+		}
+
+		private bool CheckWinCondition() {
+			int x = CurrentGameSpace.X;
+			int y = CurrentGameSpace.Y;
+			ColorType color = CurrentGameSpace.Occupant.Color;
+			int counter = 1; //assuming current space, so start at 1
+
+			//horizontal
+			bool left = true,
+				right = true;
+			for (int i = 1; i < WIN_LENGTH && (left || right); i++) {
+				if (left && i <= x && GameBoard[GetCoordinateString(x - i, y)].Occupant?.Color == color) {
+					//check left
+					counter++;
+				} else {
+					left = false;
+				}
+				if (right && i < (BOARD_SIZE - x) && GameBoard[GetCoordinateString(x + i, y)].Occupant?.Color == color) {
+					//check right
+					counter++;
+				} else {
+					right = false;
+				}
+			}
+
+			//vertical
+			bool up = true,
+				down = true;
+			for (int i = 1; i < WIN_LENGTH && (up || down); i++) {
+				if (up && i <= y && GameBoard[GetCoordinateString(x, y - i)].Occupant?.Color == color) {
+					//check up
+					counter++;
+				} else {
+					up = false;
+				}
+				if (down && i < (BOARD_SIZE - y) && GameBoard[GetCoordinateString(x, y + i)].Occupant?.Color == color) {
+					//check down
+					counter++;
+				} else {
+					down = false;
+				}
+
+				if (counter >= WIN_LENGTH) {
+					return true;
+				}
+			}
+
+			//if we got all the way here, no winner
+			return false;
 		}
 
 		/// <summary>
