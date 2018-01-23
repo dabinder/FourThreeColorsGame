@@ -212,11 +212,12 @@ namespace FourThreeColorsGame.ViewModels {
 			int x = CurrentGameSpace.X;
 			int y = CurrentGameSpace.Y;
 			ColorType color = CurrentGameSpace.Occupant.Color;
-			int counter = 1; //assuming current space, so start at 1
+			int counter;
 
 			//horizontal
 			bool left = true,
 				right = true;
+			counter = 1;
 			for (int i = 1; i < WIN_LENGTH && (left || right); i++) {
 				if (left && i <= x && GameBoard[GetCoordinateString(x - i, y)].Occupant?.Color == color) {
 					//check left
@@ -235,6 +236,7 @@ namespace FourThreeColorsGame.ViewModels {
 			//vertical
 			bool up = true,
 				down = true;
+			counter = 1;
 			for (int i = 1; i < WIN_LENGTH && (up || down); i++) {
 				if (up && i <= y && GameBoard[GetCoordinateString(x, y - i)].Occupant?.Color == color) {
 					//check up
@@ -247,6 +249,52 @@ namespace FourThreeColorsGame.ViewModels {
 					counter++;
 				} else {
 					down = false;
+				}
+
+				if (counter >= WIN_LENGTH) {
+					return true;
+				}
+			}
+
+			//diagonal - NW/SE
+			bool nw = true,
+				se = true;
+			counter = 1;
+			for (int i = 1; i < WIN_LENGTH && (nw || se); i++) {
+				if (nw && i <= x && i <= y && GameBoard[GetCoordinateString(x - i, y - i)].Occupant?.Color == color) {
+					//check nw
+					counter++;
+				} else {
+					nw = false;
+				}
+				if (se && i < (BOARD_SIZE - x) && i < (BOARD_SIZE - y) && GameBoard[GetCoordinateString(x + i, y + i)].Occupant?.Color == color) {
+					//check se
+					counter++;
+				} else {
+					se = false;
+				}
+
+				if (counter >= WIN_LENGTH) {
+					return true;
+				}
+			}
+
+			//diagonal - NE/SW
+			bool ne = true,
+				sw = true;
+			counter = 1;
+			for (int i = 1; i < WIN_LENGTH && (ne || sw); i++) {
+				if (ne && i <= (BOARD_SIZE - x) && i <= y && GameBoard[GetCoordinateString(x + i, y - i)].Occupant?.Color == color) {
+					//check ne
+					counter++;
+				} else {
+					ne = false;
+				}
+				if (sw && i < x && i < (BOARD_SIZE - y) && GameBoard[GetCoordinateString(x - i, y + i)].Occupant?.Color == color) {
+					//check sw
+					counter++;
+				} else {
+					sw = false;
 				}
 
 				if (counter >= WIN_LENGTH) {
