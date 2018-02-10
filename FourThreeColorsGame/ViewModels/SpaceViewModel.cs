@@ -2,6 +2,7 @@
 using FourThreeColorsGame.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,14 +69,30 @@ namespace FourThreeColorsGame.ViewModels {
 			}
 		}
 
+		private bool _boardActive;
+		public bool BoardActive {
+			get {
+				return _boardActive;
+			}
+			set {
+				_boardActive = value;
+				NotifyPropertyChanged(nameof(BoardActive));
+				_selectSpace.NotifyCanExecuteChanged();
+			}
+		}
+
 		public int X { get; }
 		public int Y { get; }
 
 		public SpaceViewModel(int x, int y) {
-			_selectSpace = new RelayCommand(ClickGameSpace);
+			_selectSpace = new RelayCommand(ClickGameSpace, CanClickGameSpace);
 			_selectPiece = new RelayCommand(PlayPiece, CanPlayPiece);
 			X = x;
 			Y = y;
+		}
+
+		private bool CanClickGameSpace(object parameter) {
+			return !Occupied && BoardActive;
 		}
 
 		private void ClickGameSpace(object parameter) {

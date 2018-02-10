@@ -65,6 +65,20 @@ namespace FourThreeColorsGame.ViewModels {
 				NotifyPropertyChanged(nameof(CurrentPlayer));
 			}
 		}
+
+		private Player _winner;
+		public Player Winner {
+			get {
+				return _winner;
+			}
+			private set {
+				_winner = value;
+				NotifyPropertyChanged(nameof(Winner));
+				if (value != null) {
+					BoardActive = false;
+				}
+			}
+		}
 		#endregion
 
 		#region player info
@@ -131,6 +145,10 @@ namespace FourThreeColorsGame.ViewModels {
 			set {
 				_boardActive = value;
 				NotifyPropertyChanged(nameof(BoardActive));
+				//propagate info to spaces
+				foreach (SpaceViewModel space in GameBoard.Values) {
+					space.BoardActive = value;
+				}
 			}
 		}
 
@@ -193,7 +211,9 @@ namespace FourThreeColorsGame.ViewModels {
 
 				case "Occupied":
 					//if newly occupied space, check if player is winner, then advance turn marker
-					if (!CheckWinCondition()) {
+					if (CheckWinCondition()) {
+						Winner = CurrentPlayer;
+					} else { 
 						Turn++;
 					}
 					break;
@@ -230,6 +250,10 @@ namespace FourThreeColorsGame.ViewModels {
 					counter++;
 				} else {
 					right = false;
+				}
+
+				if (counter >= WIN_LENGTH) {
+					return true;
 				}
 			}
 
