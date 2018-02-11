@@ -107,13 +107,11 @@ namespace FourThreeColorsGame.ViewModels {
 		}
 
 		private void PlayPiece(object parameter) {
-			//record space occupied
+			//update inventory and record space occupied
 			var group = CurrentPlayer.Inventory[(int)parameter];
 			Piece piece = group[group.Count - 1];
-			Occupant = piece;
-
-			//update inventory
 			group.RemoveAt(group.Count - 1);
+			Occupant = piece;
 
 			//remove piece selection
 			Active = false;

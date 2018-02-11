@@ -74,7 +74,28 @@ namespace FourThreeColorsGame.ViewModels {
 			private set {
 				_winner = value;
 				NotifyPropertyChanged(nameof(Winner));
+				NotifyPropertyChanged(nameof(HasWinner));
 				if (value != null) {
+					GameOver = true;
+				}
+			}
+		}
+
+		public bool HasWinner {
+			get {
+				return Winner != null;
+			}
+		}
+
+		private bool _gameOver;
+		public bool GameOver {
+			get {
+				return _gameOver;
+			}
+			private set {
+				_gameOver = value;
+				NotifyPropertyChanged(nameof(GameOver));
+				if (value) {
 					BoardActive = false;
 				}
 			}
@@ -213,7 +234,12 @@ namespace FourThreeColorsGame.ViewModels {
 					//if newly occupied space, check if player is winner, then advance turn marker
 					if (CheckWinCondition()) {
 						Winner = CurrentPlayer;
-					} else { 
+					} else if ((Player1.Inventory.TotalCount == 0 && Player2.Inventory.TotalCount == 0) ||
+						Turn >= BOARD_SIZE * BOARD_SIZE
+						) {
+						//if inventories are empty or board is full, mark game as a draw
+						GameOver = true;
+					} else {
 						Turn++;
 					}
 					break;
@@ -308,7 +334,7 @@ namespace FourThreeColorsGame.ViewModels {
 				sw = true;
 			counter = 1;
 			for (int i = 1; i < WIN_LENGTH && (ne || sw); i++) {
-				if (ne && i <= (BOARD_SIZE - x) && i <= y && GameBoard[GetCoordinateString(x + i, y - i)].Occupant?.Color == color) {
+				if (ne && i < (BOARD_SIZE - x) && i <= y && GameBoard[GetCoordinateString(x + i, y - i)].Occupant?.Color == color) {
 					//check ne
 					counter++;
 				} else {

@@ -7,7 +7,7 @@
 
 	<!-- default colors -->
 	<SolidColorBrush x:Key="DefaultHoverBorder" Color="SkyBlue" />
-	<SolidColorBrush x:Key="DefaultHeaderText" Color="SkyBlue" />
+	<SolidColorBrush x:Key="DefaultHeaderText" Color="SteelBlue" />
 	<SolidColorBrush x:Key="DefaultBorderBrush" Color="Silver" />
 	<SolidColorBrush x:Key="DefaultBackgroundColor" Color="Black" />
 	
