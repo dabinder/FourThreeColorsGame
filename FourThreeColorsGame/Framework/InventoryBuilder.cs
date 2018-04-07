@@ -14,6 +14,11 @@ namespace FourThreeColorsGame.Framework {
 		private static readonly int[] colorSet1 = { 19, 13, 8 };
 		private static readonly int[] colorSet2 = { 8, 13, 19 };
 
+		/// <summary>
+		/// get contents of inventory for given variant
+		/// </summary>
+		/// <param name="variant">variant enum value</param>
+		/// <returns>enumerable set of pieces</returns>
 		public static IEnumerable<Piece> GetInventoryContents(InventoryVariant variant) {
 			int[] colors;
 

@@ -8,6 +8,11 @@ namespace FourThreeColorsGame.Framework {
 	class IntAlphaConverter {
 		private const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+		/// <summary>
+		/// get letter at given numeric position in alphabet
+		/// </summary>
+		/// <param name="index">numeric position</param>
+		/// <returns>letter</returns>
 		public static char IntToAlpha(int index) {
 			if (index < 0) {
 				throw new IndexOutOfRangeException("index must be a positive number");
@@ -19,6 +24,11 @@ namespace FourThreeColorsGame.Framework {
 			return ALPHABET[index];
 		}
 
+		/// <summary>
+		/// get numeric position of given letter in alphabet
+		/// </summary>
+		/// <param name="value"letter></param>
+		/// <returns>numeric position</returns>
 		public static int AlphaToInt(char value) {
 			int index = ALPHABET.IndexOf(value);
 

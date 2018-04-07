@@ -11,24 +11,16 @@ using Windows.UI.Xaml.Media;
 
 namespace FourThreeColorsGame.Converters {
 	class ColorTypeToColorConverter : IValueConverter {
+		/// <summary>
+		/// convert ColorType enum to visible color
+		/// </summary>
+		/// <param name="value">enum value</param>
+		/// <param name="targetType">Brush or Color</param>
+		/// <param name="parameter"></param>
+		/// <param name="language"></param>
+		/// <returns>Color corresponding to given enum value</returns>
 		public object Convert(object value, Type targetType, object parameter, string language) {
-			Color color;
-			switch ((ColorType)value) {
-				case ColorType.Color1:
-					color = Colors.Crimson;
-					break;
-
-				case ColorType.Color2:
-					color = Colors.SpringGreen;
-					break;
-
-				case ColorType.Color3:
-					color = Colors.SkyBlue;
-					break;
-
-				default:
-					throw new ArgumentOutOfRangeException($"ColorType {value} not among enumerated types");
-			}
+			Color color = DisplayedColors.TranslateDisplayedColor((ColorType)value);
 
 			if (targetType == typeof(Color)) {
 				return color;

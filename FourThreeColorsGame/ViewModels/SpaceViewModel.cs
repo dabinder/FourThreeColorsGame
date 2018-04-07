@@ -84,6 +84,11 @@ namespace FourThreeColorsGame.ViewModels {
 		public int X { get; }
 		public int Y { get; }
 
+		/// <summary>
+		/// set up model with given coordinates
+		/// </summary>
+		/// <param name="x">x coordinate</param>
+		/// <param name="y">y coordinate</param>
 		public SpaceViewModel(int x, int y) {
 			_selectSpace = new RelayCommand(ClickGameSpace, CanClickGameSpace);
 			_selectPiece = new RelayCommand(PlayPiece, CanPlayPiece);
@@ -91,14 +96,28 @@ namespace FourThreeColorsGame.ViewModels {
 			Y = y;
 		}
 
+		/// <summary>
+		/// allow interaction with unoccupied spaces
+		/// </summary>
+		/// <param name="parameter"></param>
+		/// <returns>space is unoccupied and game board is active (game started, not won)</returns>
 		private bool CanClickGameSpace(object parameter) {
 			return !Occupied && BoardActive;
 		}
 
+		/// <summary>
+		/// toggle piece menu open/closed for selected space
+		/// </summary>
+		/// <param name="parameter"></param>
 		private void ClickGameSpace(object parameter) {
 			Active = !Active;
 		}
 
+		/// <summary>
+		/// check if current player can move
+		/// </summary>
+		/// <param name="parameter"></param>
+		/// <returns>player can play a piece</returns>
 		private bool CanPlayPiece(object parameter) {
 			if (CurrentPlayer == null) {
 				return false;
@@ -106,6 +125,10 @@ namespace FourThreeColorsGame.ViewModels {
 			return CurrentPlayer.Inventory[(int)parameter].Count > 0;
 		}
 
+		/// <summary>
+		/// play the selected piece
+		/// </summary>
+		/// <param name="parameter"></param>
 		private void PlayPiece(object parameter) {
 			//update inventory and record space occupied
 			var group = CurrentPlayer.Inventory[(int)parameter];

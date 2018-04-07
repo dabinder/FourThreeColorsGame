@@ -176,6 +176,9 @@ namespace FourThreeColorsGame.ViewModels {
 		public ObservableDictionary<string, SpaceViewModel> GameBoard { get; }
 		#endregion
 
+		/// <summary>
+		/// setup game board, players, and inventory data
+		/// </summary>
 		public GameViewModel() {
 			//setup players
 			_player1 = new Player("Player 1", InventoryVariant.Variant1);
@@ -216,6 +219,11 @@ namespace FourThreeColorsGame.ViewModels {
 			Turn = 1;
 		}
 
+		/// <summary>
+		/// check if space is newly active (selected) or occupied by a piece
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void SpaceViewPropertyChanged(object sender, PropertyChangedEventArgs e) {
 			switch (e.PropertyName) {
 				case "Active":
@@ -250,10 +258,20 @@ namespace FourThreeColorsGame.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// get space name as coordinate string
+		/// </summary>
+		/// <param name="x">x coordinate</param>
+		/// <param name="y">y coordinate</param>
+		/// <returns>coordinates as letter-number (e.g. A1, C5)</returns>
 		private string GetCoordinateString(int x, int y) {
 			return IntAlphaConverter.IntToAlpha(x).ToString() + y;
 		}
 
+		/// <summary>
+		/// check if current player has won
+		/// </summary>
+		/// <returns>player has won</returns>
 		private bool CheckWinCondition() {
 			int x = CurrentGameSpace.X;
 			int y = CurrentGameSpace.Y;
@@ -367,6 +385,11 @@ namespace FourThreeColorsGame.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// update inventory counts
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnInventoryChanged(object sender, NotifyCollectionChangedEventArgs e) {
 			NotifyPropertyChanged(nameof(GrandTotalPieces));
 			NotifyPropertyChanged(nameof(Color1TotalPieces));

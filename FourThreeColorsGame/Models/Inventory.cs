@@ -24,6 +24,10 @@ namespace FourThreeColorsGame.Models {
 			}
 		}
 
+		/// <summary>
+		/// build inventory for given variant
+		/// </summary>
+		/// <param name="variant">variant enum value</param>
 		public Inventory(InventoryVariant variant) : base(piece => Convert.ToInt32(piece.Color)) {
 			foreach (Piece piece in InventoryBuilder.GetInventoryContents(variant)) {
 				this.Add(piece);

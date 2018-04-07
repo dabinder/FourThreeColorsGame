@@ -10,6 +10,14 @@ using Windows.UI.Xaml.Data;
 namespace FourThreeColorsGame.Converters {
 	class PositionToIntConverter : IValueConverter {
 
+		/// <summary>
+		/// convert game space position (A1 format) to integer value for row or column
+		/// </summary>
+		/// <param name="value">input coordinates</param>
+		/// <param name="targetType">int</param>
+		/// <param name="parameter">row or column</param>
+		/// <param name="language"></param>
+		/// <returns>numeric value for row or column from coordinate</returns>
 		public object Convert(object value, Type targetType, object parameter, string language) {
 			if (targetType != typeof(int)) {
 				throw new InvalidOperationException("Target must be an integer");
@@ -24,6 +32,7 @@ namespace FourThreeColorsGame.Converters {
 				throw new ArgumentException("Input value must be board position in format [A-Z]#");
 			}
 
+			//return numeric value for row or column
 			switch ((string)parameter) {
 				case "Column":
 					return IntAlphaConverter.AlphaToInt(match.Groups[1].Value[0]);

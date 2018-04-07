@@ -27,6 +27,11 @@ namespace FourThreeColorsGame.Models {
 			}
 		}
 
+		/// <summary>
+		/// set player name and inventory
+		/// </summary>
+		/// <param name="name">player name</param>
+		/// <param name="variant">inventory variant enum value</param>
 		public Player(string name, InventoryVariant variant) {
 			Name = name;
 			_inventory = new Inventory(variant);
