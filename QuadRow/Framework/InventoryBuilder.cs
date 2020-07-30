@@ -8,10 +8,10 @@ namespace QuadRow.Framework
 		/// <summary>
 		/// color sets, workaround for psuedo const array
 		/// </summary>
-		internal static readonly int[] colorSet1 = { Config.PLAYER1_COLOR1, Config.PLAYER1_COLOR2, Config.PLAYER1_COLOR3 };
-		internal static readonly int[] colorSet2 = { Config.PLAYER2_COLOR1, Config.PLAYER2_COLOR2, Config.PLAYER2_COLOR3 };
+		private static readonly int[] colorSet1 = { Config.PLAYER1_COLOR1, Config.PLAYER1_COLOR2, Config.PLAYER1_COLOR3 };
+		private static readonly int[] colorSet2 = { Config.PLAYER2_COLOR1, Config.PLAYER2_COLOR2, Config.PLAYER2_COLOR3 };
 
-		public enum InventoryVariant {
+		internal enum InventoryVariant {
 			Variant1,
 			Variant2
 		}
@@ -21,7 +21,7 @@ namespace QuadRow.Framework
 		/// </summary>
 		/// <param name="variant">variant enum value</param>
 		/// <returns>enumerable set of pieces</returns>
-		public static IEnumerable<Piece> GetInventoryContents(InventoryVariant variant) {
+		internal static IEnumerable<Piece> GetInventoryContents(InventoryVariant variant) {
 			int[] colors;
 
 			switch (variant) {

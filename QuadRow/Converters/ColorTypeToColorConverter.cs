@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace QuadRow.Converters
 {
-	class ColorTypeToColorConverter : IValueConverter {
+	public class ColorTypeToColorConverter : IValueConverter {
 		/// <summary>
 		/// convert ColorType enum to visible color
 		/// </summary>

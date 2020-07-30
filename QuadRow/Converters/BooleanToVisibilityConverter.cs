@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace QuadRow.Converters
 {
-	class BooleanToVisibilityConverter : IValueConverter {
+	public class BooleanToVisibilityConverter : IValueConverter {
 		/// <summary>
 		/// convert boolean to Visibility value
 		/// </summary>

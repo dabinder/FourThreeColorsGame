@@ -4,11 +4,11 @@ using System.ComponentModel;
 
 namespace QuadRow.ViewModels
 {
-	class PlayerViewModel : ObservableObject {
-		public Player Player { get; }
+	public class PlayerViewModel : ObservableObject {
+		internal Player Player { get; }
 
 		private bool _playerNameError;
-		public bool PlayerNameError {
+		internal bool PlayerNameError {
 			get {
 				return _playerNameError;
 			}
@@ -18,7 +18,7 @@ namespace QuadRow.ViewModels
 			}
 		}
 
-		public PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
+		internal PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
 			Player = new Player(name, variant);
 			Player.PropertyChanged += PlayerNameChanged;
 			NotifyPropertyChanged(nameof(Player));

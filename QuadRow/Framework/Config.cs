@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace QuadRow.Framework
 {
-	public static class Config {
+	static class Config {
 		//general config settings for game
 		public const int BOARD_SIZE = 9;
 		public const int WIN_LENGTH = 4;
@@ -21,7 +21,7 @@ namespace QuadRow.Framework
 		internal const int PLAYER2_COLOR2 = 13;
 		internal const int PLAYER2_COLOR3 = 19;
 
-		public static readonly Color color1, color2, color3;
+		internal static readonly Color color1, color2, color3;
 		static Config() {
 			color1 = Colors.Crimson;
 			color2 = Colors.SpringGreen;

@@ -8,7 +8,7 @@ namespace QuadRow.ViewModels
 	{
 		#region intro screen
 		private ContentControl _currentScreeen;
-		public ContentControl CurrentScreen {
+		internal ContentControl CurrentScreen {
 			get {
 				return _currentScreeen;
 			}
@@ -19,11 +19,11 @@ namespace QuadRow.ViewModels
 		}
 
 		private RelayCommand _closeIntroCommand;
-		public RelayCommand CloseIntroCommand {
+		internal RelayCommand CloseIntroCommand {
 			get {
 				return _closeIntroCommand ?? (
 					_closeIntroCommand = new RelayCommand(param => {
-						GameScreen gameScreen = new GameScreen {
+						GameScreen gameScreen = new GameScreen(Player1ViewModel, Player2ViewModel) {
 							DataContext = this
 						};
 						CurrentScreen = gameScreen;
@@ -36,7 +36,7 @@ namespace QuadRow.ViewModels
 
 		#region player info
 		private bool _isNameBoxOpen;
-		public bool IsNameBoxOpen {
+		internal bool IsNameBoxOpen {
 			get {
 				return _isNameBoxOpen;
 			}
@@ -46,25 +46,31 @@ namespace QuadRow.ViewModels
 			}
 		}
 
-		private RelayCommand _clickNameBoxClose;
-		public RelayCommand ClickNameBoxClose {
+		private RelayCommand _closeNameBox;
+		internal RelayCommand CloseNameBox {
 			get {
-				return _clickNameBoxClose ?? (
-					_clickNameBoxClose = new RelayCommand(param => {
+				return _closeNameBox ?? (
+					_closeNameBox = new RelayCommand(param => {
 						IsNameBoxOpen = false;
 					})
 				);
 			}
 		}
+
+		internal PlayerViewModel Player1ViewModel { get; }
+		internal PlayerViewModel Player2ViewModel { get; }
 		#endregion
 
-		public GameViewModel() {
-			
+		internal GameViewModel() {
 			//initialize game on intro screen
 			ContentControl introScreen = new IntroScreen {
 				DataContext = this
 			};
 			CurrentScreen = introScreen;
+
+			//create players
+			Player1ViewModel = new PlayerViewModel("Player 1", InventoryBuilder.InventoryVariant.Variant1);
+			Player2ViewModel = new PlayerViewModel("Player 2", InventoryBuilder.InventoryVariant.Variant2);
 		}
 	}
 }

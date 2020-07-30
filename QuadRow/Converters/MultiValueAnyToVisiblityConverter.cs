@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace QuadRow.Converters
 {
-	class MultiValueAnyToVisiblityConverter : IMultiValueConverter
+	public class MultiValueAnyToVisiblityConverter : IMultiValueConverter
 	{
 		/// <summary>
 		/// set object to visible if any values in list match expected (true/false)

@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace QuadRow.Converters
 {
-	class InverseBooleanConverter : IValueConverter {
+	public class InverseBooleanConverter : IValueConverter {
 		public object Convert(object value, Type targetType, object parameter, CultureInfo language) {
 			if (!(value is bool))
 				return null;

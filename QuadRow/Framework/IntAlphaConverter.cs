@@ -2,7 +2,7 @@
 
 namespace QuadRow.Framework
 {
-	class IntAlphaConverter {
+	public class IntAlphaConverter {
 		private const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 		/// <summary>

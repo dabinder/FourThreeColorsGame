@@ -55,7 +55,7 @@
 						HorizontalAlignment="Center"
 						Content="Close"
 						Margin="0, 15, 0, 0"
-						Command="{Binding ClickNameBoxClose}"
+						Command="{Binding CloseNameBox}"
 					>
 						<Button.IsEnabled>
 							<MultiBinding Converter="{StaticResource BooleanAndConverter}">
@@ -100,36 +100,89 @@
 
 			<!-- player 1 piece selection menu -->
 			<local:PlayerPanel
-			Grid.Column="0"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Margin="10, 0, 0, 0"
-			x:Name="player1Panel"
-		/>
+				Grid.Column="0"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Margin="10, 0, 0, 0"
+				x:Name="player1Panel"
+			/>
 
 			<!-- player 2 piece selection menu -->
 			<local:PlayerPanel
-			Grid.Column="2"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Margin="10, 0, 0, 0"
-			x:Name="player2Panel"
-		/>
+				Grid.Column="2"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Margin="10, 0, 0, 0"
+				x:Name="player2Panel"
+			/>
+
+			<Grid Grid.Column="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="4*" />
+					<RowDefinition Height="1*" />
+				</Grid.RowDefinitions>
+
+				<!-- dashboard -->
+				<Grid Grid.Row="1" >
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="4*" />
+					</Grid.RowDefinitions>
+					<TextBlock Grid.Row="0" Text="Pieces Remaining" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+					<Grid Grid.Row="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+
+						<!-- column 0: colors -->
+						<Border Grid.Row="1" Grid.Column="0" Background="{StaticResource Color1}" />
+						<Border Grid.Row="2" Grid.Column="0" Background="{StaticResource Color2}" />
+						<Border Grid.Row="3" Grid.Column="0" Background="{StaticResource Color3}" />
+						<TextBlock Grid.Row="4" Grid.Column="0" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+						<!-- column 1: player 1 -->
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Player1.Inventory.TotalCount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+						<!-- column 2: player 2 -->
+						<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Player2.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Player2.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Player2.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Player2.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Player2.Inventory.TotalCount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+						<!-- column 3: totals -->
+						<TextBlock Grid.Row="0" Grid.Column="3" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Color1TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding Color2TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Color3TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding GrandTotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					</Grid>
+				</Grid>
+			</Grid>
 
 			<!-- game board -->
 			<!--
-			<ItemsControl Grid.Column="1" x:Name="gameBoard" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50, 0, 15, 0">
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<UniformGrid Rows="{x:Static fw:Config.BOARD_SIZE}" Columns="{x:Static fw:Config.BOARD_SIZE}" />
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<v:GameSpace />
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
+			<local:GameBoard
+				Grid.Column="1"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Margin="50, 0, 15, 0"
+			/>
 			-->
 		</Grid>
 	</Canvas>
