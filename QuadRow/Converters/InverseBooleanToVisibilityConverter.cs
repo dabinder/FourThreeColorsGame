@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace QuadRow.Converters
 {
-	class InverseBooleanToVisibilityConverter : IValueConverter {
+	public class InverseBooleanToVisibilityConverter : IValueConverter {
 		public object Convert(object value, Type targetType, object parameter, CultureInfo language) {
 			if (targetType != typeof(Visibility))
 				throw new InvalidOperationException("Target must be of Visibility type");

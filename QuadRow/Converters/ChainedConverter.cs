@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 namespace QuadRow.Converters
 {
-	class ChainedConverter : List<IValueConverter>, IValueConverter {
+    public class ChainedConverter : List<IValueConverter>, IValueConverter {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
             return this.Aggregate(value, (current, converter) => converter.Convert(current, targetType, parameter, culture));
         }

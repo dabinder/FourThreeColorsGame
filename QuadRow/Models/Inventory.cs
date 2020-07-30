@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace QuadRow.Models
 {
 	class Inventory : ObservableDictionary<ColorType, ObservableCollection<Piece>> {
-		public int TotalCount {
+		internal int TotalCount {
 			get {
 				int count = 0;
 				foreach (ObservableCollection<Piece> group in Values) {
@@ -21,7 +21,7 @@ namespace QuadRow.Models
 		/// build inventory for given variant
 		/// </summary>
 		/// <param name="variant">variant enum value</param>
-		public Inventory(InventoryBuilder.InventoryVariant variant) : base() {
+		internal Inventory(InventoryBuilder.InventoryVariant variant) : base() {
 			foreach (Piece piece in InventoryBuilder.GetInventoryContents(variant)) {
 				ObservableCollection<Piece> collection;
 				if (!ContainsKey(piece.Color)) {

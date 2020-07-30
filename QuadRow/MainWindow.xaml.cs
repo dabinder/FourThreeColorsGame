@@ -22,8 +22,7 @@ namespace QuadRow
 	{
 		public MainWindow() {
 			InitializeComponent();
-			GameViewModel model = new GameViewModel();
-			DataContext = model;
+			DataContext = new GameViewModel();
 		}
 	}
 }

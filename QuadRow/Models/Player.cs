@@ -4,7 +4,7 @@ namespace QuadRow.Models
 {
 	class Player : ObservableObject {
 		private string _name;
-		public string Name {
+		internal string Name {
 			get {
 				return _name;
 			}
@@ -14,14 +14,14 @@ namespace QuadRow.Models
 			}
 		}
 
-		public Inventory Inventory { get; }
+		internal Inventory Inventory { get; }
 
 		/// <summary>
 		/// set player name and inventory
 		/// </summary>
 		/// <param name="name">player name</param>
 		/// <param name="variant">inventory variant enum value</param>
-		public Player(string name, InventoryBuilder.InventoryVariant variant) {
+		internal Player(string name, InventoryBuilder.InventoryVariant variant) {
 			Name = name;
 			Inventory = new Inventory(variant);
 			NotifyPropertyChanged(nameof(Inventory));

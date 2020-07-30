@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace QuadRow.Converters
 {
-	class PositionToIntConverter : IValueConverter {
+	public class PositionToIntConverter : IValueConverter {
 
 		/// <summary>
 		/// convert game space position (A1 format) to integer value for row or column

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
  */
 
 namespace QuadRow.Collections {
-	class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged {
+	public class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged {
 
 		public ObservableDictionary() : base() { }
 		public ObservableDictionary(int capacity) : base(capacity) { }

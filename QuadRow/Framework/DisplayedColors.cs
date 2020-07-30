@@ -3,13 +3,13 @@ using System.Windows.Media;
 
 namespace QuadRow.Framework
 {
-	public static class DisplayedColors {
+	static class DisplayedColors {
 		/// <summary>
 		/// translate ColorType into displayable color
 		/// </summary>
 		/// <param name="colorType">value from ColorType enum</param>
 		/// <returns>Color object corresponding to selected ColorType</returns>
-		public static Color TranslateDisplayedColor(ColorType colorType) {
+		internal static Color TranslateDisplayedColor(ColorType colorType) {
 			switch (colorType) {
 				case ColorType.Color1:
 					return Config.color1;

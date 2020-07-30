@@ -3,9 +3,9 @@
 namespace QuadRow.Models
 {
 	class Piece {
-		public ColorType Color { get; }
-		
-		public Piece(ColorType color) {
+		internal ColorType Color { get; }
+
+		internal Piece(ColorType color) {
 			Color = color;
 		}
 	}

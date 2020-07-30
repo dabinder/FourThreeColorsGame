@@ -1,4 +1,5 @@
 ﻿using QuadRow.Framework;
+using QuadRow.Models;
 using QuadRow.ViewModels;
 using System.Windows.Controls;
 
@@ -7,12 +8,11 @@ namespace QuadRow.Views
 	/// <summary>
 	/// Interaction logic for GameScreen.xaml
 	/// </summary>
-	public partial class GameScreen : UserControl
-	{
-		public GameScreen() {
+	public partial class GameScreen : UserControl {
+		public GameScreen(PlayerViewModel player1Model, PlayerViewModel player2Model) {
 			InitializeComponent();
-			player1Panel.DataContext = new PlayerViewModel("Player 1", InventoryBuilder.InventoryVariant.Variant1);
-			player2Panel.DataContext = new PlayerViewModel("Player 2", InventoryBuilder.InventoryVariant.Variant2);
+			player1Panel.DataContext = player1Model;
+			player2Panel.DataContext = player2Model;
 		}
 	}
 }
