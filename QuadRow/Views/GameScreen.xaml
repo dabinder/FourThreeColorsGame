@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="QuadRow.Views.GameScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuadRow.Views"
+			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1500">
+
+	<Canvas Name="mainGameLayout">
+		<!-- overlay for player names -->
+		<Grid Width="{Binding ActualWidth, ElementName=mainGameLayout}"
+			  Height="{Binding ActualHeight, ElementName=mainGameLayout}"
+			  Canvas.ZIndex="1"
+			  Visibility="{Binding IsNameBoxOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+		>
+			<Border
+				Name="playerNames"
+				Width="500"
+				Height="250"
+			>
+				<Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="100" />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="150" />
+						<ColumnDefinition Width="200" />
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Player Names" Margin="0, 10, 0, 0" FontSize="20pt" />
+
+					<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Player 1 Name" />
+					<TextBox 
+						Grid.Row="1"
+						Grid.Column="1"
+						Text="{Binding DataContext.Player.Name, ElementName=player1Panel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					/>
+
+					<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Player 2 Name" />
+					<TextBox
+						Grid.Row="2"
+						Grid.Column="1"
+						Text="{Binding DataContext.Player.Name, ElementName=player2Panel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					/>
+
+					<Button
+						Grid.Row="3"
+						Grid.ColumnSpan="2"
+						HorizontalAlignment="Center"
+						Content="Close"
+						Margin="0, 15, 0, 0"
+						Command="{Binding ClickNameBoxClose}"
+					>
+						<Button.IsEnabled>
+							<MultiBinding Converter="{StaticResource BooleanAndConverter}">
+								<MultiBinding.ConverterParameter>
+									<sys:Boolean>False</sys:Boolean>
+								</MultiBinding.ConverterParameter>
+								<Binding Path="DataContext.PlayerNameError" ElementName="player1Panel" />
+								<Binding Path="DataContext.PlayerNameError" ElementName="player2Panel" />
+							</MultiBinding>
+						</Button.IsEnabled>
+					</Button>
+
+					<TextBlock
+						Grid.Row="4"
+						Grid.ColumnSpan="2"
+						HorizontalAlignment="Center"
+						Text="Fill in both player names"
+						Foreground="#FFFF6D6D"
+						FontSize="10pt"
+					>
+						<TextBlock.Visibility>
+							<MultiBinding Converter="{StaticResource MultiValueAnyToVisiblityConverter}">
+								<Binding Path="DataContext.PlayerNameError" ElementName="player1Panel" />
+								<Binding Path="DataContext.PlayerNameError" ElementName="player2Panel" />
+							</MultiBinding>
+						</TextBlock.Visibility>
+					</TextBlock>
+				</Grid>
+			</Border>
+		</Grid>
+
+		<Grid
+			Width="{Binding ActualWidth, ElementName=mainGameLayout}"
+			Height="{Binding ActualHeight, ElementName=mainGameLayout}"
+		>
+			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1.5*" />
+				<ColumnDefinition Width="7*" />
+				<ColumnDefinition Width="1.5*" />
+			</Grid.ColumnDefinitions>
+
+			<!-- player 1 piece selection menu -->
+			<local:PlayerPanel
+			Grid.Column="0"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Margin="10, 0, 0, 0"
+			x:Name="player1Panel"
+		/>
+
+			<!-- player 2 piece selection menu -->
+			<local:PlayerPanel
+			Grid.Column="2"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Margin="10, 0, 0, 0"
+			x:Name="player2Panel"
+		/>
+
+			<!-- game board -->
+			<!--
+			<ItemsControl Grid.Column="1" x:Name="gameBoard" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50, 0, 15, 0">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<UniformGrid Rows="{x:Static fw:Config.BOARD_SIZE}" Columns="{x:Static fw:Config.BOARD_SIZE}" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<v:GameSpace />
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			-->
+		</Grid>
+	</Canvas>
+</UserControl>

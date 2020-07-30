@@ -1,0 +1,39 @@
+﻿<UserControl
+	x:Class="QuadRow.Views.GameSpace"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:QuadRow.Views"
+    mc:Ignorable="d" 
+    d:DesignHeight="300" d:DesignWidth="400"
+	BorderBrush="AliceBlue"
+>
+
+	<Border Height="{StaticResource SpaceSize}" Width="{StaticResource SpaceSize}" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}">
+		<Canvas>
+			<!-- empty space-->
+			<Button
+				Command="{Binding SelectSpace}"
+				Height="{StaticResource SpaceSize}"
+				Width="{StaticResource SpaceSize}"
+				Background="Transparent"
+				BorderBrush="Transparent"
+				Visibility="{Binding Occupied, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+			/>
+
+			<!-- played piece -->
+			<!--
+			<Ellipse
+				Height="{StaticResource PieceSize}"
+				Width="{StaticResource PieceSize}"
+				Canvas.Top="{StaticResource PiecePadding}"
+				Canvas.Left="{StaticResource PiecePadding}"
+				Visibility="{Binding Occupied, Converter={StaticResource BooleanToVisibilityConverter}}"
+				Fill="{Binding Occupant.Color, Converter={StaticResource ColorTypeToColorConverter}}"
+			>
+			</Ellipse>
+			-->
+		</Canvas>
+	</Border>
+</UserControl>
