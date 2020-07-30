@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 /*
  * GroupedObservableCollection class, based on
@@ -13,7 +10,8 @@ using System.Threading.Tasks;
  * and https://stackoverflow.com/a/35006856/2136840
  */
 
-namespace FourThreeColorsGame.Collections {
+namespace FourThreeColorsGame.Collections
+{
 	public class GroupedObservableCollection<TKey, TValue> : ObservableCollection<Grouping<TKey, TValue>> where TKey : IComparable<TKey> {
 		private readonly Func<TValue, TKey> readKey;
 
