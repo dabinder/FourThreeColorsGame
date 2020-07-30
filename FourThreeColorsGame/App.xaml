@@ -5,4 +5,8 @@
     xmlns:local="using:FourThreeColorsGame"
     RequestedTheme="Dark"
 >
+
+	<Application.Resources>
+		<ResourceDictionary Source="/Resources/GameResources.xaml" />
+	</Application.Resources>
 </Application>
