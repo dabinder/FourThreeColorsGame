@@ -39,14 +39,14 @@
 					<TextBox 
 						Grid.Row="1"
 						Grid.Column="1"
-						Text="{Binding Player1.Player.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						Text="{Binding Player1.PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 					/>
 
 					<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Player 2 Name" />
 					<TextBox
 						Grid.Row="2"
 						Grid.Column="1"
-						Text="{Binding Player2.Player.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						Text="{Binding Player2.PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 					/>
 
 					<Button
@@ -157,18 +157,18 @@
 						<TextBlock Grid.Row="4" Grid.Column="0" Text="Total" />
 
 						<!-- column 1: player 1 -->
-						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.Player.Name}" />
-						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Player.Inventory[Color1].Count}" />
-						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Player.Inventory[Color2].Count}" />
-						<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Player.Inventory[Color3].Count}" />
-						<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Player1.Player.Inventory.TotalCount}" />
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.PlayerName}" />
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Color1Count}" />
+						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Color2Count}" />
+						<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Color3Count}" />
+						<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Player1.TotalCount}" />
 
 						<!-- column 2: player 2 -->
-						<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Player2.Player.Name}" />
-						<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Player2.Player.Inventory[Color1].Count}" />
-						<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Player2.Player.Inventory[Color2].Count}" />
-						<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Player2.Player.Inventory[Color3].Count}" />
-						<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Player2.Player.Inventory.TotalCount}" />
+						<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Player2.PlayerName}" />
+						<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Player2.Color1Count}" />
+						<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Player2.Color2Count}" />
+						<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Player2.Color3Count}" />
+						<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Player2.TotalCount}" />
 
 						<!-- column 3: totals -->
 						<TextBlock Grid.Row="0" Grid.Column="3" Text="Total" />
@@ -181,14 +181,12 @@
 			</Grid>
 
 			<!-- game board -->
-			<!--
 			<local:GameBoard
 				Grid.Column="1"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				Margin="50, 0, 15, 0"
+				VerticalAlignment="Top"
+				Margin="0, 25, 0, 0"
 			/>
-			-->
 		</Grid>
 	</Canvas>
 </UserControl>

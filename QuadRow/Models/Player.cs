@@ -14,7 +14,7 @@ namespace QuadRow.Models
 			}
 		}
 
-		public Inventory Inventory { get; }
+		private Inventory Inventory { get; }
 
 		/// <summary>
 		/// set player name and inventory
@@ -25,6 +25,10 @@ namespace QuadRow.Models
 			Name = name;
 			Inventory = new Inventory(variant);
 			NotifyPropertyChanged(nameof(Inventory));
+		}
+
+		public int GetCount(ColorType colorType) {
+			return Inventory[colorType].Count;
 		}
 	}
 }

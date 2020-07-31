@@ -1,11 +1,12 @@
 ﻿using QuadRow.Framework;
 using QuadRow.Models;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace QuadRow.ViewModels
 {
 	public class PlayerViewModel : ObservableObject {
-		public Player Player { get; }
+		private Player Player { get; }
 
 		private bool _playerNameError;
 		public bool PlayerNameError {
@@ -15,6 +16,37 @@ namespace QuadRow.ViewModels
 			set {
 				_playerNameError = value;
 				NotifyPropertyChanged(nameof(PlayerNameError));
+			}
+		}
+
+		public string PlayerName {
+			get {
+				return Player.Name;
+			}
+			set {
+				Player.Name = value;
+				NotifyPropertyChanged(nameof(PlayerName));
+			}
+		}
+
+		public int Color1Count {
+			get {
+				return Player.GetCount(ColorType.Color1);
+			}
+		}
+		public int Color2Count {
+			get {
+				return Player.GetCount(ColorType.Color2);
+			}
+		}
+		public int Color3Count {
+			get {
+				return Player.GetCount(ColorType.Color3);
+			}
+		}
+		public int TotalCount {
+			get {
+				return Color1Count + Color2Count + Color3Count;
 			}
 		}
 
