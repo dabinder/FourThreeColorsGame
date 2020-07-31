@@ -39,14 +39,14 @@
 					<TextBox 
 						Grid.Row="1"
 						Grid.Column="1"
-						Text="{Binding DataContext.Player.Name, ElementName=player1Panel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						Text="{Binding Player1.Player.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 					/>
 
 					<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Player 2 Name" />
 					<TextBox
 						Grid.Row="2"
 						Grid.Column="1"
-						Text="{Binding DataContext.Player.Name, ElementName=player2Panel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						Text="{Binding Player2.Player.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 					/>
 
 					<Button
@@ -62,8 +62,8 @@
 								<MultiBinding.ConverterParameter>
 									<sys:Boolean>False</sys:Boolean>
 								</MultiBinding.ConverterParameter>
-								<Binding Path="DataContext.PlayerNameError" ElementName="player1Panel" />
-								<Binding Path="DataContext.PlayerNameError" ElementName="player2Panel" />
+								<Binding Path="Player1.PlayerNameError" />
+								<Binding Path="Player2.PlayerNameError" />
 							</MultiBinding>
 						</Button.IsEnabled>
 					</Button>
@@ -152,7 +152,7 @@
 						<TextBlock Grid.Row="4" Grid.Column="0" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
 						<!-- column 1: player 1 -->
-						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.Player.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 						<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />

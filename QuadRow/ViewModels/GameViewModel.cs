@@ -8,7 +8,7 @@ namespace QuadRow.ViewModels
 	{
 		#region intro screen
 		private ContentControl _currentScreeen;
-		internal ContentControl CurrentScreen {
+		public ContentControl CurrentScreen {
 			get {
 				return _currentScreeen;
 			}
@@ -19,11 +19,11 @@ namespace QuadRow.ViewModels
 		}
 
 		private RelayCommand _closeIntroCommand;
-		internal RelayCommand CloseIntroCommand {
+		public RelayCommand CloseIntroCommand {
 			get {
 				return _closeIntroCommand ?? (
 					_closeIntroCommand = new RelayCommand(param => {
-						GameScreen gameScreen = new GameScreen(Player1ViewModel, Player2ViewModel) {
+						GameScreen gameScreen = new GameScreen(Player1, Player2) {
 							DataContext = this
 						};
 						CurrentScreen = gameScreen;
@@ -36,7 +36,7 @@ namespace QuadRow.ViewModels
 
 		#region player info
 		private bool _isNameBoxOpen;
-		internal bool IsNameBoxOpen {
+		public bool IsNameBoxOpen {
 			get {
 				return _isNameBoxOpen;
 			}
@@ -47,7 +47,7 @@ namespace QuadRow.ViewModels
 		}
 
 		private RelayCommand _closeNameBox;
-		internal RelayCommand CloseNameBox {
+		public RelayCommand CloseNameBox {
 			get {
 				return _closeNameBox ?? (
 					_closeNameBox = new RelayCommand(param => {
@@ -57,11 +57,11 @@ namespace QuadRow.ViewModels
 			}
 		}
 
-		internal PlayerViewModel Player1ViewModel { get; }
-		internal PlayerViewModel Player2ViewModel { get; }
+		public PlayerViewModel Player1 { get; }
+		public PlayerViewModel Player2 { get; }
 		#endregion
 
-		internal GameViewModel() {
+		public GameViewModel() {
 			//initialize game on intro screen
 			ContentControl introScreen = new IntroScreen {
 				DataContext = this
@@ -69,8 +69,8 @@ namespace QuadRow.ViewModels
 			CurrentScreen = introScreen;
 
 			//create players
-			Player1ViewModel = new PlayerViewModel("Player 1", InventoryBuilder.InventoryVariant.Variant1);
-			Player2ViewModel = new PlayerViewModel("Player 2", InventoryBuilder.InventoryVariant.Variant2);
+			Player1 = new PlayerViewModel("Player 1", InventoryBuilder.InventoryVariant.Variant1);
+			Player2 = new PlayerViewModel("Player 2", InventoryBuilder.InventoryVariant.Variant2);
 		}
 	}
 }
