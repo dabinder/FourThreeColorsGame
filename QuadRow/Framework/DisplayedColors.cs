@@ -9,7 +9,7 @@ namespace QuadRow.Framework
 		/// </summary>
 		/// <param name="colorType">value from ColorType enum</param>
 		/// <returns>Color object corresponding to selected ColorType</returns>
-		internal static Color TranslateDisplayedColor(ColorType colorType) {
+		public static Color TranslateDisplayedColor(ColorType colorType) {
 			switch (colorType) {
 				case ColorType.Color1:
 					return Config.color1;

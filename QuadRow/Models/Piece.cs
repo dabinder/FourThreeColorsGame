@@ -2,10 +2,10 @@
 
 namespace QuadRow.Models
 {
-	class Piece {
-		internal ColorType Color { get; }
+	public class Piece {
+		public ColorType Color { get; }
 
-		internal Piece(ColorType color) {
+		public Piece(ColorType color) {
 			Color = color;
 		}
 	}

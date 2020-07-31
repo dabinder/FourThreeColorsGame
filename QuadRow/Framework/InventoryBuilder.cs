@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace QuadRow.Framework
 {
-	static class InventoryBuilder {
+	public static class InventoryBuilder {
 		/// <summary>
 		/// color sets, workaround for psuedo const array
 		/// </summary>
 		private static readonly int[] colorSet1 = { Config.PLAYER1_COLOR1, Config.PLAYER1_COLOR2, Config.PLAYER1_COLOR3 };
 		private static readonly int[] colorSet2 = { Config.PLAYER2_COLOR1, Config.PLAYER2_COLOR2, Config.PLAYER2_COLOR3 };
 
-		internal enum InventoryVariant {
+		public enum InventoryVariant {
 			Variant1,
 			Variant2
 		}
@@ -21,7 +21,7 @@ namespace QuadRow.Framework
 		/// </summary>
 		/// <param name="variant">variant enum value</param>
 		/// <returns>enumerable set of pieces</returns>
-		internal static IEnumerable<Piece> GetInventoryContents(InventoryVariant variant) {
+		public static IEnumerable<Piece> GetInventoryContents(InventoryVariant variant) {
 			int[] colors;
 
 			switch (variant) {
