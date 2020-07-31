@@ -61,6 +61,30 @@ namespace QuadRow.ViewModels
 		public PlayerViewModel Player2 { get; }
 		#endregion
 
+		#region piece counts
+		public int Color1TotalPieces {
+			get {
+				return Player1.Player.Inventory[ColorType.Color1].Count + Player2.Player.Inventory[ColorType.Color1].Count;
+			}
+		}
+		public int Color2TotalPieces {
+			get {
+				return Player1.Player.Inventory[ColorType.Color2].Count + Player2.Player.Inventory[ColorType.Color2].Count;
+			}
+		}
+		public int Color3TotalPieces {
+			get {
+				return Player1.Player.Inventory[ColorType.Color3].Count + Player2.Player.Inventory[ColorType.Color3].Count;
+			}
+		}
+		public int GrandTotalPieces {
+			get {
+				return Player1.Player.Inventory.TotalCount + Player2.Player.Inventory.TotalCount;
+			}
+		}
+		#endregion
+
+
 		public GameViewModel() {
 			//initialize game on intro screen
 			ContentControl introScreen = new IntroScreen {

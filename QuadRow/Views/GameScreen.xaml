@@ -98,37 +98,42 @@
 				<ColumnDefinition Width="1.5*" />
 			</Grid.ColumnDefinitions>
 
+			<Grid.Resources>
+				<Style TargetType="local:PlayerPanel" BasedOn="{StaticResource {x:Type Control}}">
+					<Setter Property="HorizontalAlignment" Value="Center" />
+					<Setter Property="VerticalAlignment" Value="Center" />
+					<Setter Property="Margin" Value="10, 0, 0, 0" />
+					<Setter Property="BorderThickness" Value="0" />
+				</Style>
+			</Grid.Resources>
+			
 			<!-- player 1 piece selection menu -->
-			<local:PlayerPanel
-				Grid.Column="0"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				Margin="10, 0, 0, 0"
-				x:Name="player1Panel"
-			/>
+			<local:PlayerPanel Grid.Column="0" x:Name="player1Panel" />
 
 			<!-- player 2 piece selection menu -->
-			<local:PlayerPanel
-				Grid.Column="2"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				Margin="10, 0, 0, 0"
-				x:Name="player2Panel"
-			/>
+			<local:PlayerPanel Grid.Column="2" x:Name="player2Panel" />
 
+			<!-- piece counts -->
 			<Grid Grid.Column="1">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="4*" />
 					<RowDefinition Height="1*" />
 				</Grid.RowDefinitions>
 
-				<!-- dashboard -->
-				<Grid Grid.Row="1" >
+				<Grid Grid.Row="1" Margin="0, 0, 0, 10">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*" />
 						<RowDefinition Height="4*" />
 					</Grid.RowDefinitions>
-					<TextBlock Grid.Row="0" Text="Pieces Remaining" HorizontalAlignment="Center" VerticalAlignment="Center" />
+					
+					<Grid.Resources>
+						<Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+							<Setter Property="HorizontalAlignment" Value="Center" />
+							<Setter Property="VerticalAlignment" Value="Center" />
+						</Style>
+					</Grid.Resources>
+					
+					<TextBlock Grid.Row="0" Text="Pieces Remaining" />
 
 					<Grid Grid.Row="1">
 						<Grid.ColumnDefinitions>
@@ -149,28 +154,28 @@
 						<Border Grid.Row="1" Grid.Column="0" Background="{StaticResource Color1}" />
 						<Border Grid.Row="2" Grid.Column="0" Background="{StaticResource Color2}" />
 						<Border Grid.Row="3" Grid.Column="0" Background="{StaticResource Color3}" />
-						<TextBlock Grid.Row="4" Grid.Column="0" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="4" Grid.Column="0" Text="Total" />
 
 						<!-- column 1: player 1 -->
-						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.Player.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Player1.Inventory.TotalCount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Player1.Player.Name}" />
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Player.Inventory[Color1].Count}" />
+						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Player.Inventory[Color2].Count}" />
+						<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Player.Inventory[Color3].Count}" />
+						<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Player1.Player.Inventory.TotalCount}" />
 
 						<!-- column 2: player 2 -->
-						<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Player2.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Player2.Inventory[0].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Player2.Inventory[1].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Player2.Inventory[2].Count}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Player2.Inventory.TotalCount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Player2.Player.Name}" />
+						<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Player2.Player.Inventory[Color1].Count}" />
+						<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Player2.Player.Inventory[Color2].Count}" />
+						<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Player2.Player.Inventory[Color3].Count}" />
+						<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Player2.Player.Inventory.TotalCount}" />
 
 						<!-- column 3: totals -->
-						<TextBlock Grid.Row="0" Grid.Column="3" Text="Total" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Color1TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding Color2TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Color3TotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding GrandTotalPieces}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+						<TextBlock Grid.Row="0" Grid.Column="3" Text="Total" />
+						<TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Color1TotalPieces}" />
+						<TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding Color2TotalPieces}" />
+						<TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Color3TotalPieces}" />
+						<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding GrandTotalPieces}" />
 					</Grid>
 				</Grid>
 			</Grid>
