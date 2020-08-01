@@ -9,7 +9,6 @@ namespace QuadRow.Views
 	public partial class GameSpace : UserControl {
 		public GameSpace() {
 			InitializeComponent();
-			DataContext = new SpaceViewModel();
 		}
 	}
 }
