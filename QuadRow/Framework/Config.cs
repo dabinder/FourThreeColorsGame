@@ -21,11 +21,8 @@ namespace QuadRow.Framework
 		public const int PLAYER2_COLOR2 = 13;
 		public const int PLAYER2_COLOR3 = 19;
 
-		public static readonly Color color1, color2, color3;
-		static Config() {
-			color1 = Colors.Crimson;
-			color2 = Colors.SpringGreen;
+		public static readonly Color color1 = Colors.Crimson,
+			color2 = Colors.SpringGreen,
 			color3 = Colors.SkyBlue;
-		}
 	}
 }

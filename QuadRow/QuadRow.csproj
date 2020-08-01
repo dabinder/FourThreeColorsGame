@@ -80,6 +80,9 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\VisiblePiece.xaml.cs">
+      <DependentUpon>VisiblePiece.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
@@ -122,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UserControls\VisiblePiece.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GameBoard.xaml">
       <SubType>Designer</SubType>
