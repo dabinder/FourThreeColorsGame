@@ -3,7 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:uc="clr-namespace:QuadRow.UserControls"
     xmlns:local="clr-namespace:QuadRow.Views"
     mc:Ignorable="d" 
 >
@@ -39,7 +40,7 @@
 			<Border>
 				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType1}">
 					<Canvas>
-						<Ellipse Height="{StaticResource PieceSize}" Width="{StaticResource PieceSize}" Fill="{StaticResource Color1}" />
+						<uc:VisiblePiece Fill="{StaticResource Color1}" />
 						<TextBlock Text="{Binding Color1Count}" />
 					</Canvas>
 				</Button>
@@ -47,7 +48,7 @@
 			<Border>
 				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType2}">
 					<Canvas>
-						<Ellipse Height="{StaticResource PieceSize}" Width="{StaticResource PieceSize}" Fill="{StaticResource Color2}" />
+						<uc:VisiblePiece Fill="{StaticResource Color2}" />
 						<TextBlock Text="{Binding Color2Count}" />
 					</Canvas>
 				</Button>
@@ -55,7 +56,7 @@
 			<Border>
 				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType3}">
 					<Canvas>
-						<Ellipse Height="{StaticResource PieceSize}" Width="{StaticResource PieceSize}" Fill="{StaticResource Color3}" />
+						<uc:VisiblePiece Fill="{StaticResource Color3}" />
 						<TextBlock Text="{Binding Color3Count}" />
 					</Canvas>
 				</Button>
