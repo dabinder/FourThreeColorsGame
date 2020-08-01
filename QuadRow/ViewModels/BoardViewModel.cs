@@ -10,12 +10,10 @@ using System.Threading.Tasks;
 namespace QuadRow.ViewModels
 {
 	class BoardViewModel : ObservableObject {
-		public ObservableCollection<SpaceViewModel> GameBoard { get; }
-		//public ObservableDictionary<Coordinates, SpaceViewModel> GameBoard { get; }
+		public ObservableDictionary<Coordinates, SpaceViewModel> GameBoard { get; }
 
 		public BoardViewModel() {
-			GameBoard = new ObservableCollection<SpaceViewModel>();
-			//GameBoard = new ObservableDictionary<Coordinates, SpaceViewModel>();
+			GameBoard = new ObservableDictionary<Coordinates, SpaceViewModel>();
 			DrawGameBoard();
 		}
 
@@ -24,8 +22,10 @@ namespace QuadRow.ViewModels
 			GameBoard.Clear();
 			for (int x = 0; x < Config.BOARD_SIZE; x++) {
 				for (int y = 0; y < Config.BOARD_SIZE; y++) {
-					//GameBoard.Add(new Coordinates(x, y), model);
-					GameBoard.Add(new SpaceViewModel());
+					Coordinates coords = new Coordinates(x, y);
+					GameBoard.Add(coords, new SpaceViewModel() {
+						TestOrigin = coords.ToString()
+					});
 				}
 			}
 			NotifyPropertyChanged(nameof(GameBoard));

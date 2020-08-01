@@ -10,16 +10,15 @@
 	BorderBrush="AliceBlue"
 >
 
-	<Border Height="{StaticResource SpaceSize}" Width="{StaticResource SpaceSize}" BorderBrush="{StaticResource DefaultBorderBrush}" BorderThickness="{StaticResource BorderThickness}">
+	<Border Height="{StaticResource SpaceSize}" Width="{StaticResource SpaceSize}">
 		<Canvas>
 			<!-- empty space-->
 			<Button
-				Command="{Binding SelectSpace}"
 				Height="{StaticResource SpaceSize}"
 				Width="{StaticResource SpaceSize}"
 				Background="Transparent"
 				BorderBrush="Transparent"
-				Visibility="{Binding Occupied, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+				Content="{Binding TestOrigin}"
 			/>
 
 			<!-- played piece -->
