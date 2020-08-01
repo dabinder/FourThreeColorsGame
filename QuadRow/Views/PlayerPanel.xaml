@@ -40,7 +40,7 @@
 				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType1}">
 					<Canvas>
 						<Ellipse Height="{StaticResource PieceSize}" Width="{StaticResource PieceSize}" Fill="{StaticResource Color1}" />
-						<TextBlock Text="{Binding Player.Inventory[Color1].Count}" />
+						<TextBlock Text="{Binding Color1Count}" />
 					</Canvas>
 				</Button>
 			</Border>
@@ -48,7 +48,7 @@
 				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType2}">
 					<Canvas>
 						<Ellipse Height="{StaticResource PieceSize}" Width="{StaticResource PieceSize}" Fill="{StaticResource Color2}" />
-						<TextBlock Text="{Binding Player.Inventory[Color2].Count}" />
+						<TextBlock Text="{Binding Color2Count}" />
 					</Canvas>
 				</Button>
 			</Border>
@@ -56,7 +56,7 @@
 				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType3}">
 					<Canvas>
 						<Ellipse Height="{StaticResource PieceSize}" Width="{StaticResource PieceSize}" Fill="{StaticResource Color3}" />
-						<TextBlock Text="{Binding Player.Inventory[Color3].Count}" />
+						<TextBlock Text="{Binding Color3Count}" />
 					</Canvas>
 				</Button>
 			</Border>
