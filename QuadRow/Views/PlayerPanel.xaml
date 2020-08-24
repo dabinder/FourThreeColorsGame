@@ -8,7 +8,7 @@
     xmlns:local="clr-namespace:QuadRow.Views"
     mc:Ignorable="d" 
 >
-	
+
 	<StackPanel>
 		<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
 			<TextBlock Text="{Binding PlayerName}" />
@@ -34,32 +34,27 @@
 				<Style TargetType="TextBlock">
 					<Setter Property="Canvas.Left" Value="{StaticResource CountPosition}" />
 					<Setter Property="Canvas.Top" Value="{StaticResource CountPosition}" />
+					<Setter Property="Foreground" Value="Black" />
 				</Style>
 			</StackPanel.Resources>
 
 			<Border>
-				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType1}">
-					<Canvas>
-						<uc:VisiblePiece Fill="{StaticResource Color1}" />
-						<TextBlock Text="{Binding Color1Count}" />
-					</Canvas>
-				</Button>
+				<Canvas>
+					<uc:VisiblePiece Fill="{StaticResource Color1}" />
+					<TextBlock Text="{Binding Color1Count}" />
+				</Canvas>
 			</Border>
 			<Border>
-				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType2}">
-					<Canvas>
-						<uc:VisiblePiece Fill="{StaticResource Color2}" />
-						<TextBlock Text="{Binding Color2Count}" />
-					</Canvas>
-				</Button>
+				<Canvas>
+					<uc:VisiblePiece Fill="{StaticResource Color2}" />
+					<TextBlock Text="{Binding Color2Count}" />
+				</Canvas>
 			</Border>
 			<Border>
-				<Button Command="{Binding ClickPiece}" CommandParameter="{StaticResource ColorType3}">
-					<Canvas>
-						<uc:VisiblePiece Fill="{StaticResource Color3}" />
-						<TextBlock Text="{Binding Color3Count}" />
-					</Canvas>
-				</Button>
+				<Canvas>
+					<uc:VisiblePiece Fill="{StaticResource Color3}" />
+					<TextBlock Text="{Binding Color3Count}" />
+				</Canvas>
 			</Border>
 		</StackPanel>
 	</StackPanel>

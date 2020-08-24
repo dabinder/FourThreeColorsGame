@@ -7,5 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 	
-	<Ellipse x:Name="visiblePiece" Height="{StaticResource PieceSize}" Width="{StaticResource PieceSize}" Fill="{Binding Fill, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type local:VisiblePiece}}}" />
+	<Ellipse
+		x:Name="visiblePiece"
+		Height="{StaticResource PieceSize}"
+		Width="{StaticResource PieceSize}"
+		Fill="{Binding Fill, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type local:VisiblePiece}}}"
+	/>
 </UserControl>

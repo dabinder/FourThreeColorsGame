@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:uc="clr-namespace:QuadRow.UserControls"
     xmlns:local="clr-namespace:QuadRow.Views"
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="400"
@@ -13,26 +14,21 @@
 	<Border Height="{StaticResource SpaceSize}" Width="{StaticResource SpaceSize}">
 		<Canvas>
 			<!-- empty space-->
-			<Button
+			<Border
 				Height="{StaticResource SpaceSize}"
 				Width="{StaticResource SpaceSize}"
 				Background="Transparent"
 				BorderBrush="Transparent"
-				Content="{Binding TestOrigin}"
-			/>
-
-			<!-- played piece -->
-			<!--
-			<Ellipse
-				Height="{StaticResource PieceSize}"
-				Width="{StaticResource PieceSize}"
-				Canvas.Top="{StaticResource PiecePadding}"
-				Canvas.Left="{StaticResource PiecePadding}"
-				Visibility="{Binding Occupied, Converter={StaticResource BooleanToVisibilityConverter}}"
-				Fill="{Binding Occupant.Color, Converter={StaticResource ColorTypeToColorConverter}}"
 			>
-			</Ellipse>
-			-->
+				<TextBlock Text="{Binding TestOrigin}" />
+				<!-- played piece -->
+				<!--
+				<uc:VisiblePiece
+					Visibility="{Binding Occupied, Converter={StaticResource BooleanToVisibilityConverter}}"
+					Fill="{Binding Occupant.Color, Converter={StaticResource ColorTypeToColorConverter}}"
+				/>
+				-->
+			</Border>
 		</Canvas>
 	</Border>
 </UserControl>
