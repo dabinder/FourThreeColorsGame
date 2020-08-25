@@ -77,6 +77,7 @@
     <Compile Include="Framework\ColorType.cs" />
     <Compile Include="Framework\Config.cs" />
     <Compile Include="Framework\Coordinates.cs" />
+    <Compile Include="Framework\DraggableAdorner.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
