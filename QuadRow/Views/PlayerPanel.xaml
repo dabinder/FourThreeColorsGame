@@ -4,8 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:uc="clr-namespace:QuadRow.UserControls"
+    xmlns:uc="clr-namespace:QuadRow.Views"
     xmlns:local="clr-namespace:QuadRow.Views"
+	xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     mc:Ignorable="d" 
 >
 
@@ -14,21 +15,12 @@
 			<TextBlock Text="{Binding PlayerName}" />
 			<TextBlock Text=" Pieces" HorizontalAlignment="Center" />
 		</StackPanel>
-		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+		<StackPanel Orientation="Horizontal">
 			<StackPanel.Resources>
 				<Style TargetType="Border">
-					<Setter Property="Width" Value="{StaticResource PieceSize}" />
 					<Setter Property="Height" Value="{StaticResource PieceSize}" />
+					<Setter Property="Width" Value="{StaticResource PieceSize}" />
 					<Setter Property="Margin" Value="0, 0, 5, 0" />
-				</Style>
-				<Style TargetType="Canvas">
-					<Setter Property="HorizontalAlignment" Value="Center" />
-					<Setter Property="VerticalAlignment" Value="Center" />
-					<Setter Property="Width" Value="{StaticResource PieceSize}" />
-					<Setter Property="Height" Value="{StaticResource PieceSize}" />
-				</Style>
-				<Style TargetType="Button">
-					<Setter Property="Background" Value="Transparent" />
 					<Setter Property="BorderThickness" Value="0" />
 				</Style>
 				<Style TargetType="TextBlock">
@@ -37,25 +29,82 @@
 					<Setter Property="Foreground" Value="Black" />
 				</Style>
 			</StackPanel.Resources>
-
 			<Border>
 				<Canvas>
-					<uc:VisiblePiece Fill="{StaticResource Color1}" />
-					<TextBlock Text="{Binding Color1Count}" />
+					<uc:VisiblePiece ColorType="{StaticResource ColorType1}" />
+					<TextBlock Text="{Binding Color1Count}"	/>
 				</Canvas>
 			</Border>
 			<Border>
 				<Canvas>
-					<uc:VisiblePiece Fill="{StaticResource Color2}" />
-					<TextBlock Text="{Binding Color2Count}" />
+					<uc:VisiblePiece ColorType="{StaticResource ColorType2}" />
+					<TextBlock Text="{Binding Color2Count}"	/>
 				</Canvas>
 			</Border>
 			<Border>
 				<Canvas>
-					<uc:VisiblePiece Fill="{StaticResource Color3}" />
-					<TextBlock Text="{Binding Color3Count}" />
+					<uc:VisiblePiece ColorType="{StaticResource ColorType3}" />
+					<TextBlock Text="{Binding Color3Count}"	/>
 				</Canvas>
 			</Border>
 		</StackPanel>
+		<!--
+		<ItemsControl ItemsSource="{Binding Inventory}" HorizontalAlignment="Center" x:Name="playerPieces">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Border Height="{StaticResource PieceSize}" BorderThickness="0" Width="{StaticResource PieceSize}" Margin="0, 0, 5, 0">
+						<Canvas>
+							<uc:VisiblePiece
+								ColorType="{Binding Key, RelativeSource={RelativeSource}}"
+								IsDraggable="{Binding DataContext.Active, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerPanel}}}"
+								DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerPanel}}}"
+							/>
+							<TextBlock
+								Canvas.Left="{StaticResource CountPosition}"
+								Canvas.Top="{StaticResource CountPosition}"
+								Foreground="Black"
+								Text="{Binding Value.Count}"
+							/>
+
+							<ItemsControl ItemsSource="{Binding Value}">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<Grid />
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<uc:VisiblePiece
+											ColorType="{Binding Key}"
+											IsDraggable="{Binding Active, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerPanel}}}"
+											DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerPanel}}}"
+										/>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+							<TextBlock
+									Canvas.Left="{StaticResource CountPosition}"
+									Canvas.Top="{StaticResource CountPosition}"
+									Foreground="Black"
+									Text="{Binding Value.Count}"
+							/>
+						</Canvas>
+					</Border>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+		-->
+		<TextBlock
+			Text="Current Player"
+			FontSize="14pt"
+			Foreground="PaleTurquoise"
+			Visibility="{Binding Active, Converter={StaticResource BooleanToVisibilityConverter}}"
+			HorizontalAlignment="Center"
+		/>
 	</StackPanel>
 </UserControl>

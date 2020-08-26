@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 
-namespace QuadRow.Views
-{
+namespace QuadRow.Views {
 	/// <summary>
 	/// Interaction logic for PlayerPanel.xaml
 	/// </summary>

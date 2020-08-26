@@ -1,6 +1,8 @@
 ﻿using QuadRow.Framework;
 using QuadRow.Models;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Media;
 
 namespace QuadRow.ViewModels
@@ -29,6 +31,12 @@ namespace QuadRow.ViewModels
 			}
 		}
 
+		public Inventory Inventory {
+			get {
+				return Player.Inventory;
+			}
+		}
+
 		public int Color1Count {
 			get {
 				return Player.GetCount(ColorType.Color1);
@@ -47,6 +55,17 @@ namespace QuadRow.ViewModels
 		public int TotalCount {
 			get {
 				return Color1Count + Color2Count + Color3Count;
+			}
+		}
+
+		private bool _active;
+		public bool Active {
+			get {
+				return _active;
+			}
+			set {
+				_active = value;
+				NotifyPropertyChanged(nameof(Active));
 			}
 		}
 

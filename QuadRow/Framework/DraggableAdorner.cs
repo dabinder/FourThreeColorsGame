@@ -1,16 +1,10 @@
-﻿using QuadRow.UserControls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QuadRow.Views;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace QuadRow.Framework { 
-    class DraggableAdorner : Adorner {
+namespace QuadRow.Framework {
+	class DraggableAdorner : Adorner {
         private VisualCollection visualChildren;
 		private VisiblePiece draggedPiece;
 
@@ -19,10 +13,6 @@ namespace QuadRow.Framework {
 		public DraggableAdorner(VisiblePiece adornedElement) : base(adornedElement) {
 			visualChildren = new VisualCollection(this);
 			draggedPiece = new VisiblePiece(adornedElement);
-			SolidColorBrush brush = new SolidColorBrush() {
-				Color = Color.FromArgb(0, 0, 255, 255)
-			};
-			draggedPiece.Fill = brush;
 			visualChildren.Add(draggedPiece);
 
 			IsHitTestVisible = false;

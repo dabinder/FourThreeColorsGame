@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuadRow.ViewModels
-{
+namespace QuadRow.ViewModels {
 	class BoardViewModel : ObservableObject {
 		public ObservableDictionary<Coordinates, SpaceViewModel> GameBoard { get; }
 

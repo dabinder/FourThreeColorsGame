@@ -1,6 +1,7 @@
 ﻿using QuadRow.Framework;
 using System.Windows.Controls;
 using QuadRow.Views;
+using System;
 
 namespace QuadRow.ViewModels
 {
@@ -52,6 +53,7 @@ namespace QuadRow.ViewModels
 				return _closeNameBox ?? (
 					_closeNameBox = new RelayCommand(param => {
 						IsNameBoxOpen = false;
+						StartGame();
 					})
 				);
 			}
@@ -59,6 +61,26 @@ namespace QuadRow.ViewModels
 
 		public PlayerViewModel Player1 { get; }
 		public PlayerViewModel Player2 { get; }
+
+		private PlayerViewModel _activePlayer;
+		public PlayerViewModel ActivePlayer {
+			get {
+				return _activePlayer;
+			}
+			set {
+				_activePlayer = value;
+				NotifyPropertyChanged(nameof(ActivePlayer));
+				if (value == Player1) {
+					Player1.Active = true;
+					Player2.Active = false;
+				} else if (value == Player2) {
+					Player1.Active = false;
+					Player2.Active = true;
+				} else {
+					throw new ArgumentException("Unrecognized player " + value);
+				}
+			}
+		} 
 		#endregion
 
 		#region piece counts
@@ -94,6 +116,11 @@ namespace QuadRow.ViewModels
 			//create players
 			Player1 = new PlayerViewModel("Player 1", InventoryBuilder.InventoryVariant.Variant1);
 			Player2 = new PlayerViewModel("Player 2", InventoryBuilder.InventoryVariant.Variant2);
+		}
+
+		private void StartGame() {
+			//start player 1 as active
+			ActivePlayer = Player1;
 		}
 	}
 }
