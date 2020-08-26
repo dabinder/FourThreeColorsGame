@@ -14,7 +14,7 @@ namespace QuadRow.Models
 			}
 		}
 
-		private Inventory Inventory { get; }
+		public Inventory Inventory { get; }
 
 		/// <summary>
 		/// set player name and inventory

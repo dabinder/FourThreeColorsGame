@@ -107,10 +107,10 @@
 				</Style>
 			</Grid.Resources>
 			
-			<!-- player 1 piece selection menu -->
+			<!-- player 1 piece list -->
 			<local:PlayerPanel Grid.Column="0" x:Name="player1Panel" />
 
-			<!-- player 2 piece selection menu -->
+			<!-- player 2 piece list -->
 			<local:PlayerPanel Grid.Column="2" x:Name="player2Panel" />
 
 			<!-- piece counts -->
