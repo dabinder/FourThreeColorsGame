@@ -5,8 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Media;
 
-namespace QuadRow.ViewModels
-{
+namespace QuadRow.ViewModels {
 	public class PlayerViewModel : ObservableObject {
 		private Player Player { get; }
 
@@ -69,7 +68,7 @@ namespace QuadRow.ViewModels
 			}
 		}
 
-		public PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
+		protected PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
 			Player = new Player(name, variant);
 			Player.PropertyChanged += PlayerNameChanged;
 			NotifyPropertyChanged(nameof(Player));

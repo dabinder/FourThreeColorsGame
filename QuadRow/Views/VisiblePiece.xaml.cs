@@ -63,7 +63,7 @@ namespace QuadRow.Views {
 		protected override void OnMouseDown(MouseButtonEventArgs e) {
 			base.OnMouseDown(e);
 			if (DataContext is PlayerViewModel) {
-				PlayerViewModel model = (PlayerViewModel)DataContext;
+				PlayerViewModel model = DataContext as PlayerViewModel;
 				if (model.Active && e.LeftButton == MouseButtonState.Pressed) {
 					adornerLayer = AdornerLayer.GetAdornerLayer(this);
 					adorner = new DraggableAdorner(this);
@@ -75,18 +75,18 @@ namespace QuadRow.Views {
 
 		protected override void OnMouseMove(MouseEventArgs e) {
 			base.OnMouseMove(e);
-			if (isDragging) {
+			if (isDragging && DataContext is PlayerViewModel) {
 				DataObject data = new DataObject();
 				data.SetData(typeof(ColorType), ColorType);
 				
-				DragDrop.DoDragDrop(this, data, DragDropEffects.Copy);
+				DragDrop.DoDragDrop(this, data, DragDropEffects.None);
 				adornerLayer.Remove(adorner);
 				isDragging = false;
 			}
 		}
 
 		protected override void OnGiveFeedback(GiveFeedbackEventArgs e) {
-			if (isDragging) {
+			if (isDragging && DataContext is PlayerViewModel) {
 				Mouse.SetCursor(Cursors.None);
 				e.Handled = true;
 

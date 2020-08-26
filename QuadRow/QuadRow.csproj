@@ -81,6 +81,8 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Player1ViewModel.cs" />
+    <Compile Include="ViewModels\Player2ViewModel.cs" />
     <Compile Include="Views\VisiblePiece.xaml.cs">
       <DependentUpon>VisiblePiece.xaml</DependentUpon>
     </Compile>

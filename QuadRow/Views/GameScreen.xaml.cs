@@ -1,18 +1,20 @@
 ﻿using QuadRow.Framework;
 using QuadRow.Models;
 using QuadRow.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
 
-namespace QuadRow.Views
-{
+namespace QuadRow.Views {
 	/// <summary>
 	/// Interaction logic for GameScreen.xaml
 	/// </summary>
 	public partial class GameScreen : UserControl {
-		public GameScreen(PlayerViewModel player1Model, PlayerViewModel player2Model) {
+		public GameScreen() {
 			InitializeComponent();
-			player1Panel.DataContext = player1Model;
-			player2Panel.DataContext = player2Model;
+			Application currentApp = Application.Current;
+			DataContext = currentApp.FindResource("GameViewModel");
+			player1Panel.DataContext = currentApp.FindResource("Player1ViewModel");
+			player2Panel.DataContext = currentApp.FindResource("Player2ViewModel");
 		}
 	}
 }
