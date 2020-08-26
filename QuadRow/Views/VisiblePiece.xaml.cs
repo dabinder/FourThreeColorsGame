@@ -1,6 +1,4 @@
-﻿using QuadRow.Converters;
-using QuadRow.Framework;
-using QuadRow.Models;
+﻿using QuadRow.Framework;
 using QuadRow.ViewModels;
 using System.Runtime.InteropServices;
 using System.Windows;
