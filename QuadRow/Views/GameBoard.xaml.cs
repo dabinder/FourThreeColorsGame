@@ -6,8 +6,7 @@ namespace QuadRow.Views
 	/// <summary>
 	/// Interaction logic for GameBoard.xaml
 	/// </summary>
-	public partial class GameBoard : UserControl
-	{
+	public partial class GameBoard : UserControl {
 		public GameBoard() {
 			InitializeComponent();
 			DataContext = new BoardViewModel();

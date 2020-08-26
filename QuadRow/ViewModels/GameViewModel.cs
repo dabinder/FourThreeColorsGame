@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using QuadRow.Views;
 using System;
+using System.Windows;
 
 namespace QuadRow.ViewModels
 {
@@ -24,10 +25,7 @@ namespace QuadRow.ViewModels
 			get {
 				return _closeIntroCommand ?? (
 					_closeIntroCommand = new RelayCommand(param => {
-						GameScreen gameScreen = new GameScreen(Player1, Player2) {
-							DataContext = this
-						};
-						CurrentScreen = gameScreen;
+						CurrentScreen = new GameScreen();
 						IsNameBoxOpen = true;
 					})
 				);
@@ -59,17 +57,23 @@ namespace QuadRow.ViewModels
 			}
 		}
 
-		public PlayerViewModel Player1 { get; }
-		public PlayerViewModel Player2 { get; }
+		public PlayerViewModel Player1 {
+			get {
+				return (PlayerViewModel) Application.Current.FindResource("Player1ViewModel");
+			}
+		}
+		public PlayerViewModel Player2 {
+			get {
+				return (PlayerViewModel) Application.Current.FindResource("Player2ViewModel");
+			}
+		}
 
 		private PlayerViewModel _activePlayer;
 		public PlayerViewModel ActivePlayer {
 			get {
 				return _activePlayer;
 			}
-			set {
-				_activePlayer = value;
-				NotifyPropertyChanged(nameof(ActivePlayer));
+			private set {
 				if (value == Player1) {
 					Player1.Active = true;
 					Player2.Active = false;
@@ -79,8 +83,24 @@ namespace QuadRow.ViewModels
 				} else {
 					throw new ArgumentException("Unrecognized player " + value);
 				}
+				_activePlayer = value;
+				NotifyPropertyChanged(nameof(ActivePlayer));
 			}
-		} 
+		}
+
+		private int _turn;
+		private int Turn {
+			get {
+				return _turn;
+			}
+			set {
+				_turn = value;
+				ActivePlayer = value % 2 == 1 ?
+					Player1 :
+					Player2;
+			}
+		}
+
 		#endregion
 
 		#region piece counts
@@ -112,15 +132,11 @@ namespace QuadRow.ViewModels
 				DataContext = this
 			};
 			CurrentScreen = introScreen;
-
-			//create players
-			Player1 = new PlayerViewModel("Player 1", InventoryBuilder.InventoryVariant.Variant1);
-			Player2 = new PlayerViewModel("Player 2", InventoryBuilder.InventoryVariant.Variant2);
 		}
 
 		private void StartGame() {
 			//start player 1 as active
-			ActivePlayer = Player1;
+			Turn = 1;
 		}
 	}
 }
