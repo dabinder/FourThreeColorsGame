@@ -1,9 +1,6 @@
 ﻿using QuadRow.Framework;
 using QuadRow.Models;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Media;
 
 namespace QuadRow.ViewModels {
 	public class PlayerViewModel : ObservableObject {

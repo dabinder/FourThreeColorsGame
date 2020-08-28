@@ -1,13 +1,11 @@
 ﻿using QuadRow.Framework;
-using System.Windows.Controls;
 using QuadRow.Views;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
-namespace QuadRow.ViewModels
-{
-	class GameViewModel : ObservableObject
-	{
+namespace QuadRow.ViewModels {
+	class GameViewModel : ObservableObject {
 		#region intro screen
 		private ContentControl _currentScreeen;
 		public ContentControl CurrentScreen {
@@ -59,12 +57,12 @@ namespace QuadRow.ViewModels
 
 		public PlayerViewModel Player1 {
 			get {
-				return (PlayerViewModel) Application.Current.FindResource("Player1ViewModel");
+				return (PlayerViewModel)Application.Current.FindResource("Player1ViewModel");
 			}
 		}
 		public PlayerViewModel Player2 {
 			get {
-				return (PlayerViewModel) Application.Current.FindResource("Player2ViewModel");
+				return (PlayerViewModel)Application.Current.FindResource("Player2ViewModel");
 			}
 		}
 

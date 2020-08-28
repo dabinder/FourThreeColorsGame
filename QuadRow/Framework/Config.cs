@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
-namespace QuadRow.Framework
-{
+namespace QuadRow.Framework {
 	static class Config {
 		//general config settings for game
 		public const int BOARD_SIZE = 9;

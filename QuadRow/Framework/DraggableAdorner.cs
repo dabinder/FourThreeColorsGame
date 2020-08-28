@@ -5,10 +5,10 @@ using System.Windows.Media;
 
 namespace QuadRow.Framework {
 	class DraggableAdorner : Adorner {
-        private VisualCollection visualChildren;
+		private VisualCollection visualChildren;
 		private VisiblePiece draggedPiece;
 
-        public Point CenterOffset { get; private set; }
+		public Point CenterOffset { get; private set; }
 
 		public DraggableAdorner(VisiblePiece adornedElement) : base(adornedElement) {
 			visualChildren = new VisualCollection(this);
@@ -21,8 +21,8 @@ namespace QuadRow.Framework {
 		}
 
 		protected override Size ArrangeOverride(Size finalSize) {
-            draggedPiece.Arrange(new Rect(0, 0, finalSize.Width, finalSize.Height));
-            return draggedPiece.RenderSize;
+			draggedPiece.Arrange(new Rect(0, 0, finalSize.Width, finalSize.Height));
+			return draggedPiece.RenderSize;
 		}
 
 		protected override int VisualChildrenCount => visualChildren.Count;
@@ -30,5 +30,5 @@ namespace QuadRow.Framework {
 		protected override Visual GetVisualChild(int index) {
 			return visualChildren[index];
 		}
-    }
+	}
 }

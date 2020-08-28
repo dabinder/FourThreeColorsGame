@@ -78,7 +78,7 @@ namespace QuadRow.Views {
 			if (isDragging && DataContext is PlayerViewModel) {
 				DataObject data = new DataObject();
 				data.SetData(typeof(ColorType), ColorType);
-				
+
 				DragDrop.DoDragDrop(this, data, DragDropEffects.None);
 				adornerLayer.Remove(adorner);
 				isDragging = false;

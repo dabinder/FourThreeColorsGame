@@ -1,11 +1,9 @@
 ﻿using QuadRow.Collections;
 using QuadRow.Framework;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace QuadRow.Models
-{
+namespace QuadRow.Models {
 	public class Inventory : ObservableDictionary<ColorType, ObservableCollection<Piece>> {
 		public int TotalCount {
 			get {

@@ -3,10 +3,8 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace QuadRow.Converters
-{
-	public class MultiValueAnyToVisiblityConverter : IMultiValueConverter
-	{
+namespace QuadRow.Converters {
+	public class MultiValueAnyToVisiblityConverter : IMultiValueConverter {
 		/// <summary>
 		/// set object to visible if any values in list match expected (true/false)
 		/// </summary>

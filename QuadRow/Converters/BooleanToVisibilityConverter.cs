@@ -3,8 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace QuadRow.Converters
-{
+namespace QuadRow.Converters {
 	public class BooleanToVisibilityConverter : IValueConverter {
 		/// <summary>
 		/// convert boolean to Visibility value
