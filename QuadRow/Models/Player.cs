@@ -1,7 +1,6 @@
 ﻿using QuadRow.Framework;
 
-namespace QuadRow.Models
-{
+namespace QuadRow.Models {
 	public class Player : ObservableObject {
 		private string _name;
 		public string Name {

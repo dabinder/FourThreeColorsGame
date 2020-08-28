@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 
-namespace QuadRow.Framework
-{
+namespace QuadRow.Framework {
 	static class DisplayedColors {
 		/// <summary>
 		/// translate ColorType into displayable color

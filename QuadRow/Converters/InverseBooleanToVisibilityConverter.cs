@@ -3,8 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace QuadRow.Converters
-{
+namespace QuadRow.Converters {
 	public class InverseBooleanToVisibilityConverter : IValueConverter {
 		public object Convert(object value, Type targetType, object parameter, CultureInfo language) {
 			if (targetType != typeof(Visibility))

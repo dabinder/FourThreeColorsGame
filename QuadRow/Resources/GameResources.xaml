@@ -5,7 +5,6 @@
 	xmlns:conv="clr-namespace:QuadRow.Converters"
 	xmlns:fw="clr-namespace:QuadRow.Framework"
 	xmlns:vm="clr-namespace:QuadRow.ViewModels"
-	xmlns:v="clr-namespace:QuadRow.Views"
 	>
 
 	<!-- default colors -->

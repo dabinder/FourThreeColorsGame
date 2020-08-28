@@ -4,8 +4,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace QuadRow.Converters
-{
+namespace QuadRow.Converters {
 	public class ColorTypeToColorConverter : IValueConverter {
 		/// <summary>
 		/// convert ColorType enum to visible color

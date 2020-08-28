@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace QuadRow.Framework
-{
+namespace QuadRow.Framework {
 	public class IntAlphaConverter {
 		private const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

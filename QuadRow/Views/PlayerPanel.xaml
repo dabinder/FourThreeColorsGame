@@ -46,57 +46,6 @@
 				</Canvas>
 			</Border>
 		</StackPanel>
-		<!--
-		<ItemsControl ItemsSource="{Binding Inventory}" HorizontalAlignment="Center" x:Name="playerPieces">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<StackPanel Orientation="Horizontal" />
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<Border Height="{StaticResource PieceSize}" BorderThickness="0" Width="{StaticResource PieceSize}" Margin="0, 0, 5, 0">
-						<Canvas>
-							<uc:VisiblePiece
-								ColorType="{Binding Key, RelativeSource={RelativeSource}}"
-								IsDraggable="{Binding DataContext.Active, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerPanel}}}"
-								DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerPanel}}}"
-							/>
-							<TextBlock
-								Canvas.Left="{StaticResource CountPosition}"
-								Canvas.Top="{StaticResource CountPosition}"
-								Foreground="Black"
-								Text="{Binding Value.Count}"
-							/>
-
-							<ItemsControl ItemsSource="{Binding Value}">
-								<ItemsControl.ItemsPanel>
-									<ItemsPanelTemplate>
-										<Grid />
-									</ItemsPanelTemplate>
-								</ItemsControl.ItemsPanel>
-								<ItemsControl.ItemTemplate>
-									<DataTemplate>
-										<uc:VisiblePiece
-											ColorType="{Binding Key}"
-											IsDraggable="{Binding Active, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerPanel}}}"
-											DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:PlayerPanel}}}"
-										/>
-									</DataTemplate>
-								</ItemsControl.ItemTemplate>
-							</ItemsControl>
-							<TextBlock
-									Canvas.Left="{StaticResource CountPosition}"
-									Canvas.Top="{StaticResource CountPosition}"
-									Foreground="Black"
-									Text="{Binding Value.Count}"
-							/>
-						</Canvas>
-					</Border>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-		-->
 		<TextBlock
 			Text="Current Player"
 			FontSize="14pt"

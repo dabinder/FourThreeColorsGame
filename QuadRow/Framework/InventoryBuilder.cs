@@ -2,8 +2,7 @@ using QuadRow.Models;
 using System;
 using System.Collections.Generic;
 
-namespace QuadRow.Framework
-{
+namespace QuadRow.Framework {
 	public static class InventoryBuilder {
 		/// <summary>
 		/// color sets, workaround for psuedo const array
@@ -25,15 +24,15 @@ namespace QuadRow.Framework
 			int[] colors;
 
 			switch (variant) {
-				case InventoryVariant.Variant1 :
+				case InventoryVariant.Variant1:
 					colors = colorSet1;
 					break;
 
-				case InventoryVariant.Variant2 :
+				case InventoryVariant.Variant2:
 					colors = colorSet2;
 					break;
 
-				default :
+				default:
 					throw new ArgumentOutOfRangeException($"InventoryVariant {variant} not among enumerated types");
 			}
 
