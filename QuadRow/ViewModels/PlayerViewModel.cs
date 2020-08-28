@@ -1,6 +1,11 @@
 ﻿using QuadRow.Framework;
 using QuadRow.Models;
+using QuadRow.Views;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace QuadRow.ViewModels {
 	public class PlayerViewModel : ObservableObject {
@@ -65,6 +70,19 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		private DraggableAdorner adorner;
+		private AdornerLayer adornerLayer;
+		private bool isDragging;
+
+		[DllImport("user32.dll")]
+		internal static extern void GetCursorPos(ref Win32Point pt);
+
+		[StructLayout(LayoutKind.Sequential)]
+		internal struct Win32Point {
+			public int X;
+			public int Y;
+		};
+
 		protected PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
 			Player = new Player(name, variant);
 			Player.PropertyChanged += PlayerNameChanged;
@@ -74,6 +92,41 @@ namespace QuadRow.ViewModels {
 		private void PlayerNameChanged(object sender, PropertyChangedEventArgs e) {
 			if (e.PropertyName == "Name") {
 				PlayerNameError = Player.Name == "";
+			}
+		}
+
+		public void PieceMouseDown(object sender, MouseButtonEventArgs e) {
+			if (Active && e.LeftButton == MouseButtonState.Pressed) {
+				VisiblePiece piece = (VisiblePiece)sender;
+				adornerLayer = AdornerLayer.GetAdornerLayer(piece);
+				adorner = new DraggableAdorner(piece);
+				adornerLayer.Add(adorner);
+				isDragging = true;
+			}
+		}
+
+		public void PieceMouseMove(object sender, MouseEventArgs e) {
+			if (isDragging) {
+				VisiblePiece piece = (VisiblePiece)sender;
+				DataObject data = new DataObject();
+				data.SetData(typeof(ColorType), piece.ColorType);
+
+				DragDrop.DoDragDrop(piece, data, DragDropEffects.None);
+				adornerLayer.Remove(adorner);
+				isDragging = false;
+			}
+		}
+
+		public void PieceGiveFeedback(object sender, GiveFeedbackEventArgs e) {
+			if (isDragging) {
+				VisiblePiece piece = (VisiblePiece)sender;
+				Mouse.SetCursor(Cursors.None);
+				e.Handled = true;
+
+				Win32Point win32Point = new Win32Point();
+				GetCursorPos(ref win32Point);
+				Point relPos = piece.PointFromScreen(new Point(win32Point.X, win32Point.Y));
+				adorner.Arrange(new Rect(relPos, adorner.DesiredSize));
 			}
 		}
 	}
