@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:uc="clr-namespace:QuadRow.Views"
+    xmlns:v="clr-namespace:QuadRow.Views"
     mc:Ignorable="d" 
 >
 
@@ -29,19 +29,19 @@
 			</StackPanel.Resources>
 			<Border>
 				<Canvas>
-					<uc:VisiblePiece ColorType="{StaticResource ColorType1}" />
+					<v:VisiblePiece ColorType="{StaticResource ColorType1}" x:Name="pieceType1" />
 					<TextBlock Text="{Binding Color1Count}"	/>
 				</Canvas>
 			</Border>
 			<Border>
 				<Canvas>
-					<uc:VisiblePiece ColorType="{StaticResource ColorType2}" />
+					<v:VisiblePiece ColorType="{StaticResource ColorType2}" x:Name="pieceType2" />
 					<TextBlock Text="{Binding Color2Count}"	/>
 				</Canvas>
 			</Border>
 			<Border>
 				<Canvas>
-					<uc:VisiblePiece ColorType="{StaticResource ColorType3}" />
+					<v:VisiblePiece ColorType="{StaticResource ColorType3}" x:Name="pieceType3" />
 					<TextBlock Text="{Binding Color3Count}"	/>
 				</Canvas>
 			</Border>
