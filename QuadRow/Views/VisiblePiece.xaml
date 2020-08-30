@@ -10,6 +10,6 @@
 		x:Name="visiblePiece"
 		Height="{StaticResource PieceSize}"
 		Width="{StaticResource PieceSize}"
-		Fill="{Binding Fill, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type local:VisiblePiece}}}"
+		Fill="{Binding ColorType, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type local:VisiblePiece}}, Converter={StaticResource ColorTypeToColorConverter}}"
 	/>
 </UserControl>

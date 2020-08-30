@@ -32,12 +32,6 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
-		public Inventory Inventory {
-			get {
-				return Player.Inventory;
-			}
-		}
-
 		public int Color1Count {
 			get {
 				return Player.GetCount(ColorType.Color1);
@@ -111,7 +105,7 @@ namespace QuadRow.ViewModels {
 				DataObject data = new DataObject();
 				data.SetData(typeof(ColorType), piece.ColorType);
 
-				DragDrop.DoDragDrop(piece, data, DragDropEffects.None);
+				DragDrop.DoDragDrop(piece, data, DragDropEffects.Copy);
 				adornerLayer.Remove(adorner);
 				isDragging = false;
 			}
@@ -128,6 +122,10 @@ namespace QuadRow.ViewModels {
 				Point relPos = piece.PointFromScreen(new Point(win32Point.X, win32Point.Y));
 				adorner.Arrange(new Rect(relPos, adorner.DesiredSize));
 			}
+		}
+
+		public Piece PlayPiece(ColorType colorType) {
+			return Player.PlayPiece(colorType);
 		}
 	}
 }

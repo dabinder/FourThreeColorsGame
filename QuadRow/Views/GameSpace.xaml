@@ -4,31 +4,40 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:uc="clr-namespace:QuadRow.UserControls"
+    xmlns:v="clr-namespace:QuadRow.Views"
     xmlns:local="clr-namespace:QuadRow.Views"
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="400"
 	BorderBrush="AliceBlue"
+	AllowDrop="True"
+	IsHitTestVisible="True"
 >
 
 	<Border Height="{StaticResource SpaceSize}" Width="{StaticResource SpaceSize}">
 		<Canvas>
-			<!-- empty space-->
+			<!-- game space-->
 			<Border
 				Height="{StaticResource SpaceSize}"
 				Width="{StaticResource SpaceSize}"
 				Background="Transparent"
 				BorderBrush="Transparent"
 			>
-				<TextBlock Text="{Binding TestOrigin}" />
 				<!-- played piece -->
-				<!--
-				<uc:VisiblePiece
-					Visibility="{Binding Occupied, Converter={StaticResource BooleanToVisibilityConverter}}"
-					Fill="{Binding Occupant.Color, Converter={StaticResource ColorTypeToColorConverter}}"
+				<v:VisiblePiece
+					ColorType="{Binding Occupant.Color}"
+					Visibility="{Binding IsOccupied, Converter={StaticResource BooleanToVisibilityConverter}}"
 				/>
-				-->
 			</Border>
+			
+			<TextBlock Text="{Binding TestOrigin}" />
+			<!-- hover with piece -->
+			<Border
+				Height="{StaticResource SpaceSize}"
+				Width="{StaticResource SpaceSize}"
+				BorderBrush="{StaticResource DefaultHoverBorder}"
+				BorderThickness="2"
+				Visibility="{Binding IsHovered, Converter={StaticResource BooleanToVisibilityConverter}}"
+			/>
 		</Canvas>
 	</Border>
 </UserControl>

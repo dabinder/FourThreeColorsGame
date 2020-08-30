@@ -13,7 +13,7 @@ namespace QuadRow.Models {
 			}
 		}
 
-		public Inventory Inventory { get; }
+		private readonly Inventory inventory;
 
 		/// <summary>
 		/// set player name and inventory
@@ -22,12 +22,16 @@ namespace QuadRow.Models {
 		/// <param name="variant">inventory variant enum value</param>
 		public Player(string name, InventoryBuilder.InventoryVariant variant) {
 			Name = name;
-			Inventory = new Inventory(variant);
+			inventory = new Inventory(variant);
 			NotifyPropertyChanged(nameof(Inventory));
 		}
 
 		public int GetCount(ColorType colorType) {
-			return Inventory[colorType].Count;
+			return inventory[colorType].Count;
+		}
+
+		public Piece PlayPiece(ColorType colorType) {
+			return inventory.RemovePiece(colorType);
 		}
 	}
 }
