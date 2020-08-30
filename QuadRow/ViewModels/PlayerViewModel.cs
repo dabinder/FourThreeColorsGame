@@ -1,6 +1,7 @@
 ﻿using QuadRow.Framework;
 using QuadRow.Models;
 using QuadRow.Views;
+using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -16,7 +17,7 @@ namespace QuadRow.ViewModels {
 			get {
 				return _playerNameError;
 			}
-			set {
+			private set {
 				_playerNameError = value;
 				NotifyPropertyChanged(nameof(PlayerNameError));
 			}
@@ -34,22 +35,17 @@ namespace QuadRow.ViewModels {
 
 		public int Color1Count {
 			get {
-				return Player.GetCount(ColorType.Color1);
+				return Player.Color1Count;
 			}
 		}
 		public int Color2Count {
 			get {
-				return Player.GetCount(ColorType.Color2);
+				return Player.Color2Count;
 			}
 		}
 		public int Color3Count {
 			get {
-				return Player.GetCount(ColorType.Color3);
-			}
-		}
-		public int TotalCount {
-			get {
-				return Color1Count + Color2Count + Color3Count;
+				return Player.Color3Count;
 			}
 		}
 
@@ -79,13 +75,27 @@ namespace QuadRow.ViewModels {
 
 		protected PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
 			Player = new Player(name, variant);
-			Player.PropertyChanged += PlayerNameChanged;
+			Player.PropertyChanged += PlayerPropertyChanged;
 			NotifyPropertyChanged(nameof(Player));
 		}
 
-		private void PlayerNameChanged(object sender, PropertyChangedEventArgs e) {
-			if (e.PropertyName == "Name") {
-				PlayerNameError = Player.Name == "";
+		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
+			switch (e.PropertyName) {
+				case "Name":
+					PlayerNameError = Player.Name == "";
+					break;
+
+				case "Color1Count":
+					NotifyPropertyChanged(nameof(Color1Count));
+					break;
+
+				case "Color2Count":
+					NotifyPropertyChanged(nameof(Color2Count));
+					break;
+
+				case "Color3Count":
+					NotifyPropertyChanged(nameof(Color3Count));
+					break;
 			}
 		}
 
@@ -126,6 +136,12 @@ namespace QuadRow.ViewModels {
 
 		public Piece PlayPiece(ColorType colorType) {
 			return Player.PlayPiece(colorType);
+		}
+
+		private void InventoryChanged(object sender, CollectionChangeEventArgs e) {
+			NotifyPropertyChanged(nameof(Color1Count));
+			NotifyPropertyChanged(nameof(Color2Count));
+			NotifyPropertyChanged(nameof(Color3Count));
 		}
 	}
 }

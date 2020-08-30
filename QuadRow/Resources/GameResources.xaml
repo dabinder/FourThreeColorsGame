@@ -66,6 +66,7 @@
 	<conv:PositionToIntConverter x:Key="PositionToIntConverter" />
 	<conv:MultiValueAnyToVisiblityConverter x:Key="MultiValueAnyToVisiblityConverter" />
 	<conv:BooleanAndConverter x:Key="BooleanAndConverter" />
+	<conv:MultiValueSumConverter x:Key="MultiValueSumConverter" />
 
 	<!-- piece colors -->
 	<fw:ColorType x:Key="ColorType1">Color1</fw:ColorType>

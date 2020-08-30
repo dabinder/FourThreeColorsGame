@@ -78,8 +78,8 @@
 					>
 						<TextBlock.Visibility>
 							<MultiBinding Converter="{StaticResource MultiValueAnyToVisiblityConverter}">
-								<Binding Path="DataContext.PlayerNameError" ElementName="player1Panel" />
-								<Binding Path="DataContext.PlayerNameError" ElementName="player2Panel" />
+								<Binding Path="Player1.PlayerNameError" />
+								<Binding Path="Player2.PlayerNameError" />
 							</MultiBinding>
 						</TextBlock.Visibility>
 					</TextBlock>
@@ -161,21 +161,69 @@
 						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Player1.Color1Count}" />
 						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Player1.Color2Count}" />
 						<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Player1.Color3Count}" />
-						<TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Player1.TotalCount}" />
+						<TextBlock Grid.Row="4" Grid.Column="1">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource MultiValueSumConverter}">
+									<Binding Path="Player1.Color1Count" />
+									<Binding Path="Player1.Color2Count" />
+									<Binding Path="Player1.Color3Count" />
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
 
 						<!-- column 2: player 2 -->
 						<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Player2.PlayerName}" />
 						<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Player2.Color1Count}" />
 						<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Player2.Color2Count}" />
 						<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Player2.Color3Count}" />
-						<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Player2.TotalCount}" />
+						<TextBlock Grid.Row="4" Grid.Column="2">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource MultiValueSumConverter}">
+									<Binding Path="Player2.Color1Count" />
+									<Binding Path="Player2.Color2Count" />
+									<Binding Path="Player2.Color3Count" />
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
 
 						<!-- column 3: totals -->
 						<TextBlock Grid.Row="0" Grid.Column="3" Text="Total" />
-						<TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Color1TotalPieces}" />
-						<TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding Color2TotalPieces}" />
-						<TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Color3TotalPieces}" />
-						<TextBlock Grid.Row="4" Grid.Column="3" Text="{Binding GrandTotalPieces}" />
+						<TextBlock Grid.Row="1" Grid.Column="3">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource MultiValueSumConverter}">
+									<Binding Path="Player1.Color1Count" />
+									<Binding Path="Player2.Color1Count" />
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+						<TextBlock Grid.Row="2" Grid.Column="3">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource MultiValueSumConverter}">
+									<Binding Path="Player1.Color2Count" />
+									<Binding Path="Player2.Color2Count" />
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+						<TextBlock Grid.Row="3" Grid.Column="3">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource MultiValueSumConverter}">
+									<Binding Path="Player1.Color3Count" />
+									<Binding Path="Player2.Color3Count" />
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+						<TextBlock Grid.Row="4" Grid.Column="3">
+							<TextBlock.Text>
+								<MultiBinding Converter="{StaticResource MultiValueSumConverter}">
+									<Binding Path="Player1.Color1Count" />
+									<Binding Path="Player1.Color2Count" />
+									<Binding Path="Player1.Color3Count" />
+									<Binding Path="Player2.Color1Count" />
+									<Binding Path="Player2.Color2Count" />
+									<Binding Path="Player2.Color3Count" />
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
 					</Grid>
 				</Grid>
 			</Grid>

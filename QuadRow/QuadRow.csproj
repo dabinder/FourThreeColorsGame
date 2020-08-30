@@ -74,6 +74,7 @@
     <Compile Include="Converters\ChainedConverter.cs" />
     <Compile Include="Converters\MultiValueAllToVisibilityConverter.cs" />
     <Compile Include="Converters\MultiValueAnyToVisiblityConverter.cs" />
+    <Compile Include="Converters\MultiValueSumConverter.cs" />
     <Compile Include="Framework\ColorType.cs" />
     <Compile Include="Framework\Config.cs" />
     <Compile Include="Framework\Coordinates.cs" />
