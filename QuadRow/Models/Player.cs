@@ -67,5 +67,9 @@ namespace QuadRow.Models {
 		public Piece PlayPiece(ColorType colorType) {
 			return inventory.RemovePiece(colorType);
 		}
+
+		public bool CanPlayPiece(ColorType colorType) {
+			return inventory[colorType].Count > 0;
+		}
 	}
 }
