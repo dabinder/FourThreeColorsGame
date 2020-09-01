@@ -12,7 +12,7 @@ namespace QuadRow.Converters {
 		/// <param name="targetType">Visiblity</param>
 		/// <param name="parameter"></param>
 		/// <param name="language"></param>
-		/// <returns>true = Visible, false = Collapsed</returns>
+		/// <returns>true = Visible, false = Hidden</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo language) {
 			if (targetType != typeof(Visibility)) throw new InvalidOperationException("Target must be of Visibility type");
 			if (!(value is bool)) return null;
@@ -26,7 +26,7 @@ namespace QuadRow.Converters {
 		/// <param name="targetType">boolean</param>
 		/// <param name="parameter"></param>
 		/// <param name="language"></param>
-		/// <returns>Visible = true, Collapsed = false</returns>
+		/// <returns>Visible = true, Hidden = false</returns>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo language) {
 			if (!(value is Visibility)) throw new InvalidOperationException("Value must be of Visibility type");
 			if (Equals(value, Visibility.Visible)) return true;
