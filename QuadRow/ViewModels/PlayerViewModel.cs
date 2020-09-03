@@ -1,7 +1,6 @@
 ﻿using QuadRow.Framework;
 using QuadRow.Models;
 using QuadRow.Views;
-using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -170,12 +169,6 @@ namespace QuadRow.ViewModels {
 		public Piece PlayPiece(ColorType colorType) {
 			IsPiecePlayed = true;
 			return player.PlayPiece(colorType);
-		}
-
-		private void InventoryChanged(object sender, CollectionChangeEventArgs e) {
-			NotifyPropertyChanged(nameof(Color1Count));
-			NotifyPropertyChanged(nameof(Color2Count));
-			NotifyPropertyChanged(nameof(Color3Count));
 		}
 	}
 }

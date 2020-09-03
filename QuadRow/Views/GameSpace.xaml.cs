@@ -1,6 +1,4 @@
-﻿using QuadRow.Framework;
-using QuadRow.Models;
-using QuadRow.ViewModels;
+﻿using QuadRow.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
