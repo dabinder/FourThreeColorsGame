@@ -17,8 +17,8 @@
 		>
 			<Border
 				Name="playerNames"
-				Width="500"
-				Height="250"
+				Width="{StaticResource OverlayWidth}"
+				Height="{StaticResource OverlayHeight}"
 			>
 				<Grid HorizontalAlignment="Center" VerticalAlignment="Top">
 					<Grid.RowDefinitions>
@@ -85,6 +85,26 @@
 					</TextBlock>
 				</Grid>
 			</Border>
+		</Grid>
+		
+		<!-- end of game notification -->
+		<Grid Width="{Binding ActualWidth, ElementName=mainGameLayout}"
+			  Height="{Binding ActualHeight, ElementName=mainGameLayout}"
+			  Canvas.ZIndex="1"
+			  Visibility="{Binding IsTie, Converter={StaticResource BooleanToVisibilityConverter}}"
+		>
+			<Border Width="{StaticResource OverlayWidth}" Height="{StaticResource OverlayHeight}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition  />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Game Over" FontSize="20pt" />
+
+					<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Text="No more moves possible; game is a tie" FontSize="12pt" />
+				</Grid>
+			</Border> 
 		</Grid>
 
 		<Grid

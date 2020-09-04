@@ -10,7 +10,6 @@ namespace QuadRow.Framework {
 	/// code borrowed from:
 	///		https://social.msdn.microsoft.com/Forums/en-US/81eca7d5-88d7-477a-8cdb-cfb9e8b75379/how-to-add-controls-to-adorner?forum=wpf,
 	///		https://www.wundervisionenvisionthefuture.com/post/wpf-c-drag-and-drop-icon-adorner
-	///		https://stackoverflow.com/a/27975085/2136840
 	/// </summary>
 	class DraggableAdorner : Adorner {
 		private VisualCollection visualChildren;
