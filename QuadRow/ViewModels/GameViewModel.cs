@@ -24,10 +24,7 @@ namespace QuadRow.ViewModels {
 		public RelayCommand CloseIntroCommand {
 			get {
 				return _closeIntroCommand ?? (
-					_closeIntroCommand = new RelayCommand(param => {
-						CurrentScreen = new GameScreen();
-						IsNameBoxOpen = true;
-					})
+					_closeIntroCommand = new RelayCommand(param => ResetGame())
 				);
 			}
 		}
@@ -117,6 +114,14 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		private RelayCommand _restartGame;
+		public RelayCommand RestartGame {
+			get {
+				return _restartGame ?? (
+					_restartGame = new RelayCommand(param => ResetGame())
+				);
+			}
+		}
 		#endregion
 
 		public GameViewModel() {
@@ -125,8 +130,6 @@ namespace QuadRow.ViewModels {
 				DataContext = this
 			};
 			CurrentScreen = introScreen;
-			Player1.PropertyChanged += PlayerPropertyChanged;
-			Player2.PropertyChanged += PlayerPropertyChanged;
 		}
 
 		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -154,6 +157,19 @@ namespace QuadRow.ViewModels {
 				IsTie = true;
 				EndGame();
 			}
+		}
+
+		private void ResetGame() {
+			Application currentApp = Application.Current;
+			currentApp.Resources["Player1ViewModel"] = new Player1ViewModel();
+			currentApp.Resources["Player2ViewModel"] = new Player2ViewModel();
+			NotifyPropertyChanged(nameof(Player1));
+			NotifyPropertyChanged(nameof(Player2));
+			Player1.PropertyChanged += PlayerPropertyChanged;
+			Player2.PropertyChanged += PlayerPropertyChanged;
+			CurrentScreen = new GameScreen();
+			IsNameBoxOpen = true;
+			IsTie = false;
 		}
 	}
 }

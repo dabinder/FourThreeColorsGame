@@ -13,7 +13,7 @@ namespace QuadRow.ViewModels {
 	/// 
 	/// drag-and-drop code borrowed from https://stackoverflow.com/a/27975085/2136840
 	/// </summary>
-	public class PlayerViewModel : ObservableObject {
+	abstract public class PlayerViewModel : ObservableObject {
 		private readonly Player player;
 
 		private bool _playerNameError;
