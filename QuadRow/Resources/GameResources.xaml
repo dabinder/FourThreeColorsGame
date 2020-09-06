@@ -81,6 +81,7 @@
 	<sys:Double x:Key="PieceSize">45</sys:Double>
 	<sys:Double x:Key="OverlayWidth">500</sys:Double>
 	<sys:Double x:Key="OverlayHeight">250</sys:Double>
+	<sys:Int32 x:Key="MaxPlayerNameLength">20</sys:Int32>
 	<!-- padding should be (SpaceSize - PieceSize)/2 - BorderThickness -->
 	<sys:Double x:Key="PiecePadding">7</sys:Double>
 	<sys:Double x:Key="CountPosition">20</sys:Double>
