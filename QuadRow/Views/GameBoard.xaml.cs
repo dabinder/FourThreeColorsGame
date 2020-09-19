@@ -1,4 +1,5 @@
 ﻿using QuadRow.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace QuadRow.Views {
@@ -8,7 +9,7 @@ namespace QuadRow.Views {
 	public partial class GameBoard : UserControl {
 		public GameBoard() {
 			InitializeComponent();
-			DataContext = new BoardViewModel();
+			DataContext = Application.Current.Resources["BoardViewModel"];
 		}
 	}
 }
