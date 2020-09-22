@@ -3,7 +3,6 @@ using QuadRow.Framework;
 using QuadRow.Views;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
