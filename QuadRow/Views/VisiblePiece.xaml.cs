@@ -29,10 +29,17 @@ namespace QuadRow.Views {
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		/// <summary>
+		/// create new visible piece
+		/// </summary>
 		public VisiblePiece() {
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// create new visible piece as a copy of an existing piece
+		/// </summary>
+		/// <param name="piece">piece to copy</param>
 		public VisiblePiece(VisiblePiece piece) : this() {
 			visiblePiece.Height = piece.visiblePiece.Height;
 			visiblePiece.Width = piece.visiblePiece.Width;

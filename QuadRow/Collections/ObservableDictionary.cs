@@ -3,11 +3,13 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 
-/*
- * ObservableDictionary class, from https://stackoverflow.com/a/14410196/2136840
- */
-
 namespace QuadRow.Collections {
+
+	/// <summary>
+	/// ObservableDictionary class, from https://stackoverflow.com/a/14410196/2136840
+	/// </summary>
+	/// <typeparam name="TKey">item key</typeparam>
+	/// <typeparam name="TValue">item value</typeparam>
 	public class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged {
 
 		public ObservableDictionary() : base() { }

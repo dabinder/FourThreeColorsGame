@@ -142,14 +142,22 @@ namespace QuadRow.ViewModels {
 		}
 		#endregion
 
+		/// <summary>
+		/// initialize game on intro screen
+		/// </summary>
 		public GameViewModel() {
-			//initialize game on intro screen
 			ContentControl introScreen = new IntroScreen {
 				DataContext = this
 			};
 			CurrentScreen = introScreen;
 		}
 
+		/// <summary>
+		/// listen for changes to IsPieceChanged player property
+		/// check for winner or tie with each played piece
+		/// </summary>
+		/// <param name="sender">player with changed property</param>
+		/// <param name="e">details of changed property</param>
 		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
 			if (e.PropertyName == "IsPiecePlayed" && (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender)) {
 				if (CheckWinner()) {
@@ -165,15 +173,25 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// start player 1 as active
+		/// </summary>
 		private void StartGame() {
-			//start player 1 as active
 			Turn = 1;
 		}
 
+		/// <summary>
+		/// set active player to no one
+		/// </summary>
 		private void EndGame() {
 			ActivePlayer = null;
 		}
 
+		/// <summary>
+		/// check if the current player has won the game with the latest played piece
+		/// a win is declared with 4 in a row either horizontally, vertically, or diagonally
+		/// </summary>
+		/// <returns>current player has won</returns>
 		private bool CheckWinner() {
 			Coordinates start = ActivePlayer.LastPlayedLocation;
 			ColorType color = ActivePlayer.LastPlayedColor;
@@ -274,14 +292,20 @@ namespace QuadRow.ViewModels {
 			return false;
 		}
 
+		/// <summary>
+		/// if current player's inventory is empty or board is full, mark game as tie
+		/// </summary>
+		/// <returns>game has ended in a tie</returns>
 		private bool CheckTieGame() {
-			//if current player's inventory is empty or board is full, mark game as tie
 			return (Turn > Config.BOARD_SIZE * Config.BOARD_SIZE ||
 				(Player1.IsInventoryEmpty && ActivePlayer == Player1) ||
 				(Player2.IsInventoryEmpty && ActivePlayer == Player2)
 			);
 		}
 
+		/// <summary>
+		/// reset board and player parameters to prepare for a new game
+		/// </summary>
 		private void ResetGame() {
 			Application currentApp = Application.Current;
 			currentApp.Resources["Player1ViewModel"] = new Player1ViewModel();

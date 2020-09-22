@@ -6,6 +6,9 @@ namespace QuadRow.Views {
 	/// Interaction logic for GameScreen.xaml
 	/// </summary>
 	public partial class GameScreen : UserControl {
+		/// <summary>
+		/// create a new game screen and set players' data context to PlayerViewModels
+		/// </summary>
 		public GameScreen() {
 			InitializeComponent();
 			Application currentApp = Application.Current;

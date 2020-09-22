@@ -1,6 +1,9 @@
 ﻿using System.Windows.Media;
 
 namespace QuadRow.Framework {
+	/// <summary>
+	/// game-wide configuration
+	/// </summary>
 	static class Config {
 		//general config settings for game
 		public const int BOARD_SIZE = 9;

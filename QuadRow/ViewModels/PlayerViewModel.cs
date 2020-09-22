@@ -105,19 +105,39 @@ namespace QuadRow.ViewModels {
 		private AdornerLayer adornerLayer;
 		private bool isDragging;
 
+		/// <summary>
+		/// identify position of cursor for given point
+		/// </summary>
+		/// <param name="pt">point of reference</param>
 		[DllImport("user32.dll")]
 		internal static extern void GetCursorPos(ref Win32Point pt);
 
+		/// <summary>
+		/// X, Y coordinates to identify cursor position
+		/// </summary>
 		[StructLayout(LayoutKind.Sequential)]
 		internal struct Win32Point {
 			public int X, Y;
 		};
 
+		/// <summary>
+		/// create new player and listen for property changes
+		/// </summary>
+		/// <param name="name">initial name of player</param>
+		/// <param name="variant">inventory variant for player</param>
 		protected PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
 			player = new Player(name, variant);
 			player.PropertyChanged += PlayerPropertyChanged;
 		}
 
+		/// <summary>
+		/// listen for changes to player properties:
+		/// 
+		///		Name: check for valid name entered
+		///		Color1/2/3Count: update local count of color and notify listeners
+		/// </summary>
+		/// <param name="sender">player with property change</param>
+		/// <param name="e">details of property change</param>
 		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
 			switch (e.PropertyName) {
 				case "Name":
@@ -141,6 +161,12 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// action on pressing down the mouse button on a piece
+		/// copy visible piece for drag-and-drop effect
+		/// </summary>
+		/// <param name="sender">visible piece clicked on</param>
+		/// <param name="e">mouse button action details</param>
 		public void PieceMouseDown(object sender, MouseButtonEventArgs e) {
 			if (Active && e.LeftButton == MouseButtonState.Pressed) {
 				VisiblePiece piece = (VisiblePiece)sender;
@@ -153,6 +179,12 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// action on moving the mouse while holding a piece
+		/// if currently dragging a piece, moving the mouse will visibly drag the piece across the screen
+		/// </summary>
+		/// <param name="sender">piece being dragged</param>
+		/// <param name="e">mouse move action details</param>
 		public void PieceMouseMove(object sender, MouseEventArgs e) {
 			if (isDragging) {
 				VisiblePiece piece = (VisiblePiece)sender;
@@ -165,6 +197,11 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// action on drag-and-drop event while holding a piece
+		/// </summary>
+		/// <param name="sender">piece being dragged</param>
+		/// <param name="e">feedback event details</param>
 		public void PieceGiveFeedback(object sender, GiveFeedbackEventArgs e) {
 			if (isDragging) {
 				VisiblePiece piece = (VisiblePiece)sender;
@@ -178,6 +215,12 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// play piece from inventory and return it
+		/// </summary>
+		/// <param name="colorType">color of piece to play</param>
+		/// <param name="coordinates">destination on board to place piece</param>
+		/// <returns>piece played</returns>
 		public Piece PlayPiece(ColorType colorType, Coordinates coordinates) {
 			LastPlayedLocation = coordinates;
 			LastPlayedColor = colorType;

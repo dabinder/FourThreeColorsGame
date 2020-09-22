@@ -48,6 +48,10 @@ namespace QuadRow.Models {
 			}
 		}
 
+		/// <summary>
+		/// recalculate counts and notify listeners on inventory changes
+		/// </summary>
+		/// <param name="colorType">color of piece added to or removed from inventory</param>
 		private void OnInventoryChanged(ColorType colorType) {
 			switch (colorType) {
 				case ColorType.Color1:
@@ -64,10 +68,20 @@ namespace QuadRow.Models {
 			}
 		}
 
+		/// <summary>
+		/// remove piece from inventory and return it
+		/// </summary>
+		/// <param name="colorType">color of piece to play</param>
+		/// <returns>played piece</returns>
 		public Piece PlayPiece(ColorType colorType) {
 			return inventory.RemovePiece(colorType);
 		}
 
+		/// <summary>
+		/// determine whether player currently can play a piece
+		/// </summary>
+		/// <param name="colorType">color of piece to play</param>
+		/// <returns>player can play a piece of the specified color</returns>
 		public bool CanPlayPiece(ColorType colorType) {
 			return inventory[colorType].Count > 0;
 		}
