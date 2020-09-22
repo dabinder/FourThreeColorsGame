@@ -115,7 +115,6 @@
     <Compile Include="Collections\ObservableDictionary.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ColorTypeToColorConverter.cs" />
-    <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Framework\DisplayedColors.cs" />
     <Compile Include="Framework\InventoryBuilder.cs" />
     <Compile Include="Framework\ObservableObject.cs" />
