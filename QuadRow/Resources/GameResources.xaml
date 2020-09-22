@@ -61,8 +61,6 @@
 	<!-- converters -->
 	<conv:ColorTypeToColorConverter x:Key="ColorTypeToColorConverter" />
 	<conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-	<conv:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
-	<conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 	<conv:MultiValueAnyToVisiblityConverter x:Key="MultiValueAnyToVisiblityConverter" />
 	<conv:BooleanAndConverter x:Key="BooleanAndConverter" />
 	<conv:MultiValueSumConverter x:Key="MultiValueSumConverter" />
