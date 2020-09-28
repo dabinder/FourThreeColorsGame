@@ -3,8 +3,8 @@ using System.Windows.Input;
 
 namespace QuadRow.Framework {
 	public class RelayCommand : ICommand {
-		readonly Action<object> _execute;
-		readonly Predicate<object> _canExecute;
+		private readonly Action<object> _execute;
+		private readonly Predicate<object> _canExecute;
 
 		/// <summary>
 		/// create RelayCommand with an always true predicate
@@ -31,6 +31,9 @@ namespace QuadRow.Framework {
 			return _canExecute == null ? true : _canExecute(parameter);
 		}
 
+		/// <summary>
+		/// on changing the CanExecute condition, (un)subscribe specified event to force update of can execute status
+		/// </summary>
 		public event EventHandler CanExecuteChanged {
 			add {
 				CommandManager.RequerySuggested += value;

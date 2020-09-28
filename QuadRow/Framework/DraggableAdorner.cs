@@ -15,8 +15,6 @@ namespace QuadRow.Framework {
 		private readonly VisualCollection visualChildren;
 		private readonly VisiblePiece draggedPiece;
 
-		public Point CenterOffset { get; private set; }
-
 		/// <summary>
 		/// create copy of visible piece from adorned element
 		/// original piece remains in its starting location while this one is being dragged
@@ -28,8 +26,6 @@ namespace QuadRow.Framework {
 			visualChildren.Add(draggedPiece);
 
 			IsHitTestVisible = false;
-			Rect renderRect = new Rect(adornedElement.RenderSize);
-			CenterOffset = new Point(-renderRect.Width / 2, -renderRect.Height / 2);
 		}
 
 		/// <summary>
