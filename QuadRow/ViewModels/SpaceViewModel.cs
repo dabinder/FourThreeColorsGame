@@ -4,8 +4,6 @@ using System.Windows;
 
 namespace QuadRow.ViewModels {
 	class SpaceViewModel : ObservableObject {
-		//TODO: delete
-		public string TestOrigin { get; set; }
 
 		private readonly Coordinates coordinates;
 
