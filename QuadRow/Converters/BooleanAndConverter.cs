@@ -6,7 +6,7 @@ using System.Windows.Data;
 namespace QuadRow.Converters {
 	public class BooleanAndConverter : IMultiValueConverter {
 		/// <summary>
-		/// read multiple values, return single value indicating *all* are true
+		/// read multiple values, return single value indicating *all* match expected
 		/// </summary>
 		/// <param name="values">list of values</param>
 		/// <param name="targetType">boolean</param>

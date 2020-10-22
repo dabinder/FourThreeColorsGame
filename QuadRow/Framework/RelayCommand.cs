@@ -27,28 +27,21 @@ namespace QuadRow.Framework {
 		/// </summary>
 		/// <param name="parameter">parameter to pass into predicate</param>
 		/// <returns>command can be performed</returns>
-		public bool CanExecute(object parameter) {
-			return _canExecute == null ? true : _canExecute(parameter);
-		}
+		public bool CanExecute(object parameter) =>
+			_canExecute == null || _canExecute(parameter);
 
 		/// <summary>
 		/// on changing the CanExecute condition, (un)subscribe specified event to force update of can execute status
 		/// </summary>
 		public event EventHandler CanExecuteChanged {
-			add {
-				CommandManager.RequerySuggested += value;
-			}
-			remove {
-				CommandManager.RequerySuggested -= value;
-			}
+			add => CommandManager.RequerySuggested += value;
+			remove => CommandManager.RequerySuggested -= value;
 		}
 
 		/// <summary>
 		/// execute this RelayCommand's action
 		/// </summary>
 		/// <param name="parameter">parameter to pass into action</param>
-		public void Execute(object parameter) {
-			_execute(parameter);
-		}
+		public void Execute(object parameter) => _execute(parameter);
 	}
 }

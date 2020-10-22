@@ -20,18 +20,14 @@ namespace QuadRow.ViewModels {
 		/// indicates whether player has an invalid name entered (name field is blank)
 		/// </summary>
 		public bool PlayerNameError {
-			get {
-				return player.Name == "";
-			}
+			get => player.Name == "";
 		}
 
 		/// <summary>
 		/// player's name
 		/// </summary>
 		public string PlayerName {
-			get {
-				return player.Name;
-			}
+			get => player.Name;
 			set {
 				player.Name = value;
 				NotifyPropertyChanged(nameof(PlayerName));
@@ -42,63 +38,49 @@ namespace QuadRow.ViewModels {
 		/// current total of color 1 pieces
 		/// </summary>
 		public int Color1Count {
-			get {
-				return player.Color1Count;
-			}
+			get => player.Color1Count;
 		}
 
 		/// <summary>
 		/// current total of color 2 pieces
 		/// </summary>
 		public int Color2Count {
-			get {
-				return player.Color2Count;
-			}
+			get => return player.Color2Count;
 		}
 
 		/// <summary>
 		/// current total of color 3 pieces
 		/// </summary>
 		public int Color3Count {
-			get {
-				return player.Color3Count;
-			}
+			get => player.Color3Count;
 		}
 		
 		/// <summary>
 		/// indicates player has at least one color 1 piece remaining
 		/// </summary>
 		public bool HasColor1 {
-			get {
-				return Color1Count > 0;
-			}
+			get => Color1Count > 0;
 		}
 
 		/// <summary>
 		/// indicates player has at least one color 2 piece remaining
 		/// </summary>
 		public bool HasColor2 {
-			get {
-				return Color2Count > 0;
-			}
+			get => Color2Count > 0;
 		}
 
 		/// <summary>
 		/// indicates player has at least one color 3 piece remaining
 		/// </summary>
 		public bool HasColor3 {
-			get {
-				return Color3Count > 0;
-			}
+			get => Color3Count > 0;
 		}
 
 		/// <summary>
 		/// indicates inventory has no remaining pieces of any color
 		/// </summary>
 		public bool IsInventoryEmpty {
-			get {
-				return !HasColor1 && !HasColor2 && !HasColor3;
-			}
+			get => !HasColor1 && !HasColor2 && !HasColor3;
 		}
 
 		private bool _active;
@@ -106,9 +88,7 @@ namespace QuadRow.ViewModels {
 		/// player is currently active and permitted to play a piece
 		/// </summary>
 		public bool Active {
-			get {
-				return _active;
-			}
+			get => _active;
 			set {
 				_active = value;
 				NotifyPropertyChanged(nameof(Active));
@@ -121,9 +101,7 @@ namespace QuadRow.ViewModels {
 		/// indicates player has played a piece this turn
 		/// </summary>
 		public bool IsPiecePlayed { 
-			get {
-				return _isPiecePlayed;
-			}
+			get => _isPiecePlayed;
 			private set {
 				_isPiecePlayed = value;
 				NotifyPropertyChanged(nameof(IsPiecePlayed));

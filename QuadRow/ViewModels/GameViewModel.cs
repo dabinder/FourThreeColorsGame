@@ -14,9 +14,7 @@ namespace QuadRow.ViewModels {
 		/// currently displayed screen
 		/// </summary>
 		public ContentControl CurrentScreen {
-			get {
-				return _currentScreeen;
-			}
+			get => _currentScreeen;
 			set {
 				_currentScreeen = value;
 				NotifyPropertyChanged("CurrentScreen");
@@ -42,9 +40,7 @@ namespace QuadRow.ViewModels {
 		/// indicates whether the player name entry box is currently displayed on screen
 		/// </summary>
 		public bool IsNameBoxOpen {
-			get {
-				return _isNameBoxOpen;
-			}
+			get => _isNameBoxOpen;
 			private set {
 				_isNameBoxOpen = value;
 				NotifyPropertyChanged(nameof(IsNameBoxOpen));
@@ -70,18 +66,14 @@ namespace QuadRow.ViewModels {
 		/// game player 1; uses globally shared resource for the player 1 view model
 		/// </summary>
 		public PlayerViewModel Player1 {
-			get {
-				return (PlayerViewModel)Application.Current.FindResource("Player1ViewModel");
-			}
+			get => (PlayerViewModel)Application.Current.FindResource("Player1ViewModel");
 		}
 
 		/// <summary>
 		/// game player 2; uses globally shared resource for the player 2 view model
 		/// </summary>
 		public PlayerViewModel Player2 {
-			get {
-				return (PlayerViewModel)Application.Current.FindResource("Player2ViewModel");
-			}
+			get => (PlayerViewModel)Application.Current.FindResource("Player2ViewModel");
 		}
 
 		private PlayerViewModel _activePlayer;
@@ -90,9 +82,7 @@ namespace QuadRow.ViewModels {
 		/// this will alternate back and forth each turn
 		/// </summary>
 		public PlayerViewModel ActivePlayer {
-			get {
-				return _activePlayer;
-			}
+			get => _activePlayer;
 			private set {
 				if (value == Player1) {
 					Player1.Active = true;
@@ -119,9 +109,7 @@ namespace QuadRow.ViewModels {
 		/// the active player will be player 1 for odd numbered turns; 2 for even-numbered turns
 		/// </summary>
 		private int Turn {
-			get {
-				return _turn;
-			}
+			get => _turn;
 			set {
 				_turn = value;
 				ActivePlayer = value % 2 == 1 ?
@@ -135,9 +123,7 @@ namespace QuadRow.ViewModels {
 		/// indicates game has ended in a tie
 		/// </summary>
 		public bool IsTie {
-			get {
-				return _isTie;
-			}
+			get => _isTie;
 			private set {
 				_isTie = value;
 				NotifyPropertyChanged(nameof(IsTie));
@@ -149,9 +135,7 @@ namespace QuadRow.ViewModels {
 		/// indicates which player has won the game
 		/// </summary>
 		public PlayerViewModel Winner {
-			get {
-				return _winner;
-			}
+			get => _winner;
 			set {
 				_winner = value;
 				NotifyPropertyChanged(nameof(Winner));
@@ -163,9 +147,7 @@ namespace QuadRow.ViewModels {
 		/// indicates whether the game has a winner
 		/// </summary>
 		public bool HasWinner {
-			get {
-				return Winner != null;
-			}
+			get => Winner != null;
 		}
 
 		private RelayCommand _restartGame;
@@ -215,16 +197,12 @@ namespace QuadRow.ViewModels {
 		/// <summary>
 		/// start player 1 as active
 		/// </summary>
-		private void StartGame() {
-			Turn = 1;
-		}
+		private void StartGame() => Turn = 1;
 
 		/// <summary>
 		/// set active player to no one
 		/// </summary>
-		private void EndGame() {
-			ActivePlayer = null;
-		}
+		private void EndGame() => ActivePlayer = null;
 
 		/// <summary>
 		/// check if the current player has won the game with the latest played piece
