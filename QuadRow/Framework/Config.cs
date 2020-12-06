@@ -4,7 +4,7 @@ namespace QuadRow.Framework {
 	/// <summary>
 	/// game-wide configuration
 	/// </summary>
-	static class Config {
+	public static class Config {
 		//general config settings for game
 		public const int BOARD_SIZE = 9;
 		public const int WIN_LENGTH = 4;
@@ -18,6 +18,7 @@ namespace QuadRow.Framework {
 		public const int PLAYER2_COLOR2 = 13;
 		public const int PLAYER2_COLOR3 = 19;
 
+		//piece colors
 		public static readonly Color color1 = Colors.Crimson,
 			color2 = Colors.SpringGreen,
 			color3 = Colors.SkyBlue;

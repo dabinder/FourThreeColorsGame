@@ -14,16 +14,16 @@ namespace QuadRow.Converters.Tests {
 
 		[TestMethod]
 		public void ConvertTest_ReturnsColor() {
-			Assert.AreEqual(Colors.Crimson, converter.Convert(ColorType.Color1, typeof(Color), null, CultureInfo.CurrentCulture));
-			Assert.AreEqual(Colors.SpringGreen, converter.Convert(ColorType.Color2, typeof(Color), null, CultureInfo.CurrentCulture));
-			Assert.AreEqual(Colors.SkyBlue, converter.Convert(ColorType.Color3, typeof(Color), null, CultureInfo.CurrentCulture));
+			Assert.AreEqual(Config.color1, converter.Convert(ColorType.Color1, typeof(Color), null, CultureInfo.CurrentCulture));
+			Assert.AreEqual(Config.color2, converter.Convert(ColorType.Color2, typeof(Color), null, CultureInfo.CurrentCulture));
+			Assert.AreEqual(Config.color3, converter.Convert(ColorType.Color3, typeof(Color), null, CultureInfo.CurrentCulture));
 		}
 
 		[TestMethod]
 		public void ConvertTest_ReturnsBrush() {
-			Assert.IsTrue(BrushCompare(new SolidColorBrush(Colors.Crimson), (SolidColorBrush) converter.Convert(ColorType.Color1, typeof(Brush), null, CultureInfo.CurrentCulture)));
-			Assert.IsTrue(BrushCompare(new SolidColorBrush(Colors.SpringGreen), (SolidColorBrush) converter.Convert(ColorType.Color2, typeof(Brush), null, CultureInfo.CurrentCulture)));
-			Assert.IsTrue(BrushCompare(new SolidColorBrush(Colors.SkyBlue), (SolidColorBrush) converter.Convert(ColorType.Color3, typeof(Brush), null, CultureInfo.CurrentCulture)));
+			Assert.IsTrue(BrushCompare(new SolidColorBrush(Config.color1), (SolidColorBrush) converter.Convert(ColorType.Color1, typeof(Brush), null, CultureInfo.CurrentCulture)));
+			Assert.IsTrue(BrushCompare(new SolidColorBrush(Config.color2), (SolidColorBrush) converter.Convert(ColorType.Color2, typeof(Brush), null, CultureInfo.CurrentCulture)));
+			Assert.IsTrue(BrushCompare(new SolidColorBrush(Config.color3), (SolidColorBrush) converter.Convert(ColorType.Color3, typeof(Brush), null, CultureInfo.CurrentCulture)));
 		}
 	}
 }
