@@ -1,5 +1,4 @@
-﻿using QuadRow.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace QuadRow.Views {
