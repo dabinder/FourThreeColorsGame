@@ -15,16 +15,16 @@ namespace QuadRow.Views {
 		}
 
 		private void PlayerPanel_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
-			if (DataContext is PlayerViewModel && !subscribed) {
-				PlayerViewModel model = DataContext as PlayerViewModel;
+			if (e.NewValue is PlayerViewModel && !subscribed) {
+				PlayerViewModel model = e.NewValue as PlayerViewModel;
 				foreach (VisiblePiece piece in new VisiblePiece[] { pieceType1, pieceType2, pieceType3 }) {
 					piece.MouseDown += model.PieceMouseDown;
 					piece.MouseMove += model.PieceMouseMove;
 					piece.GiveFeedback += model.PieceGiveFeedback;
 				}
 				subscribed = true;
-			} else if (!(DataContext is PlayerViewModel) && subscribed) {
-				PlayerViewModel model = DataContext as PlayerViewModel;
+			} else if (!(e.NewValue is PlayerViewModel) && subscribed) {
+				PlayerViewModel model = e.OldValue as PlayerViewModel;
 				foreach (VisiblePiece piece in new VisiblePiece[] { pieceType1, pieceType2, pieceType3 }) {
 					piece.MouseDown -= model.PieceMouseDown;
 					piece.MouseMove -= model.PieceMouseMove;

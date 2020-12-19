@@ -38,5 +38,13 @@ namespace QuadRow.Models {
 				};
 			}
 		}
+
+		public Piece RemovePiece(ColorType colorType) {
+			ObservableCollection<Piece> pieces = this[colorType];
+			int index = pieces.Count - 1;
+			Piece piece = pieces[index];
+			pieces.RemoveAt(index);
+			return piece;
+		}
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using QuadRow.Framework;
+using QuadRow.ViewModels;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -6,17 +8,8 @@ using System.Windows.Media;
 namespace QuadRow.Views {
 	/// <summary>
 	/// Interaction logic for Piece
-	/// code borrowed from:
-	///		https://social.msdn.microsoft.com/Forums/en-US/81eca7d5-88d7-477a-8cdb-cfb9e8b75379/how-to-add-controls-to-adorner?forum=wpf,
-	///		https://www.wundervisionenvisionthefuture.com/post/wpf-c-drag-and-drop-icon-adorner
-	///		https://stackoverflow.com/a/27975085/2136840
 	/// </summary>
-	public partial class VisiblePiece : UserControl {
-		public Brush Fill {
-			get {
-				return new SolidColorBrush(DisplayedColors.TranslateDisplayedColor(ColorType));
-			}
-		}
+	public partial class VisiblePiece : UserControl, INotifyPropertyChanged {
 
 		public ColorType ColorType {
 			get {
@@ -24,6 +17,7 @@ namespace QuadRow.Views {
 			}
 			set {
 				SetValue(ColorTypeProperty, value);
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ColorType)));
 			}
 		}
 
@@ -32,6 +26,8 @@ namespace QuadRow.Views {
 			typeof(ColorType),
 			typeof(VisiblePiece)
 		);
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public VisiblePiece() {
 			InitializeComponent();
