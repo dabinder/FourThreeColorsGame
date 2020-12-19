@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace QuadRow.ViewModels {
 	public class PlayerViewModel : ObservableObject {
-		private Player Player { get; }
+		private readonly Player player;
 
 		private bool _playerNameError;
 		public bool PlayerNameError {
@@ -25,27 +25,27 @@ namespace QuadRow.ViewModels {
 
 		public string PlayerName {
 			get {
-				return Player.Name;
+				return player.Name;
 			}
 			set {
-				Player.Name = value;
+				player.Name = value;
 				NotifyPropertyChanged(nameof(PlayerName));
 			}
 		}
 
 		public int Color1Count {
 			get {
-				return Player.Color1Count;
+				return player.Color1Count;
 			}
 		}
 		public int Color2Count {
 			get {
-				return Player.Color2Count;
+				return player.Color2Count;
 			}
 		}
 		public int Color3Count {
 			get {
-				return Player.Color3Count;
+				return player.Color3Count;
 			}
 		}
 
@@ -74,15 +74,14 @@ namespace QuadRow.ViewModels {
 		};
 
 		protected PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
-			Player = new Player(name, variant);
-			Player.PropertyChanged += PlayerPropertyChanged;
-			NotifyPropertyChanged(nameof(Player));
+			player = new Player(name, variant);
+			player.PropertyChanged += PlayerPropertyChanged;
 		}
 
 		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
 			switch (e.PropertyName) {
 				case "Name":
-					PlayerNameError = Player.Name == "";
+					PlayerNameError = player.Name == "";
 					break;
 
 				case "Color1Count":
@@ -102,10 +101,12 @@ namespace QuadRow.ViewModels {
 		public void PieceMouseDown(object sender, MouseButtonEventArgs e) {
 			if (Active && e.LeftButton == MouseButtonState.Pressed) {
 				VisiblePiece piece = (VisiblePiece)sender;
-				adornerLayer = AdornerLayer.GetAdornerLayer(piece);
-				adorner = new DraggableAdorner(piece);
-				adornerLayer.Add(adorner);
-				isDragging = true;
+				if (player.CanPlayPiece(piece.ColorType)) {
+					adornerLayer = AdornerLayer.GetAdornerLayer(piece);
+					adorner = new DraggableAdorner(piece);
+					adornerLayer.Add(adorner);
+					isDragging = true;
+				}
 			}
 		}
 
@@ -135,7 +136,7 @@ namespace QuadRow.ViewModels {
 		}
 
 		public Piece PlayPiece(ColorType colorType) {
-			return Player.PlayPiece(colorType);
+			return player.PlayPiece(colorType);
 		}
 
 		private void InventoryChanged(object sender, CollectionChangeEventArgs e) {
