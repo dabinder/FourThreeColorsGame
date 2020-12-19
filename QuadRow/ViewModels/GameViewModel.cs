@@ -150,6 +150,49 @@ namespace QuadRow.ViewModels {
 			get => Winner != null;
 		}
 
+		private PlayerViewModel _previousPlayer;
+
+		private bool _isRestartBoxOpen;
+		/// <summary>
+		/// indicates whether confirmation popup to restart game is currently displayed on the screen
+		/// </summary>
+		public bool IsRestartBoxOpen {
+			get => _isRestartBoxOpen;
+			private set {
+				_isRestartBoxOpen = value;
+				if (value) _previousPlayer = _activePlayer;
+				ActivePlayer = null;
+				NotifyPropertyChanged(nameof(IsRestartBoxOpen));
+			}
+		}
+
+		private RelayCommand _confirmRestart;
+		/// <summary>
+		/// confirms player wishes to restart game
+		/// </summary>
+		public RelayCommand ConfirmRestart {
+			get {
+				return _confirmRestart ?? (
+					_confirmRestart = new RelayCommand(param => IsRestartBoxOpen = true)
+				);
+			}
+		}
+
+		private RelayCommand _cancelRestart;
+		/// <summary>
+		/// cancels request to restart game
+		/// </summary>
+		public RelayCommand CancelRestart {
+			get {
+				return _cancelRestart ?? (
+					_cancelRestart = new RelayCommand(param => {
+						IsRestartBoxOpen = false;
+						ActivePlayer = _previousPlayer;
+					})
+				);
+			}
+		}
+
 		private RelayCommand _restartGame;
 		/// <summary>
 		/// command to setup a new game
@@ -333,6 +376,7 @@ namespace QuadRow.ViewModels {
 			Player1.PropertyChanged += PlayerPropertyChanged;
 			Player2.PropertyChanged += PlayerPropertyChanged;
 			CurrentScreen = new GameScreen();
+			IsRestartBoxOpen = false;
 			IsNameBoxOpen = true;
 			IsTie = false;
 			Winner = null;

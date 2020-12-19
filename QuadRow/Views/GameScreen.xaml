@@ -9,6 +9,62 @@
              d:DesignHeight="800" d:DesignWidth="1500">
 
 	<Canvas Name="mainGameLayout">
+		<!-- restart game button -->
+		<Button
+			Content="Restart Game"
+			Canvas.Right="20"
+			Canvas.Top="20"
+			Command="{Binding ConfirmRestart}"
+		>
+			<Button.IsEnabled>
+				<MultiBinding Converter="{StaticResource BooleanAndConverter}">
+					<MultiBinding.ConverterParameter>
+						<sys:Boolean>False</sys:Boolean>
+					</MultiBinding.ConverterParameter>
+					<Binding Path="IsTie" />
+					<Binding Path="HasWinner" />
+					<Binding Path="IsNameBoxOpen" />
+					<Binding Path="IsRestartBoxOpen" />
+				</MultiBinding>
+			</Button.IsEnabled>
+		</Button>
+		
+		<!-- restart overlay -->
+		<Grid Width="{Binding ActualWidth, ElementName=mainGameLayout}"
+			  Height="{Binding ActualHeight, ElementName=mainGameLayout}"
+			  Canvas.ZIndex="2"
+			  Visibility="{Binding IsRestartBoxOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+		>
+
+			<Border Width="{StaticResource OverlayWidth}" Height="{StaticResource OverlayHeight}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*"  />
+						<RowDefinition Height="2*" />
+					</Grid.RowDefinitions>
+
+					<Grid.Resources>
+						<Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+							<Setter Property="FontSize" Value="12pt" />
+						</Style>
+					</Grid.Resources>
+
+					<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Restart Game?" FontSize="20pt" />
+
+					<Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*" />
+							<ColumnDefinition Width="20" />
+							<ColumnDefinition Width="1*" />
+						</Grid.ColumnDefinitions>
+
+						<Button Grid.Column="0" Content="Yes" Command="{Binding RestartGame}" />
+						<Button Grid.Column="2" Content="No" Command="{Binding CancelRestart}" />
+					</Grid>
+				</Grid>
+			</Border>
+		</Grid>
+		
 		<!-- overlay for player names -->
 		<Grid Width="{Binding ActualWidth, ElementName=mainGameLayout}"
 			  Height="{Binding ActualHeight, ElementName=mainGameLayout}"
