@@ -49,8 +49,6 @@ namespace QuadRow.Framework {
 		/// </summary>
 		/// <param name="index">index of the specified child element</param>
 		/// <returns>the specified child element</returns>
-		protected override Visual GetVisualChild(int index) {
-			return visualChildren[index];
-		}
+		protected override Visual GetVisualChild(int index) => visualChildren[index];
 	}
 }

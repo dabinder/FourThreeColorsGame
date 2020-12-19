@@ -11,8 +11,6 @@ namespace QuadRow.Models {
 		/// set this piece's color
 		/// </summary>
 		/// <param name="color">piece color</param>
-		public Piece(ColorType color) {
-			Color = color;
-		}
+		public Piece(ColorType color) => Color = color;
 	}
 }

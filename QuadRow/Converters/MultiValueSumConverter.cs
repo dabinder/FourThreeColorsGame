@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 
 namespace QuadRow.Converters {
-	class MultiValueSumConverter : IMultiValueConverter {
+	public class MultiValueSumConverter : IMultiValueConverter {
 		/// <summary>
 		/// get sum of integer values in list
 		/// </summary>

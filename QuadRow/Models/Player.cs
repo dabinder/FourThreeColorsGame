@@ -9,9 +9,7 @@ namespace QuadRow.Models {
 		/// name of player
 		/// </summary>
 		public string Name {
-			get {
-				return _name;
-			}
+			get  => _name;
 			set {
 				_name = value;
 				NotifyPropertyChanged(nameof(Name));
@@ -22,27 +20,21 @@ namespace QuadRow.Models {
 		/// current total of color 1 pieces
 		/// </summary>
 		public int Color1Count {
-			get {
-				return inventory[ColorType.Color1].Count;
-			}
+			get => inventory[ColorType.Color1].Count;
 		}
 
 		/// <summary>
 		/// current total of color 2 pieces
 		/// </summary>
 		public int Color2Count {
-			get {
-				return inventory[ColorType.Color2].Count;
-			}
+			get => inventory[ColorType.Color2].Count;
 		}
 
 		/// <summary>
 		/// current toal of color 3 pieces
 		/// </summary>
 		public int Color3Count {
-			get {
-				return inventory[ColorType.Color3].Count;
-			}
+			get => inventory[ColorType.Color3].Count;
 		}
 
 		private readonly Inventory inventory;

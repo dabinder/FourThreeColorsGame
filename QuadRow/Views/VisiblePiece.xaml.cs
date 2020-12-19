@@ -14,9 +14,7 @@ namespace QuadRow.Views {
 		/// color to display for this piece
 		/// </summary>
 		public ColorType ColorType {
-			get {
-				return (ColorType)GetValue(ColorTypeProperty);
-			}
+			get => (ColorType)GetValue(ColorTypeProperty);
 			set {
 				SetValue(ColorTypeProperty, value);
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ColorType)));
@@ -40,9 +38,7 @@ namespace QuadRow.Views {
 		/// <summary>
 		/// create new visible piece
 		/// </summary>
-		public VisiblePiece() {
-			InitializeComponent();
-		}
+		public VisiblePiece() => InitializeComponent();
 
 		/// <summary>
 		/// create new visible piece as a copy of an existing piece

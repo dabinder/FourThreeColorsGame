@@ -8,8 +8,6 @@ namespace QuadRow.Views {
 		/// <summary>
 		/// create intro screen
 		/// </summary>
-		public IntroScreen() {
-			InitializeComponent();
-		}
+		public IntroScreen() => InitializeComponent();
 	}
 }
