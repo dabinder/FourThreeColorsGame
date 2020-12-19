@@ -8,11 +8,11 @@ namespace QuadRow.Converters {
 		/// <summary>
 		/// set object to visible if any values in list match expected (true/false)
 		/// </summary>
-		/// <param name="values"></param>
-		/// <param name="targetType"></param>
-		/// <param name="parameter"></param>
+		/// <param name="values">list of values</param>
+		/// <param name="targetType">Visibility</param>
+		/// <param name="parameter">value to match (true/false)</param>
 		/// <param name="culture"></param>
-		/// <returns></returns>
+		/// <returns>if all values match parameter: true; otherwise false</returns>
 		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
 			bool expected = parameter == null || (bool)parameter;
 

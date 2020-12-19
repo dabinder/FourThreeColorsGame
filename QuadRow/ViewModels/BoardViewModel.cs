@@ -5,12 +5,12 @@ namespace QuadRow.ViewModels {
 	class BoardViewModel : ObservableObject {
 		public ObservableDictionary<Coordinates, SpaceViewModel> Board { get; }
 
+		/// <summary>
+		/// create and display new game board
+		/// </summary>
 		public BoardViewModel() {
 			Board = new ObservableDictionary<Coordinates, SpaceViewModel>();
-			DrawGameBoard();
-		}
 
-		private void DrawGameBoard() {
 			//build spaces
 			Board.Clear();
 			for (int y = 0; y < Config.BOARD_SIZE; y++) {

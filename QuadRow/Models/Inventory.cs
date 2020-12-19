@@ -21,6 +21,11 @@ namespace QuadRow.Models {
 			}
 		}
 
+		/// <summary>
+		/// remove a piece of the specified color from inventory
+		/// </summary>
+		/// <param name="colorType">color to remove</param>
+		/// <returns>piece removed from inventory</returns>
 		public Piece RemovePiece(ColorType colorType) {
 			ObservableCollection<Piece> pieces = this[colorType];
 			int index = pieces.Count - 1;

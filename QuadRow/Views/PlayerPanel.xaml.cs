@@ -9,11 +9,19 @@ namespace QuadRow.Views {
 	public partial class PlayerPanel : UserControl {
 		private bool subscribed;
 
+		/// <summary>
+		/// create new player panel and listen for changes to the data context
+		/// </summary>
 		public PlayerPanel() {
 			InitializeComponent();
 			DataContextChanged += PlayerPanel_DataContextChanged;
 		}
 
+		/// <summary>
+		/// if this player panel's data context is changed, subscribe/unsubscribe to piece events on the corresponding view model for dragging visible pieces from the panel to the board
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void PlayerPanel_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
 			if (e.NewValue is PlayerViewModel && !subscribed) {
 				PlayerViewModel model = e.NewValue as PlayerViewModel;

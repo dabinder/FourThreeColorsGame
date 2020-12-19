@@ -37,18 +37,44 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// set this space's coordinates
+		/// </summary>
+		/// <param name="coordinates"></param>
+		public SpaceViewModel(Coordinates coordinates) {
+			this.coordinates = coordinates;
+		}
+
+		/// <summary>
+		/// handle dragging a piece over a space
+		/// highlight the space on drag in
+		/// </summary>
+		/// <param name="sender">space dragged over</param>
+		/// <param name="e">drag event details</param>
 		public void DragPieceIn(object sender, DragEventArgs e) {
 			if (!IsOccupied && e.Data.GetDataPresent(typeof(ColorType))) {
 				IsHovered = true;
 			}
 		}
 
+		/// <summary>
+		/// handle dragging a piece out from a space
+		/// remove highlight on drag out
+		/// </summary>
+		/// <param name="sender">space being dragged over</param>
+		/// <param name="e">drag event details</param>
 		public void DragPieceOut(object sender, DragEventArgs e) {
 			if (e.Data.GetDataPresent(typeof(ColorType))) {
 				IsHovered = false;
 			}
 		}
 
+		/// <summary>
+		/// handle dropping a piece into a space
+		/// if the space is available, play the piece from the current player's inventory and draw the played piece on the board
+		/// </summary>
+		/// <param name="sender">space where piece is dropped</param>
+		/// <param name="e">drag event details</param>
 		public void DropPiece(object sender, DragEventArgs e) {
 			if (!IsOccupied && e.Data.GetDataPresent(typeof(ColorType)) && !e.Handled) {
 				GameViewModel game = (GameViewModel)Application.Current.FindResource("GameViewModel");
@@ -60,10 +86,6 @@ namespace QuadRow.ViewModels {
 				IsHovered = false;
 				e.Handled = true;
 			}
-		}
-
-		public SpaceViewModel(Coordinates coordinates) {
-			this.coordinates = coordinates;
 		}
 	}
 }

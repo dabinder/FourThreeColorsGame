@@ -1,4 +1,7 @@
 ﻿namespace QuadRow.Framework {
+	/// <summary>
+	/// X, Y coordinates for each space on the board
+	/// </summary>
 	public readonly struct Coordinates {
 		public int X { get; }
 		public int Y { get; }
