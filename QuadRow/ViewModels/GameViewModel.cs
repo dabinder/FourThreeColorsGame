@@ -1,6 +1,7 @@
 ﻿using QuadRow.Framework;
 using QuadRow.Views;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -107,6 +108,14 @@ namespace QuadRow.ViewModels {
 				DataContext = this
 			};
 			CurrentScreen = introScreen;
+			Player1.PropertyChanged += PlayerPropertyChanged;
+			Player2.PropertyChanged += PlayerPropertyChanged;
+		}
+
+		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
+			if (e.PropertyName == "HasPlayedPiece" && (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender)) {
+				Turn++;
+			}
 		}
 
 		private void StartGame() {

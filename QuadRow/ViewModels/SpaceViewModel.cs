@@ -49,8 +49,6 @@ namespace QuadRow.ViewModels {
 
 		public void DropPiece(object sender, DragEventArgs e) {
 			if (!IsOccupied && e.Data.GetDataPresent(typeof(ColorType)) && !e.Handled) {
-				//Piece piece = (Piece)e.Data.GetData(typeof(Piece));
-				//Occupant = piece;
 				GameViewModel game = (GameViewModel)Application.Current.FindResource("GameViewModel");
 				PlayerViewModel player = game.ActivePlayer;
 				ColorType colorType = (ColorType)e.Data.GetData(typeof(ColorType));

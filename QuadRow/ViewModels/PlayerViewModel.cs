@@ -57,6 +57,18 @@ namespace QuadRow.ViewModels {
 			set {
 				_active = value;
 				NotifyPropertyChanged(nameof(Active));
+				if (value) HasPlayedPiece = false;
+			}
+		}
+
+		private bool _hasPlayedPiece;
+		public bool HasPlayedPiece { 
+			get {
+				return _hasPlayedPiece;
+			}
+			private set {
+				_hasPlayedPiece = value;
+				NotifyPropertyChanged(nameof(HasPlayedPiece));
 			}
 		}
 
@@ -136,6 +148,7 @@ namespace QuadRow.ViewModels {
 		}
 
 		public Piece PlayPiece(ColorType colorType) {
+			HasPlayedPiece = true;
 			return player.PlayPiece(colorType);
 		}
 
