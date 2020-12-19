@@ -10,8 +10,8 @@ namespace QuadRow.Views {
 			InitializeComponent();
 			Application currentApp = Application.Current;
 			DataContext = currentApp.FindResource("GameViewModel");
-			player1Panel.DataContext = currentApp.FindResource("Player1ViewModel");
-			player2Panel.DataContext = currentApp.FindResource("Player2ViewModel");
+			player1Panel.DataContext = currentApp.Resources["Player1ViewModel"];
+			player2Panel.DataContext = currentApp.Resources["Player2ViewModel"];
 		}
 	}
 }

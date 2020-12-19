@@ -96,13 +96,16 @@
 			<Border Width="{StaticResource OverlayWidth}" Height="{StaticResource OverlayHeight}">
 				<Grid>
 					<Grid.RowDefinitions>
-						<RowDefinition  />
-						<RowDefinition />
+						<RowDefinition Height="1*"  />
+						<RowDefinition Height="2*" />
+						<RowDefinition Height="1*" />
 					</Grid.RowDefinitions>
 
 					<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Game Over" FontSize="20pt" />
 
-					<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Text="No more moves possible; game is a tie" FontSize="12pt" />
+					<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No more moves possible; game is a tie" FontSize="12pt" />
+
+					<Button	Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Start New Game" Command="{Binding RestartGame}" />
 				</Grid>
 			</Border> 
 		</Grid>
