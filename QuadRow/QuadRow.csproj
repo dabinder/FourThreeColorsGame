@@ -71,8 +71,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanAndConverter.cs" />
-    <Compile Include="Converters\ChainedConverter.cs" />
-    <Compile Include="Converters\MultiValueAllToVisibilityConverter.cs" />
     <Compile Include="Converters\MultiValueAnyToVisiblityConverter.cs" />
     <Compile Include="Converters\MultiValueSumConverter.cs" />
     <Compile Include="Framework\ColorType.cs" />
@@ -118,10 +116,7 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ColorTypeToColorConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
-    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
-    <Compile Include="Converters\PositionToIntConverter.cs" />
     <Compile Include="Framework\DisplayedColors.cs" />
-    <Compile Include="Framework\IntAlphaConverter.cs" />
     <Compile Include="Framework\InventoryBuilder.cs" />
     <Compile Include="Framework\ObservableObject.cs" />
     <Compile Include="Framework\RelayCommand.cs" />
