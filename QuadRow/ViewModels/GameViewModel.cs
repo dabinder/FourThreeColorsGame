@@ -113,7 +113,7 @@ namespace QuadRow.ViewModels {
 		}
 
 		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
-			if (e.PropertyName == "HasPlayedPiece" && (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender)) {
+			if (e.PropertyName == "IsPiecePlayed" && (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender)) {
 				Turn++;
 			}
 		}

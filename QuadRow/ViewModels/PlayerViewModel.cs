@@ -49,6 +49,23 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		public bool HasColor1 {
+			get {
+				return Color1Count > 0;
+			}
+		}
+		public bool HasColor2 {
+			get {
+				return Color2Count > 0;
+			}
+		}
+		public bool HasColor3 {
+			get {
+				return Color3Count > 0;
+			}
+		}
+
+
 		private bool _active;
 		public bool Active {
 			get {
@@ -57,18 +74,18 @@ namespace QuadRow.ViewModels {
 			set {
 				_active = value;
 				NotifyPropertyChanged(nameof(Active));
-				if (value) HasPlayedPiece = false;
+				if (value) IsPiecePlayed = false;
 			}
 		}
 
-		private bool _hasPlayedPiece;
-		public bool HasPlayedPiece { 
+		private bool _isPiecePlayed;
+		public bool IsPiecePlayed { 
 			get {
-				return _hasPlayedPiece;
+				return _isPiecePlayed;
 			}
 			private set {
-				_hasPlayedPiece = value;
-				NotifyPropertyChanged(nameof(HasPlayedPiece));
+				_isPiecePlayed = value;
+				NotifyPropertyChanged(nameof(IsPiecePlayed));
 			}
 		}
 
@@ -98,14 +115,17 @@ namespace QuadRow.ViewModels {
 
 				case "Color1Count":
 					NotifyPropertyChanged(nameof(Color1Count));
+					NotifyPropertyChanged(nameof(HasColor1));
 					break;
 
 				case "Color2Count":
 					NotifyPropertyChanged(nameof(Color2Count));
+					NotifyPropertyChanged(nameof(HasColor2));
 					break;
 
 				case "Color3Count":
 					NotifyPropertyChanged(nameof(Color3Count));
+					NotifyPropertyChanged(nameof(HasColor3));
 					break;
 			}
 		}
@@ -148,7 +168,7 @@ namespace QuadRow.ViewModels {
 		}
 
 		public Piece PlayPiece(ColorType colorType) {
-			HasPlayedPiece = true;
+			IsPiecePlayed = true;
 			return player.PlayPiece(colorType);
 		}
 
