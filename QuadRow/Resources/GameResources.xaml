@@ -89,6 +89,7 @@
 	
 	<!-- view models -->
 	<vm:GameViewModel x:Key="GameViewModel" />
+	<vm:BoardViewModel x:Key="BoardViewModel" />
 	<vm:Player1ViewModel x:Key="Player1ViewModel" />
 	<vm:Player2ViewModel x:Key="Player2ViewModel" />
 </ResourceDictionary>

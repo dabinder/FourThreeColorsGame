@@ -6,6 +6,8 @@ namespace QuadRow.ViewModels {
 	class SpaceViewModel : ObservableObject {
 		public string TestOrigin { get; set; }
 
+		private readonly Coordinates coordinates;
+
 		private bool _isHovered;
 		public bool IsHovered {
 			get {
@@ -52,13 +54,16 @@ namespace QuadRow.ViewModels {
 				GameViewModel game = (GameViewModel)Application.Current.FindResource("GameViewModel");
 				PlayerViewModel player = game.ActivePlayer;
 				ColorType colorType = (ColorType)e.Data.GetData(typeof(ColorType));
-				Occupant = player.PlayPiece(colorType);
-
+				Occupant = player.PlayPiece(colorType, coordinates);
+				
 				//clear decoration
 				IsHovered = false;
 				e.Handled = true;
 			}
 		}
 
+		public SpaceViewModel(Coordinates coordinates) {
+			this.coordinates = coordinates;
+		}
 	}
 }

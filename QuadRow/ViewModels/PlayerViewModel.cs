@@ -98,6 +98,9 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		public Coordinates LastPlayedLocation { get; private set; }
+		public ColorType LastPlayedColor { get; private set; }
+
 		private DraggableAdorner adorner;
 		private AdornerLayer adornerLayer;
 		private bool isDragging;
@@ -107,8 +110,7 @@ namespace QuadRow.ViewModels {
 
 		[StructLayout(LayoutKind.Sequential)]
 		internal struct Win32Point {
-			public int X;
-			public int Y;
+			public int X, Y;
 		};
 
 		protected PlayerViewModel(string name, InventoryBuilder.InventoryVariant variant) {
@@ -176,7 +178,9 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
-		public Piece PlayPiece(ColorType colorType) {
+		public Piece PlayPiece(ColorType colorType, Coordinates coordinates) {
+			LastPlayedLocation = coordinates;
+			LastPlayedColor = colorType;
 			IsPiecePlayed = true;
 			return player.PlayPiece(colorType);
 		}

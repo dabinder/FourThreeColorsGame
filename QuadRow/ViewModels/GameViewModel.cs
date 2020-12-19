@@ -1,4 +1,5 @@
-﻿using QuadRow.Framework;
+﻿using QuadRow.Collections;
+using QuadRow.Framework;
 using QuadRow.Views;
 using System;
 using System.ComponentModel;
@@ -114,6 +115,24 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		private PlayerViewModel _winner;
+		public PlayerViewModel Winner {
+			get {
+				return _winner;
+			}
+			set {
+				_winner = value;
+				NotifyPropertyChanged(nameof(Winner));
+				NotifyPropertyChanged(nameof(HasWinner));
+			}
+		}
+
+		public bool HasWinner {
+			get {
+				return Winner != null;
+			}
+		}
+
 		private RelayCommand _restartGame;
 		public RelayCommand RestartGame {
 			get {
@@ -134,8 +153,16 @@ namespace QuadRow.ViewModels {
 
 		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
 			if (e.PropertyName == "IsPiecePlayed" && (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender)) {
-				Turn++;
-				CheckTieGame();
+				if (CheckWinner()) {
+					Winner = ActivePlayer;
+					EndGame();
+				} else {
+					Turn++;
+					if (CheckTieGame()) {
+						IsTie = true;
+						EndGame();
+					}
+				}
 			}
 		}
 
@@ -148,21 +175,119 @@ namespace QuadRow.ViewModels {
 			ActivePlayer = null;
 		}
 
-		private void CheckTieGame() {
+		private bool CheckWinner() {
+			Coordinates start = ActivePlayer.LastPlayedLocation;
+			ColorType color = ActivePlayer.LastPlayedColor;
+			int x = start.X,
+				y = start.Y;
+			ObservableDictionary<Coordinates, SpaceViewModel> board = ((BoardViewModel)Application.Current.Resources["BoardViewModel"]).Board;
+			int counter;
+
+			//horizontal
+			bool left = true,
+				right = true;
+			counter = 1;
+			for (int i = 1; i < Config.WIN_LENGTH && (left || right); i++) {
+				if (left && i <= x && board[new Coordinates(x - i, y)].Occupant?.Color == color) {
+					counter++;
+				} else {
+					left = false;
+				}
+				if (right && i < (Config.BOARD_SIZE - x) && board[new Coordinates(x + i, y)].Occupant?.Color == color) {
+					counter++;
+				} else {
+					right = false;
+				}
+
+				if (counter >= Config.WIN_LENGTH) {
+					return true;
+				}
+			}
+
+			//vertical
+			bool up = true,
+				down = true;
+			counter = 1;
+			for (int i = 1; i < Config.WIN_LENGTH && (up || down); i++) {
+				if (up && i <= y && board[new Coordinates(x, y - i)].Occupant?.Color == color) {
+					counter++;
+				} else {
+					up = false;
+				}
+				if (down && i < (Config.BOARD_SIZE - y) && board[new Coordinates(x, y + i)].Occupant?.Color == color) {
+					counter++;
+				} else {
+					down = false;
+				}
+
+				if (counter >= Config.WIN_LENGTH) {
+					return true;
+				}
+			}
+
+			//diagonal - NW/SE
+			bool nw = true,
+				se = true;
+			counter = 1;
+			for (int i = 1; i < Config.WIN_LENGTH && (nw || se); i++) {
+				if (nw && i <= x && i <= y && board[new Coordinates(x - i, y - i)].Occupant?.Color == color) {
+					//check nw
+					counter++;
+				} else {
+					nw = false;
+				}
+				if (se && i < (Config.BOARD_SIZE - x) && i < (Config.BOARD_SIZE - y) && board[new Coordinates(x + i, y + i)].Occupant?.Color == color) {
+					//check se
+					counter++;
+				} else {
+					se = false;
+				}
+
+				if (counter >= Config.WIN_LENGTH) {
+					return true;
+				}
+			}
+
+			//diagonal - NE/SW
+			bool ne = true,
+				sw = true;
+			counter = 1;
+			for (int i = 1; i < Config.WIN_LENGTH && (ne || sw); i++) {
+				if (ne && i < (Config.BOARD_SIZE - x) && i <= y && board[new Coordinates(x + i, y - i)].Occupant?.Color == color) {
+					//check ne
+					counter++;
+				} else {
+					ne = false;
+				}
+				if (sw && i < x && i < (Config.BOARD_SIZE - y) && board[new Coordinates(x - i, y + i)].Occupant?.Color == color) {
+					//check sw
+					counter++;
+				} else {
+					sw = false;
+				}
+
+				if (counter >= Config.WIN_LENGTH) {
+					return true;
+				}
+			}
+
+			//if we got all the way here, no winner
+			return false;
+		}
+
+		private bool CheckTieGame() {
 			//if current player's inventory is empty or board is full, mark game as tie
-			if (Turn > Config.BOARD_SIZE * Config.BOARD_SIZE ||
+			return (Turn > Config.BOARD_SIZE * Config.BOARD_SIZE ||
 				(Player1.IsInventoryEmpty && ActivePlayer == Player1) ||
 				(Player2.IsInventoryEmpty && ActivePlayer == Player2)
-			) {
-				IsTie = true;
-				EndGame();
-			}
+			);
 		}
 
 		private void ResetGame() {
 			Application currentApp = Application.Current;
 			currentApp.Resources["Player1ViewModel"] = new Player1ViewModel();
 			currentApp.Resources["Player2ViewModel"] = new Player2ViewModel();
+			currentApp.Resources["BoardViewModel"] = new BoardViewModel();
 			NotifyPropertyChanged(nameof(Player1));
 			NotifyPropertyChanged(nameof(Player2));
 			Player1.PropertyChanged += PlayerPropertyChanged;
@@ -170,6 +295,7 @@ namespace QuadRow.ViewModels {
 			CurrentScreen = new GameScreen();
 			IsNameBoxOpen = true;
 			IsTie = false;
+			Winner = null;
 		}
 	}
 }

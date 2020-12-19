@@ -93,8 +93,14 @@
 		<Grid Width="{Binding ActualWidth, ElementName=mainGameLayout}"
 			  Height="{Binding ActualHeight, ElementName=mainGameLayout}"
 			  Canvas.ZIndex="1"
-			  Visibility="{Binding IsTie, Converter={StaticResource BooleanToVisibilityConverter}}"
 		>
+			<Grid.Visibility>
+				<MultiBinding Converter="{StaticResource MultiValueAnyToVisiblityConverter}">
+					<Binding Path="IsTie" />
+					<Binding Path="HasWinner" />
+				</MultiBinding>
+			</Grid.Visibility>
+			
 			<Border Width="{StaticResource OverlayWidth}" Height="{StaticResource OverlayHeight}">
 				<Grid>
 					<Grid.RowDefinitions>
@@ -103,9 +109,32 @@
 						<RowDefinition Height="1*" />
 					</Grid.RowDefinitions>
 
+					<Grid.Resources>
+						<Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+							<Setter Property="FontSize" Value="12pt" />
+						</Style>
+					</Grid.Resources>
+
 					<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Game Over" FontSize="20pt" />
 
-					<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="No more moves possible; game is a tie" FontSize="12pt" />
+					<TextBlock
+						Grid.Row="1"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						Text="No more moves possible; game is a tie"
+						Visibility="{Binding IsTie, Converter={StaticResource BooleanToVisibilityConverter}}"
+					/>
+
+					<StackPanel
+						Grid.Row="1"
+						Orientation="Horizontal"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						Visibility="{Binding HasWinner, Converter={StaticResource BooleanToVisibilityConverter}}"
+					>
+						<TextBlock Text="{Binding Winner.PlayerName}" />
+						<TextBlock Text=" wins!" />
+					</StackPanel>
 
 					<Button	Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Start New Game" Command="{Binding RestartGame}" />
 				</Grid>
