@@ -29,7 +29,6 @@
 				/>
 			</Border>
 			
-			<TextBlock Text="{Binding TestOrigin}" />
 			<!-- hover with piece -->
 			<Border
 				Height="{StaticResource SpaceSize}"
