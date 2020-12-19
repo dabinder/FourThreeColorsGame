@@ -101,29 +101,6 @@ namespace QuadRow.ViewModels {
 
 		#endregion
 
-		#region piece counts
-		public int Color1TotalPieces {
-			get {
-				return Player1.Color1Count + Player2.Color1Count;
-			}
-		}
-		public int Color2TotalPieces {
-			get {
-				return Player1.Color2Count + Player2.Color2Count;
-			}
-		}
-		public int Color3TotalPieces {
-			get {
-				return Player1.Color3Count + Player2.Color3Count;
-			}
-		}
-		public int GrandTotalPieces {
-			get {
-				return Player1.TotalCount + Player2.TotalCount;
-			}
-		}
-		#endregion
-
 		public GameViewModel() {
 			//initialize game on intro screen
 			ContentControl introScreen = new IntroScreen {

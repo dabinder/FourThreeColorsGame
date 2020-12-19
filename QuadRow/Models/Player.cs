@@ -1,4 +1,6 @@
 ﻿using QuadRow.Framework;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace QuadRow.Models {
 	public class Player : ObservableObject {
@@ -13,6 +15,22 @@ namespace QuadRow.Models {
 			}
 		}
 
+		public int Color1Count {
+			get {
+				return inventory[ColorType.Color1].Count;
+			}
+		}
+		public int Color2Count {
+			get {
+				return inventory[ColorType.Color2].Count;
+			}
+		}
+		public int Color3Count {
+			get {
+				return inventory[ColorType.Color3].Count;
+			}
+		}
+
 		private readonly Inventory inventory;
 
 		/// <summary>
@@ -23,11 +41,27 @@ namespace QuadRow.Models {
 		public Player(string name, InventoryBuilder.InventoryVariant variant) {
 			Name = name;
 			inventory = new Inventory(variant);
-			NotifyPropertyChanged(nameof(Inventory));
+			foreach (KeyValuePair<ColorType, ObservableCollection<Piece>> pair in inventory) {
+				pair.Value.CollectionChanged += (sender, e) => {
+					OnInventoryChanged(pair.Key);
+				};
+			}
 		}
 
-		public int GetCount(ColorType colorType) {
-			return inventory[colorType].Count;
+		private void OnInventoryChanged(ColorType colorType) {
+			switch (colorType) {
+				case ColorType.Color1:
+					NotifyPropertyChanged(nameof(Color1Count));
+					break;
+
+				case ColorType.Color2:
+					NotifyPropertyChanged(nameof(Color2Count));
+					break;
+
+				case ColorType.Color3:
+					NotifyPropertyChanged(nameof(Color3Count));
+					break;
+			}
 		}
 
 		public Piece PlayPiece(ColorType colorType) {
