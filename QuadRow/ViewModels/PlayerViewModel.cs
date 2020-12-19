@@ -45,7 +45,7 @@ namespace QuadRow.ViewModels {
 		/// current total of color 2 pieces
 		/// </summary>
 		public int Color2Count {
-			get => return player.Color2Count;
+			get => player.Color2Count;
 		}
 
 		/// <summary>
