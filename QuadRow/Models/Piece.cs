@@ -2,6 +2,9 @@
 
 namespace QuadRow.Models {
 	public class Piece {
+		/// <summary>
+		/// this piece's color
+		/// </summary>
 		public ColorType Color { get; }
 
 		/// <summary>

@@ -10,7 +10,9 @@ namespace QuadRow.Views {
 	/// Interaction logic for Piece
 	/// </summary>
 	public partial class VisiblePiece : UserControl, INotifyPropertyChanged {
-
+		/// <summary>
+		/// color to display for this piece
+		/// </summary>
 		public ColorType ColorType {
 			get {
 				return (ColorType)GetValue(ColorTypeProperty);
@@ -21,12 +23,18 @@ namespace QuadRow.Views {
 			}
 		}
 
+		/// <summary>
+		/// dependency property to update this piece's color type via XAML
+		/// </summary>
 		public static readonly DependencyProperty ColorTypeProperty = DependencyProperty.Register(
 			"ColorType",
 			typeof(ColorType),
 			typeof(VisiblePiece)
 		);
 
+		/// <summary>
+		/// event to subscribe to property changes
+		/// </summary>
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>

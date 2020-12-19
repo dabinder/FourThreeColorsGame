@@ -10,6 +10,9 @@ namespace QuadRow.Framework {
 		private static readonly int[] colorSet1 = { Config.PLAYER1_COLOR1, Config.PLAYER1_COLOR2, Config.PLAYER1_COLOR3 };
 		private static readonly int[] colorSet2 = { Config.PLAYER2_COLOR1, Config.PLAYER2_COLOR2, Config.PLAYER2_COLOR3 };
 
+		/// <summary>
+		/// enum values for possible inventory variants
+		/// </summary>
 		public enum InventoryVariant {
 			Variant1,
 			Variant2

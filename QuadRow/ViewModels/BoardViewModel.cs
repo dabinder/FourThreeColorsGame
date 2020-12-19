@@ -3,6 +3,9 @@ using QuadRow.Framework;
 
 namespace QuadRow.ViewModels {
 	class BoardViewModel : ObservableObject {
+		/// <summary>
+		/// active game board
+		/// </summary>
 		public ObservableDictionary<Coordinates, SpaceViewModel> Board { get; }
 
 		/// <summary>

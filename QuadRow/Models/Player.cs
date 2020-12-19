@@ -5,6 +5,9 @@ using System.Collections.ObjectModel;
 namespace QuadRow.Models {
 	public class Player : ObservableObject {
 		private string _name;
+		/// <summary>
+		/// name of player
+		/// </summary>
 		public string Name {
 			get {
 				return _name;
@@ -15,16 +18,27 @@ namespace QuadRow.Models {
 			}
 		}
 
+		/// <summary>
+		/// current total of color 1 pieces
+		/// </summary>
 		public int Color1Count {
 			get {
 				return inventory[ColorType.Color1].Count;
 			}
 		}
+
+		/// <summary>
+		/// current total of color 2 pieces
+		/// </summary>
 		public int Color2Count {
 			get {
 				return inventory[ColorType.Color2].Count;
 			}
 		}
+
+		/// <summary>
+		/// current toal of color 3 pieces
+		/// </summary>
 		public int Color3Count {
 			get {
 				return inventory[ColorType.Color3].Count;

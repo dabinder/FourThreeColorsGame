@@ -4,11 +4,15 @@ using System.Windows;
 
 namespace QuadRow.ViewModels {
 	class SpaceViewModel : ObservableObject {
+		//TODO: delete
 		public string TestOrigin { get; set; }
 
 		private readonly Coordinates coordinates;
 
 		private bool _isHovered;
+		/// <summary>
+		/// indicates a dragged piece is currently over this space
+		/// </summary>
 		public bool IsHovered {
 			get {
 				return _isHovered;
@@ -20,6 +24,9 @@ namespace QuadRow.ViewModels {
 		}
 
 		private Piece _occupant;
+		/// <summary>
+		/// current piece occupying this space
+		/// </summary>
 		public Piece Occupant {
 			get {
 				return _occupant;
@@ -31,6 +38,9 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// indicates this space is occupied by a piece
+		/// </summary>
 		public bool IsOccupied {
 			get {
 				return Occupant != null;

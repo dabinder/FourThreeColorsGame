@@ -10,6 +10,9 @@ namespace QuadRow.ViewModels {
 	class GameViewModel : ObservableObject {
 		#region intro screen
 		private ContentControl _currentScreeen;
+		/// <summary>
+		/// currently displayed screen
+		/// </summary>
 		public ContentControl CurrentScreen {
 			get {
 				return _currentScreeen;
@@ -21,6 +24,9 @@ namespace QuadRow.ViewModels {
 		}
 
 		private RelayCommand _closeIntroCommand;
+		/// <summary>
+		/// command to close the intro screen and prepare a new game
+		/// </summary>
 		public RelayCommand CloseIntroCommand {
 			get {
 				return _closeIntroCommand ?? (
@@ -32,6 +38,9 @@ namespace QuadRow.ViewModels {
 
 		#region player info
 		private bool _isNameBoxOpen;
+		/// <summary>
+		/// indicates whether the player name entry box is currently displayed on screen
+		/// </summary>
 		public bool IsNameBoxOpen {
 			get {
 				return _isNameBoxOpen;
@@ -43,6 +52,9 @@ namespace QuadRow.ViewModels {
 		}
 
 		private RelayCommand _closeNameBox;
+		/// <summary>
+		/// command to close the player name entry box and start the game
+		/// </summary>
 		public RelayCommand CloseNameBox {
 			get {
 				return _closeNameBox ?? (
@@ -54,11 +66,18 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// game player 1; uses globally shared resource for the player 1 view model
+		/// </summary>
 		public PlayerViewModel Player1 {
 			get {
 				return (PlayerViewModel)Application.Current.FindResource("Player1ViewModel");
 			}
 		}
+
+		/// <summary>
+		/// game player 2; uses globally shared resource for the player 2 view model
+		/// </summary>
 		public PlayerViewModel Player2 {
 			get {
 				return (PlayerViewModel)Application.Current.FindResource("Player2ViewModel");
@@ -66,6 +85,10 @@ namespace QuadRow.ViewModels {
 		}
 
 		private PlayerViewModel _activePlayer;
+		/// <summary>
+		/// current player
+		/// this will alternate back and forth each turn
+		/// </summary>
 		public PlayerViewModel ActivePlayer {
 			get {
 				return _activePlayer;
@@ -91,6 +114,10 @@ namespace QuadRow.ViewModels {
 		#region game flow
 
 		private int _turn;
+		/// <summary>
+		/// current game turn
+		/// the active player will be player 1 for odd numbered turns; 2 for even-numbered turns
+		/// </summary>
 		private int Turn {
 			get {
 				return _turn;
@@ -104,6 +131,9 @@ namespace QuadRow.ViewModels {
 		}
 
 		private bool _isTie;
+		/// <summary>
+		/// indicates game has ended in a tie
+		/// </summary>
 		public bool IsTie {
 			get {
 				return _isTie;
@@ -115,6 +145,9 @@ namespace QuadRow.ViewModels {
 		}
 
 		private PlayerViewModel _winner;
+		/// <summary>
+		/// indicates which player has won the game
+		/// </summary>
 		public PlayerViewModel Winner {
 			get {
 				return _winner;
@@ -126,6 +159,9 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		/// <summary>
+		/// indicates whether the game has a winner
+		/// </summary>
 		public bool HasWinner {
 			get {
 				return Winner != null;
@@ -133,6 +169,9 @@ namespace QuadRow.ViewModels {
 		}
 
 		private RelayCommand _restartGame;
+		/// <summary>
+		/// command to setup a new game
+		/// </summary>
 		public RelayCommand RestartGame {
 			get {
 				return _restartGame ?? (
