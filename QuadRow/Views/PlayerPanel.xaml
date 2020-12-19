@@ -9,11 +9,11 @@
 >
 
 	<StackPanel>
-		<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 			<TextBlock Text="{Binding PlayerName}" />
-			<TextBlock Text=" Pieces" HorizontalAlignment="Center" />
+			<TextBlock Text=" Pieces" />
 		</StackPanel>
-		<StackPanel Orientation="Horizontal">
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 			<StackPanel.Resources>
 				<Style TargetType="Border">
 					<Setter Property="Height" Value="{StaticResource PieceSize}" />

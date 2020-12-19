@@ -40,6 +40,7 @@
 						Grid.Row="1"
 						Grid.Column="1"
 						Text="{Binding Player1.PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						MaxLength="{StaticResource MaxPlayerNameLength}"
 					/>
 
 					<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Player 2 Name" />
@@ -47,6 +48,7 @@
 						Grid.Row="2"
 						Grid.Column="1"
 						Text="{Binding Player2.PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						MaxLength="{StaticResource MaxPlayerNameLength}"
 					/>
 
 					<Button
