@@ -3,25 +3,25 @@ using QuadRow.Framework;
 
 namespace QuadRow.ViewModels {
 	class BoardViewModel : ObservableObject {
-		public ObservableDictionary<Coordinates, SpaceViewModel> GameBoard { get; }
+		public ObservableDictionary<Coordinates, SpaceViewModel> Board { get; }
 
 		public BoardViewModel() {
-			GameBoard = new ObservableDictionary<Coordinates, SpaceViewModel>();
+			Board = new ObservableDictionary<Coordinates, SpaceViewModel>();
 			DrawGameBoard();
 		}
 
 		private void DrawGameBoard() {
 			//build spaces
-			GameBoard.Clear();
+			Board.Clear();
 			for (int y = 0; y < Config.BOARD_SIZE; y++) {
 				for (int x = 0; x < Config.BOARD_SIZE; x++) {
 					Coordinates coords = new Coordinates(x, y);
-					GameBoard.Add(coords, new SpaceViewModel() {
+					Board.Add(coords, new SpaceViewModel() {
 						TestOrigin = coords.ToString()
 					});
 				}
 			}
-			NotifyPropertyChanged(nameof(GameBoard));
+			NotifyPropertyChanged(nameof(Board));
 		}
 	}
 }
