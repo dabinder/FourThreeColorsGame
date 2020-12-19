@@ -8,6 +8,11 @@ using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace QuadRow.ViewModels {
+	/// <summary>
+	/// manages Player models and serves as view model for PlayerPanel user control
+	/// 
+	/// drag-and-drop code borrowed from https://stackoverflow.com/a/27975085/2136840
+	/// </summary>
 	public class PlayerViewModel : ObservableObject {
 		private readonly Player player;
 
@@ -64,6 +69,11 @@ namespace QuadRow.ViewModels {
 			}
 		}
 
+		public bool IsInventoryEmpty {
+			get {
+				return !HasColor1 && !HasColor2 && !HasColor3;
+			}
+		}
 
 		private bool _active;
 		public bool Active {

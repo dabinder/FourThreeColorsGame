@@ -2,6 +2,7 @@
 using QuadRow.Views;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -79,13 +80,18 @@ namespace QuadRow.ViewModels {
 				} else if (value == Player2) {
 					Player1.Active = false;
 					Player2.Active = true;
+				} else if (value == null) { //end of game scenario
+					Player1.Active = false;
+					Player2.Active = false;
 				} else {
 					throw new ArgumentException("Unrecognized player " + value);
 				}
 				_activePlayer = value;
-				NotifyPropertyChanged(nameof(ActivePlayer));
 			}
 		}
+		#endregion
+
+		#region game flow
 
 		private int _turn;
 		private int Turn {
@@ -97,6 +103,17 @@ namespace QuadRow.ViewModels {
 				ActivePlayer = value % 2 == 1 ?
 					Player1 :
 					Player2;
+			}
+		}
+
+		private bool _isTie;
+		public bool IsTie {
+			get {
+				return _isTie;
+			}
+			private set {
+				_isTie = value;
+				NotifyPropertyChanged(nameof(IsTie));
 			}
 		}
 
@@ -115,12 +132,28 @@ namespace QuadRow.ViewModels {
 		private void PlayerPropertyChanged(object sender, PropertyChangedEventArgs e) {
 			if (e.PropertyName == "IsPiecePlayed" && (bool)sender.GetType().GetProperty(e.PropertyName).GetValue(sender)) {
 				Turn++;
+				CheckTieGame();
 			}
 		}
 
 		private void StartGame() {
 			//start player 1 as active
 			Turn = 1;
+		}
+
+		private void EndGame() {
+			ActivePlayer = null;
+		}
+
+		private void CheckTieGame() {
+			//if current player's inventory is empty or board is full, mark game as tie
+			if (Turn > Config.BOARD_SIZE * Config.BOARD_SIZE ||
+				(Player1.IsInventoryEmpty && ActivePlayer == Player1) ||
+				(Player2.IsInventoryEmpty && ActivePlayer == Player2)
+			) {
+				IsTie = true;
+				EndGame();
+			}
 		}
 	}
 }
