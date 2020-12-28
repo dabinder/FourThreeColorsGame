@@ -4,6 +4,9 @@ using System.Linq;
 using System.Windows.Data;
 
 namespace QuadRow.Converters {
+	/// <summary>
+	/// converter to take multiple values and return whether *all* match the expected value
+	/// </summary>
 	public class BooleanAndConverter : IMultiValueConverter {
 		/// <summary>
 		/// read multiple values, return single value indicating *all* match expected

@@ -2,6 +2,9 @@
 using System.Windows.Input;
 
 namespace QuadRow.Framework {
+	/// <summary>
+	/// command event to dispatch if permitted conditions are met
+	/// </summary>
 	public class RelayCommand : ICommand {
 		private readonly Action<object> _execute;
 		private readonly Predicate<object> _canExecute;
@@ -9,7 +12,7 @@ namespace QuadRow.Framework {
 		/// <summary>
 		/// create RelayCommand with an always true predicate
 		/// </summary>
-		/// <param name="execute"></param>
+		/// <param name="execute">action to perform</param>
 		public RelayCommand(Action<object> execute) : this(execute, null) { }
 
 		/// <summary>

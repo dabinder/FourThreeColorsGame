@@ -3,6 +3,9 @@ using QuadRow.Models;
 using System.Windows;
 
 namespace QuadRow.ViewModels {
+	/// <summary>
+	/// manages individual spaces on board including receiving drag-and-drop pieces
+	/// </summary>
 	class SpaceViewModel : ObservableObject {
 
 		private readonly Coordinates coordinates;

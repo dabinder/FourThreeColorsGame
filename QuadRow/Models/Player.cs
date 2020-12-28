@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace QuadRow.Models {
+	/// <summary>
+	/// game player
+	/// </summary>
 	public class Player : ObservableObject {
 		private string _name;
 		/// <summary>

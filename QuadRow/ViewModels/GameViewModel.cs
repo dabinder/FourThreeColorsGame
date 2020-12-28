@@ -7,6 +7,9 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace QuadRow.ViewModels {
+	/// <summary>
+	/// manages the game flow
+	/// </summary>
 	class GameViewModel : ObservableObject {
 		#region intro screen
 		private ContentControl _currentScreeen;
@@ -367,6 +370,11 @@ namespace QuadRow.ViewModels {
 		/// reset board and player parameters to prepare for a new game
 		/// </summary>
 		private void ResetGame() {
+			//unsubscribe from events before reset
+			Player1.PropertyChanged -= PlayerPropertyChanged;
+			Player2.PropertyChanged -= PlayerPropertyChanged;
+
+			//reset app to initial state
 			Application currentApp = Application.Current;
 			currentApp.Resources["Player1ViewModel"] = new Player1ViewModel();
 			currentApp.Resources["Player2ViewModel"] = new Player2ViewModel();

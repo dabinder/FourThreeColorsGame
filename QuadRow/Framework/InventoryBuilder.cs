@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 
 namespace QuadRow.Framework {
+	/// <summary>
+	/// builds a player's starting inventory of pieces from a specified variant
+	/// </summary>
 	public static class InventoryBuilder {
 		/// <summary>
 		/// color sets, workaround for psuedo const array

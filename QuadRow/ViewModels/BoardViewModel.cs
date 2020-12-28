@@ -2,6 +2,9 @@
 using QuadRow.Framework;
 
 namespace QuadRow.ViewModels {
+	/// <summary>
+	/// manages the game board
+	/// </summary>
 	class BoardViewModel : ObservableObject {
 		/// <summary>
 		/// active game board

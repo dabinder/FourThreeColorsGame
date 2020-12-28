@@ -3,6 +3,9 @@ using QuadRow.Framework;
 using System.Collections.ObjectModel;
 
 namespace QuadRow.Models {
+	/// <summary>
+	/// player's inventory of playable pieces
+	/// </summary>
 	public class Inventory : ObservableDictionary<ColorType, ObservableCollection<Piece>> {
 		/// <summary>
 		/// build inventory for given variant

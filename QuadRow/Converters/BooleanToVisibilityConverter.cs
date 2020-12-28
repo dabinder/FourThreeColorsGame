@@ -4,6 +4,9 @@ using System.Windows;
 using System.Windows.Data;
 
 namespace QuadRow.Converters {
+	/// <summary>
+	/// converter to take a boolean and return a Visibility (visible/hidden) value
+	/// </summary>
 	public class BooleanToVisibilityConverter : IValueConverter {
 		/// <summary>
 		/// convert boolean to Visibility value

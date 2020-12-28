@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel;
 
 namespace QuadRow.Framework {
+	/// <summary>
+	/// facilitate property changed notifications for game classes
+	/// </summary>
 	public abstract class ObservableObject : INotifyPropertyChanged {
 		/// <summary>
 		/// handler for global property changes

@@ -5,6 +5,9 @@ using System.Windows.Data;
 using System.Windows.Media;
 
 namespace QuadRow.Converters {
+	/// <summary>
+	/// converter to take a ColorType enum value to a Color or Brush
+	/// </summary>
 	public class ColorTypeToColorConverter : IValueConverter {
 		/// <summary>
 		/// convert ColorType enum to visible color

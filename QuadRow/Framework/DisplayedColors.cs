@@ -2,6 +2,9 @@
 using System.Windows.Media;
 
 namespace QuadRow.Framework {
+	/// <summary>
+	/// set of visible colors used in the game to match the enum ColorType values
+	/// </summary>
 	static class DisplayedColors {
 		/// <summary>
 		/// translate ColorType into displayable color
